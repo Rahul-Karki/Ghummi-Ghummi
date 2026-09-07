@@ -113,7 +113,7 @@ export function Icon({
   style,
 }: IconProps) {
   const { colors } = useTheme();
-  const finalColor = color || colors.black;
+  const finalColor = color || colors.textPrimary;
   return (
     <IconComponent
       size={size}

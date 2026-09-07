@@ -90,7 +90,7 @@ export function ConfirmationDialog({
         style={[
           styles.sheet,
           {
-            backgroundColor: colors.white,
+            backgroundColor: colors.surface,
             paddingBottom: Math.max(insets.bottom, Spacing.xl),
             transform: [{ translateY: sheetTranslateY }],
           },

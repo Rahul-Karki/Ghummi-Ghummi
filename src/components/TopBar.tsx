@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useTheme, Typography, Spacing, Radius } from '../theme/ThemeContext';
+import { useTheme, Typography, Spacing, Radius, FontBrand } from '../theme/ThemeContext';
 import { Icon, IconName } from './Icon';
 import { hapticLight } from '../utils/haptics';
 
@@ -12,7 +12,7 @@ export default function TopBar({
   onBack?: () => void;
 }) {
   const { colors } = useTheme();
-  const color = light ? colors.white : colors.black;
+  const color = light ? colors.white : colors.textPrimary;
 
   return (
     <View style={styles.container}>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   wordmark: {
-    fontFamily: 'Georgia',
+    fontFamily: FontBrand,
     fontSize: 19.17,
     letterSpacing: -1.15,
   },

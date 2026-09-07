@@ -103,7 +103,7 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
         <View style={styles.hero}>
           <Image source={{ uri: LISTINGS[0].image }} style={styles.heroImage} />
           <View style={styles.heroOverlay} />
-          <View style={styles.heroContent}>
+          <View style={[styles.heroContent, { paddingTop: Math.max(insets.top, Spacing.xl) }]}>
             <View style={styles.heroTop}>
               <View style={styles.locationBadge}>
                 <Icon name={IconName.MapPin} size={13} color={colors.white} strokeWidth={2} />
@@ -118,14 +118,14 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
               <Text style={[styles.heroTitle, { color: colors.white }]}>Find Your Perfect Stay</Text>
               <Text style={styles.heroSub}>12 handpicked places in San Francisco</Text>
             </View>
-            <TouchableOpacity style={[styles.searchBar, { backgroundColor: colors.white }]} activeOpacity={0.8} onPress={() => navigation.navigate('V2ScanSave')} accessibilityLabel="Search properties in San Francisco" accessibilityRole="button">
+            <TouchableOpacity style={[styles.searchBar, { backgroundColor: colors.surface }]} activeOpacity={0.8} onPress={() => navigation.navigate('V2ScanSave')} accessibilityLabel="Search properties in San Francisco" accessibilityRole="button">
               <Icon name={IconName.Search} size={18} color={colors.muted} strokeWidth={1.8} />
               <View style={styles.searchTextCol}>
-                <Text style={[styles.searchTitle, { color: colors.black }]}>San Francisco, CA</Text>
+                <Text style={[styles.searchTitle, { color: colors.textPrimary }]}>San Francisco, CA</Text>
                 <Text style={[styles.searchSub, { color: colors.muted }]}>Jun 15–22 · 2 guests</Text>
               </View>
               <View style={[styles.searchFilter, { backgroundColor: colors.secondary }]}>
-                <Icon name={IconName.SlidersHorizontal} size={14} color={colors.black} strokeWidth={1.8} />
+                <Icon name={IconName.SlidersHorizontal} size={14} color={colors.textPrimary} strokeWidth={1.8} />
               </View>
             </TouchableOpacity>
           </View>
@@ -133,7 +133,7 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
 
         {/* Search Section */}
         <View style={styles.searchSection}>
-          <View style={[styles.searchInputContainer, { backgroundColor: colors.white, borderColor: searchFocused ? colors.primary : colors.border }, searchFocused && styles.searchInputFocused]}>
+          <View style={[styles.searchInputContainer, { backgroundColor: colors.surface, borderColor: searchFocused ? colors.primary : colors.border }, searchFocused && styles.searchInputFocused]}>
             <Icon name={IconName.Search} size={18} color={searchFocused ? colors.primary : colors.muted} strokeWidth={1.8} />
             <TextInput
               style={[styles.searchInput, { color: colors.textPrimary }]}
@@ -154,7 +154,7 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
           </View>
 
           {searchQuery.length > 0 ? (
-            <View style={[styles.searchResults, { backgroundColor: colors.white }]}>
+            <View style={[styles.searchResults, { backgroundColor: colors.surface }]}>
               {filteredServices.length > 0 ? (
                 filteredServices.map((service) => (
                   <TouchableOpacity key={service.label} style={[styles.searchResultItem, { borderBottomColor: colors.border }]} onPress={() => { hapticLight(); setSearchQuery(''); setSearchFocused(false); navigation.navigate('V2ScanSave'); }} activeOpacity={0.7}>
@@ -178,7 +178,7 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
           ) : (
             <View style={styles.servicesGrid}>
               {SERVICES.map((service) => (
-                <TouchableOpacity key={service.label} style={[styles.serviceItem, { backgroundColor: colors.white }]} activeOpacity={0.7} onPress={() => { hapticLight(); navigation.navigate('V2ScanSave'); }} accessibilityLabel={`Browse ${service.label}`} accessibilityRole="button">
+                <TouchableOpacity key={service.label} style={[styles.serviceItem, { backgroundColor: colors.surface }]} activeOpacity={0.7} onPress={() => { hapticLight(); navigation.navigate('V2ScanSave'); }} accessibilityLabel={`Browse ${service.label}`} accessibilityRole="button">
                   <View style={[styles.serviceIconContainer, { backgroundColor: colors.secondary }]}>
                     <Icon name={service.icon} size={22} color={colors.primary} strokeWidth={1.5} />
                   </View>
@@ -195,7 +195,7 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
           <View style={styles.sectionHeader}>
             <View>
               <Text style={[styles.sectionTag, { color: colors.primaryGold }]}>EXPLORE</Text>
-              <Text style={[styles.sectionTitle, { color: colors.black }]}>Choose Your Style</Text>
+              <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Choose Your Style</Text>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('V1Gallery')} style={styles.seeAllBtn} accessibilityLabel="See all explore styles" accessibilityRole="button">
               <Text style={[styles.seeAll, { color: colors.primaryGold }]}>See All →</Text>
@@ -239,7 +239,7 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
           <View style={styles.sectionHeader}>
             <View>
               <Text style={[styles.sectionTag, { color: colors.primaryGold }]}>FEATURED</Text>
-              <Text style={[styles.sectionTitle, { color: colors.black }]}>Top Picks For You</Text>
+              <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Top Picks For You</Text>
             </View>
           </View>
           <View style={styles.featuredGrid}>
@@ -307,24 +307,24 @@ const styles = StyleSheet.create({
   hero: { height: SCREEN_H * 0.48, position: 'relative' },
   heroImage: { ...StyleSheet.absoluteFill, width: '100%', height: '100%' },
   heroOverlay: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(15,23,42,0.35)' },
-  heroContent: { flex: 1, paddingHorizontal: Spacing.xl, paddingTop: Platform.OS === 'ios' ? 60 : 40, justifyContent: 'space-between' },
+  heroContent: { flex: 1, paddingHorizontal: Spacing.xl, justifyContent: 'space-between' },
   heroTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   locationBadge: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.15)', paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderRadius: Radius.full, gap: 6 },
-  locationText: { fontFamily: 'Inter', fontWeight: '500', fontSize: 13 },
+  locationText: { fontFamily: 'Google Sans Flex-Medium', fontWeight: '500', fontSize: 13 },
   profileBtn: { width: 44, height: 44, borderRadius: 22, backgroundColor: 'rgba(255,255,255,0.15)', alignItems: 'center', justifyContent: 'center' },
   heroCenter: { gap: 6 },
-  greeting: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, color: 'rgba(255,255,255,0.85)' },
-  heroTitle: { fontFamily: 'Georgia', fontSize: 28, letterSpacing: -0.8, lineHeight: 34 },
-  heroSub: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, color: 'rgba(255,255,255,0.8)' },
+  greeting: { fontFamily: 'Google Sans Flex-Light', fontWeight: '300', fontSize: 14, color: 'rgba(255,255,255,0.85)' },
+  heroTitle: { fontFamily: 'Besley', fontSize: 28, letterSpacing: 0, lineHeight: 34 },
+  heroSub: { fontFamily: 'Google Sans Flex-Light', fontWeight: '300', fontSize: 14, color: 'rgba(255,255,255,0.8)' },
   searchBar: { flexDirection: 'row', alignItems: 'center', borderRadius: Radius.lg, padding: Spacing.md, gap: Spacing.md, borderWidth: 1, borderColor: 'rgba(255,255,255,0.15)', shadowColor: '#000', shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.15, shadowRadius: 16, elevation: 8 },
   searchTextCol: { flex: 1, gap: 2 },
-  searchTitle: { fontFamily: 'Inter', fontWeight: '600', fontSize: 14 },
-  searchSub: { fontFamily: 'Inter', fontWeight: '400', fontSize: 12 },
+  searchTitle: { fontFamily: 'Google Sans Flex-Medium', fontWeight: '500', fontSize: 14 },
+  searchSub: { fontFamily: 'Google Sans Flex-Light', fontWeight: '300', fontSize: 12 },
   searchFilter: { width: 44, height: 44, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
   section: { marginBottom: Spacing.xxl },
   sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', paddingHorizontal: Spacing.xl, marginBottom: Spacing.lg },
-  sectionTag: { fontFamily: 'Inter', fontWeight: '600', fontSize: 10, letterSpacing: 1.5, marginBottom: 4 },
-  sectionTitle: { fontFamily: 'Georgia', fontSize: 20, letterSpacing: -0.5 },
+  sectionTag: { fontFamily: 'Google Sans Flex-Medium', fontWeight: '500', fontSize: 10, letterSpacing: 1.5, marginBottom: 4 },
+  sectionTitle: { fontFamily: 'Besley', fontSize: 20, letterSpacing: 0 },
   seeAllBtn: { paddingVertical: Spacing.sm, paddingHorizontal: Spacing.md },
   seeAll: { ...Typography.bodySmall, fontWeight: '500' },
   cardsContainer: { paddingLeft: Spacing.xl, paddingRight: Spacing.lg, gap: 16 },
@@ -333,13 +333,13 @@ const styles = StyleSheet.create({
   exploreCardOverlay: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.20)' },
   exploreCardContent: { flex: 1, justifyContent: 'space-between', padding: Spacing.xl },
   exploreTagBadge: { alignSelf: 'flex-start', backgroundColor: 'rgba(255,255,255,0.2)', paddingHorizontal: Spacing.md, paddingVertical: 5, borderRadius: Radius.full },
-  exploreTagText: { fontFamily: 'Inter', fontWeight: '600', fontSize: 11, letterSpacing: 0.5 },
+  exploreTagText: { fontFamily: 'Google Sans Flex-Medium', fontWeight: '500', fontSize: 11, letterSpacing: 0.5 },
   exploreCardBottom: { gap: 4 },
-  exploreCardTitle: { fontFamily: 'Georgia', fontSize: 22, letterSpacing: -0.5 },
-  exploreCardSub: { fontFamily: 'Inter', fontWeight: '400', fontSize: 13, color: 'rgba(255,255,255,0.8)' },
-  exploreCardDesc: { fontFamily: 'Inter', fontWeight: '400', fontSize: 12, color: 'rgba(255,255,255,0.75)', lineHeight: 17, marginTop: 4 },
+  exploreCardTitle: { fontFamily: 'Besley', fontSize: 22, letterSpacing: 0 },
+  exploreCardSub: { fontFamily: 'Google Sans Flex-Light', fontWeight: '300', fontSize: 13, color: 'rgba(255,255,255,0.8)' },
+  exploreCardDesc: { fontFamily: 'Google Sans Flex-Light', fontWeight: '300', fontSize: 12, color: 'rgba(255,255,255,0.75)', lineHeight: 17, marginTop: 4 },
   exploreCardAction: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: Spacing.md },
-  exploreCardActionText: { fontFamily: 'Inter', fontWeight: '600', fontSize: 13 },
+  exploreCardActionText: { fontFamily: 'Google Sans Flex-Medium', fontWeight: '500', fontSize: 13 },
   pagination: { flexDirection: 'row', justifyContent: 'center', gap: 6, marginTop: Spacing.lg },
   dot: { width: 6, height: 6, borderRadius: 3 },
   dotActive: { width: 20 },
@@ -348,10 +348,10 @@ const styles = StyleSheet.create({
   featuredImage: { ...StyleSheet.absoluteFill, width: '100%', height: '100%' },
   featuredOverlay: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.12)' },
   featuredBadge: { position: 'absolute', top: Spacing.md, right: Spacing.md, flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: 'rgba(0,0,0,0.5)', paddingHorizontal: 10, paddingVertical: 4, borderRadius: Radius.full },
-  featuredMatch: { fontFamily: 'Inter', fontWeight: '600', fontSize: 12 },
+  featuredMatch: { fontFamily: 'Google Sans Flex-Medium', fontWeight: '500', fontSize: 12 },
   featuredInfo: { position: 'absolute', bottom: 0, left: 0, right: 0, padding: Spacing.md, backgroundColor: 'rgba(0,0,0,0.45)' },
-  featuredName: { fontFamily: 'Georgia', fontSize: 14, lineHeight: 18 },
-  featuredPrice: { fontFamily: 'Inter', fontWeight: '400', fontSize: 11, color: 'rgba(255,255,255,0.85)', marginTop: 2 },
+  featuredName: { fontFamily: 'Besley', fontSize: 14, lineHeight: 18 },
+  featuredPrice: { fontFamily: 'Google Sans Flex-Light', fontWeight: '300', fontSize: 11, color: 'rgba(255,255,255,0.85)', marginTop: 2 },
   searchSection: { paddingHorizontal: Spacing.xl, paddingTop: Spacing.lg, paddingBottom: Spacing.md },
   searchInputContainer: { flexDirection: 'row', alignItems: 'center', borderRadius: Radius.lg, paddingHorizontal: Spacing.md, paddingVertical: Spacing.md, gap: Spacing.sm, borderWidth: 1.5, ...Shadows.sm },
   searchInputFocused: { ...Shadows.md },

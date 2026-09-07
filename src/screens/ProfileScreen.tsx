@@ -118,7 +118,7 @@ export default function ProfileScreen({ navigation }: any) {
           </View>
           <View style={[styles.toggleTrack, { backgroundColor: isDark ? colors.primary : colors.border }]}>
             <View style={[styles.toggleThumb, { 
-              backgroundColor: colors.white,
+              backgroundColor: colors.surface,
               transform: [{ translateX: isDark ? 20 : 2 }],
             }]} />
           </View>

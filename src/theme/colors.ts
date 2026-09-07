@@ -164,112 +164,124 @@ export const Radius = {
   full: 999,
 } as const;
 
-export const FontStack = "'Inter', -apple-system, BlinkMacSystemFont, sans-serif";
-export const FontSerif = "'Georgia', serif";
+// These names are registered in App.tsx with expo-font. A CSS-style fallback
+// list is not valid in React Native and silently falls back to the OS font.
+export const FontStack = 'Inter';
+export const FontMedium = 'Inter-Medium';
+export const FontSemiBold = 'Inter-SemiBold';
+export const FontBold = 'Inter-Bold';
+export const FontMono = 'Geist Mono';
+// The supplied prototype uses an editorial serif for display, a compact UI
+// sans for interface copy, and Outfit only for the wordmark.
+export const FontDisplay = 'Besley';
+export const FontUi = 'Google Sans Flex';
+export const FontUiLight = 'Google Sans Flex-Light';
+export const FontUiMedium = 'Google Sans Flex-Medium';
+export const FontBrand = 'Outfit-Medium';
 
 export const Typography = {
   display: {
-    fontFamily: FontSerif,
-    fontSize: 32,
-    fontWeight: '400' as const,
-    letterSpacing: -1.0,
-    lineHeight: 38,
-  },
-  h1: {
-    fontFamily: FontSerif,
-    fontSize: 28,
-    fontWeight: '400' as const,
-    letterSpacing: -0.8,
-    lineHeight: 34,
-  },
-  h2: {
-    fontFamily: FontSerif,
-    fontSize: 24,
-    fontWeight: '400' as const,
-    letterSpacing: -0.5,
-    lineHeight: 30,
-  },
-  h3: {
-    fontFamily: FontSerif,
-    fontSize: 20,
-    fontWeight: '400' as const,
-    letterSpacing: -0.5,
-    lineHeight: 26,
-  },
-  sectionTitle: {
-    fontFamily: FontSerif,
-    fontSize: 18,
-    fontWeight: '400' as const,
-    letterSpacing: -0.3,
-    lineHeight: 23,
-  },
-  subtitle: {
-    fontFamily: FontStack,
-    fontSize: 16,
+    fontFamily: FontDisplay,
+    fontSize: 30,
     fontWeight: '400' as const,
     letterSpacing: 0,
-    lineHeight: 22,
+    lineHeight: 36,
   },
-  body: {
-    fontFamily: FontStack,
-    fontSize: 14,
+  h1: {
+    fontFamily: FontDisplay,
+    fontSize: 26,
+    fontWeight: '400' as const,
+    letterSpacing: 0,
+    lineHeight: 32,
+  },
+  h2: {
+    fontFamily: FontDisplay,
+    fontSize: 22,
+    fontWeight: '400' as const,
+    letterSpacing: 0,
+    lineHeight: 28,
+  },
+  h3: {
+    fontFamily: FontDisplay,
+    fontSize: 20,
+    fontWeight: '400' as const,
+    letterSpacing: 0,
+    lineHeight: 24,
+  },
+  sectionTitle: {
+    fontFamily: FontDisplay,
+    fontSize: 16,
     fontWeight: '400' as const,
     letterSpacing: 0,
     lineHeight: 20,
   },
-  bodySmall: {
-    fontFamily: FontStack,
-    fontSize: 13,
-    fontWeight: '400' as const,
+  subtitle: {
+    fontFamily: FontUiLight,
+    fontSize: 14,
+    fontWeight: '300' as const,
     letterSpacing: 0,
-    lineHeight: 18,
+    lineHeight: 20,
+  },
+  body: {
+    fontFamily: FontUiLight,
+    fontSize: 14,
+    fontWeight: '300' as const,
+    letterSpacing: 0,
+    lineHeight: 20,
+  },
+  bodySmall: {
+    fontFamily: FontUiLight,
+    fontSize: 14,
+    fontWeight: '300' as const,
+    letterSpacing: 0,
+    lineHeight: 20,
   },
   caption: {
-    fontFamily: FontStack,
+    fontFamily: FontUiLight,
     fontSize: 12,
-    fontWeight: '400' as const,
+    fontWeight: '300' as const,
     letterSpacing: 0.1,
     lineHeight: 16,
   },
   captionSmall: {
-    fontFamily: FontStack,
-    fontSize: 11,
+    fontFamily: FontUiMedium,
+    fontSize: 12,
     fontWeight: '500' as const,
     letterSpacing: 0.5,
-    lineHeight: 14,
+    lineHeight: 16,
   },
   label: {
-    fontFamily: FontStack,
+    fontFamily: FontUiMedium,
     fontSize: 12,
     fontWeight: '600' as const,
     letterSpacing: 1.0,
     lineHeight: 16,
   },
   button: {
-    fontFamily: FontStack,
-    fontSize: 15,
-    fontWeight: '600' as const,
+    fontFamily: FontUiMedium,
+    fontSize: 14,
+    fontWeight: '500' as const,
     letterSpacing: 0.3,
-    lineHeight: 20,
-  },
-  buttonSmall: {
-    fontFamily: FontStack,
-    fontSize: 13,
-    fontWeight: '600' as const,
-    letterSpacing: 0.2,
     lineHeight: 18,
   },
+  buttonSmall: {
+    fontFamily: FontUiMedium,
+    fontSize: 14,
+    fontWeight: '500' as const,
+    letterSpacing: 0.2,
+    lineHeight: 20,
+  },
   tag: {
-    fontFamily: FontStack,
+    fontFamily: FontUiMedium,
     fontSize: 11,
-    fontWeight: '600' as const,
+    fontWeight: '500' as const,
     letterSpacing: 0.5,
     lineHeight: 14,
   },
   overline: {
-    fontFamily: FontStack,
+    fontFamily: FontUiMedium,
     fontSize: 10,
-    fontWeight: '600' as const,
+    fontWeight: '500' as const,
     letterSpacing: 1.5,
     lineHeight: 14,
   },

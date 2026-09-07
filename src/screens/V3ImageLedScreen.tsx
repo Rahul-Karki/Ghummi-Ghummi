@@ -124,7 +124,7 @@ function Hero({ onBack }: { onBack: () => void }) {
   }, []);
 
   return (
-    <View style={[styles.heroContainer, { backgroundColor: colors.black }]}>
+    <View style={[styles.heroContainer, { backgroundColor: colors.background }]}>
       <Animated.View
         style={[
           styles.heroImageContainer,
@@ -209,7 +209,7 @@ function CompareAlternatives() {
   return (
     <View style={styles.compareContainer}>
       <View style={styles.compareHeader}>
-        <Text style={[styles.compareTitle, { color: colors.black }]}>Compare Alternatives</Text>
+        <Text style={[styles.compareTitle, { color: colors.textPrimary }]}>Compare Alternatives</Text>
         <Text style={[styles.compareCount, { color: colors.muted }]}>3/12</Text>
       </View>
 
@@ -234,33 +234,33 @@ function CompareAlternatives() {
         <CompareRow
           label="Match"
           values={COMPARE_DATA.match.map((v, i) =>
-            i === 0 ? <MatchPill key={i}>{v}</MatchPill> : <Text key={i} style={[styles.compareValue, { color: colors.black }]}>{v}</Text>
+            i === 0 ? <MatchPill key={i}>{v}</MatchPill> : <Text key={i} style={[styles.compareValue, { color: colors.textPrimary }]}>{v}</Text>
           )}
         />
         <CompareRow
           label="Price"
           values={COMPARE_DATA.price.map((v, i) => (
-            <Text key={i} style={[styles.compareValue, { color: colors.black }]}>{v}</Text>
+            <Text key={i} style={[styles.compareValue, { color: colors.textPrimary }]}>{v}</Text>
           ))}
         />
         <CompareRow
           label="Style"
           values={COMPARE_DATA.style.map((v, i) => (
-            <Text key={i} style={[styles.compareValue, { color: colors.black }]}>{v}</Text>
+            <Text key={i} style={[styles.compareValue, { color: colors.textPrimary }]}>{v}</Text>
           ))}
         />
         <CompareRow
           label="Location"
           values={COMPARE_DATA.location.map((v, i) => (
-            <Text key={i} style={[styles.compareValue, { color: colors.black }]}>{v}</Text>
+            <Text key={i} style={[styles.compareValue, { color: colors.textPrimary }]}>{v}</Text>
           ))}
         />
         <CompareRow
           label="Reviews"
           values={COMPARE_DATA.reviews.map((v, i) => (
             <View key={i} style={styles.reviewRow}>
-              <Icon name={IconName.Star} size={8} color={colors.black} />
-              <Text style={[styles.compareValue, { color: colors.black }]}>{v}</Text>
+              <Icon name={IconName.Star} size={8} color={colors.textPrimary} />
+              <Text style={[styles.compareValue, { color: colors.textPrimary }]}>{v}</Text>
             </View>
           ))}
         />
@@ -279,7 +279,7 @@ function CompareRow({
   const { colors } = useTheme();
   return (
     <View style={styles.compareRowContainer}>
-      <Text style={[styles.compareRowLabel, { color: colors.black }]}>{label}</Text>
+      <Text style={[styles.compareRowLabel, { color: colors.textPrimary }]}>{label}</Text>
       <View style={styles.compareRowValues}>
         {values.map((v, i) => (
           <View key={i} style={styles.compareCol}>
@@ -296,14 +296,14 @@ function WhyMatchedSection() {
   const { colors } = useTheme();
   return (
     <View style={styles.whyContainer}>
-      <Text style={[styles.whyTitle, { color: colors.black }]}>Why we matched you</Text>
+      <Text style={[styles.whyTitle, { color: colors.textPrimary }]}>Why we matched you</Text>
       {WHY_MATCHED.map((item, i) => (
         <View key={i}>
           <View style={styles.whyRow}>
-            <Icon name={WHY_MATCHED_ICONS[i]} size={14} color={colors.black} />
+            <Icon name={WHY_MATCHED_ICONS[i]} size={14} color={colors.textPrimary} />
             <View style={styles.whyTextCol}>
-              <Text style={[styles.whyItemTitle, { color: colors.black }]}>{item.title}</Text>
-              <Text style={[styles.whyItemSub, { color: colors.black }]}>{item.sub}</Text>
+              <Text style={[styles.whyItemTitle, { color: colors.textPrimary }]}>{item.title}</Text>
+              <Text style={[styles.whyItemSub, { color: colors.textSecondary }]}>{item.sub}</Text>
             </View>
           </View>
           {i < WHY_MATCHED.length - 1 && <View style={styles.whyDivider} />}
@@ -339,7 +339,7 @@ function PriceAndReserve() {
     <View style={styles.priceContainer}>
       <View style={styles.priceInfo}>
         <View style={styles.priceRow}>
-          <Text style={[styles.priceAmount, { color: colors.black }]}>$146</Text>
+        <Text style={[styles.priceAmount, { color: colors.textPrimary }]}>$146</Text>
           <Text style={[styles.pricePerNight, { color: colors.muted }]}>/night</Text>
         </View>
         <Text style={[styles.priceTotal, { color: colors.muted }]}>$1,022 · 7 nights</Text>
@@ -351,7 +351,7 @@ function PriceAndReserve() {
         accessibilityLabel="Reserve this property"
         accessibilityRole="button"
       >
-        <Text style={[styles.reserveText, { color: colors.black }]}>Reserve</Text>
+        <Text style={[styles.reserveText, { color: colors.textInverse }]}>Reserve</Text>
       </TouchableOpacity>
       <Toast
         message={toast.message}
@@ -397,12 +397,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   heroTitle: {
-    fontFamily: 'Inter',
+    fontFamily: 'Besley',
     fontWeight: '400',
     fontSize: 18,
   },
   heroSub: {
-    fontFamily: 'Inter',
+    fontFamily: 'Google Sans Flex-Light',
     fontWeight: '300',
     fontSize: 12,
     opacity: 0.9,
@@ -432,7 +432,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   heroPlaceName: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Besley',
     fontSize: 30,
     lineHeight: 36,
   },
@@ -487,7 +487,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   compareTitle: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     fontSize: 16,
   },
   compareCount: {
@@ -553,7 +553,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   whyTitle: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     fontSize: 16,
   },
   whyRow: {
@@ -600,7 +600,7 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   priceAmount: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     fontSize: 16,
     lineHeight: 19.2,
   },
