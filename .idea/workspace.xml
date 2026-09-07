@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BackgroundAgentGlobalSettings">
+    <option name="selectedModelId" value="anthropic/claude-opus-5-fast" />
+    <option name="selectedProviderName" value="OpenRouter" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3d65596b-dc49-4115-a719-0edfd378ae9a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Avatar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Avatar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/BottomSheet.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BottomSheet.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ConfirmationDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ConfirmationDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ErrorState.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ErrorState.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Icon.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Icon.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LoadingOverlay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoadingOverlay.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pill.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pill.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/StatusBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/StatusBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TopBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TopBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/YMark.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/YMark.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/navigation/AppNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/AppNavigator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/AIGenerationScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AIGenerationScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/IntroScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/IntroScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/MapScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/MapScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/ProfileScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ProfileScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/PropertyDetailsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/PropertyDetailsScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/SavedScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/SavedScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/TripsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/TripsScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/V1GalleryScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/V1GalleryScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/V2ScanSaveScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/V2ScanSaveScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/V3ImageLedScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/V3ImageLedScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/theme/ThemeContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/theme/ThemeContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/theme/colors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/theme/colors.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/Users/shivansh/Desktop/Shivansh/Ghummi-Ghummi/Client" value="3IzZIjFbTUWI85oIMcvop7vjq8S" />
+    </persistenceIdMap>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ShivanshhGargg&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ShivanshhGargg/Ghummi-Ghummi.git&quot;,
+    &quot;accountId&quot;: &quot;ccad3105-bd16-4513-a3f6-8b6721b2def7&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3IzBBsGUSGt9GmqF3gdcEuTSy0x" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "copilot.chat.legacySessionMetadata.migrated": "true",
+    "git-widget-placeholder": "fix/dark-mode-fonts",
+    "javascript.preferred.runtime.type.id": "node",
+    "junie.onboarding.icon.badge.shown": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "/Users/shivansh/Desktop/Shivansh/Ghummi-Ghummi/Client/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.24374.125" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3d65596b-dc49-4115-a719-0edfd378ae9a" name="Changes" comment="" />
+      <created>1788757383522</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1788757383522</updated>
+      <workItem from="1788757384535" duration="33000" />
+      <workItem from="1788757670236" duration="920000" />
+      <workItem from="1788768015921" duration="1293000" />
+      <workItem from="1788769330737" duration="1397000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -93,7 +93,7 @@ export default function V1GalleryScreen({ navigation }: { navigation: any }) {
         <TopBar onBack={() => navigation.goBack()} />
 
         <View style={styles.header}>
-          <Text style={[styles.headerTitle, { color: colors.black }]}>12 curated picks</Text>
+          <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>12 curated picks</Text>
           <Text style={[styles.headerSubtitle, { color: colors.muted }]}>
             San Francisco · Jun 15-22 · 2 guests
           </Text>
@@ -207,7 +207,7 @@ function GalleryView({
       </View>
 
       <View style={styles.sectionHeader}>
-        <Text style={[styles.sectionTitle, { color: colors.black }]}>More matches for you</Text>
+        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>More matches for you</Text>
         <Text style={[styles.sectionCount, { color: colors.muted }]}>
           {visibleCount} of 12
         </Text>
@@ -258,8 +258,8 @@ function ListingCard({
       <View style={styles.listingTopRow}>
         <Pill>{listing.match}% Match</Pill>
         <View style={styles.listingRatingRow}>
-          <Icon name={IconName.Star} size={11} color={colors.black} />
-          <Text style={[styles.listingRating, { color: colors.black }]}>{listing.rating.toFixed(2)}</Text>
+          <Icon name={IconName.Star} size={11} color={colors.textPrimary} />
+          <Text style={[styles.listingRating, { color: colors.textPrimary }]}>{listing.rating.toFixed(2)}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -280,7 +280,7 @@ function MapView({
     <>
       <View style={styles.mapContainer}>
         <View style={styles.mapPlaceholder}>
-          <Text style={[styles.mapTitle, { color: colors.black }]}>Map</Text>
+          <Text style={[styles.mapTitle, { color: colors.textPrimary }]}>Map</Text>
           <View style={styles.mapGrid}>
             <View style={styles.mapGridLineH} />
             <View style={[styles.mapGridLineH, styles.mapGridLineH2]} />
@@ -307,7 +307,7 @@ function MapView({
       </View>
 
       <View style={styles.specContainer}>
-        <Text style={[styles.specName, { color: colors.black }]}>{selected.name}</Text>
+        <Text style={[styles.specName, { color: colors.textPrimary }]}>{selected.name}</Text>
         <View style={[styles.divider, { backgroundColor: colors.border }]} />
         <SpecRow label={selected.type} />
         <View style={[styles.divider, { backgroundColor: colors.border }]} />
@@ -324,7 +324,7 @@ function SpecRow({ label }: { label: string }) {
   const { colors } = useTheme();
   return (
     <View style={styles.specRow}>
-      <Text style={[styles.specLabel, { color: colors.black }]}>{label}</Text>
+      <Text style={[styles.specLabel, { color: colors.textPrimary }]}>{label}</Text>
     </View>
   );
 }
@@ -440,7 +440,7 @@ const styles = StyleSheet.create({
     paddingTop: 56,
   },
   sectionTitle: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     fontSize: 18,
     lineHeight: 22,
   },
@@ -574,7 +574,7 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   specName: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     fontSize: 20,
     lineHeight: 24,
   },

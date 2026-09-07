@@ -78,7 +78,7 @@ export default function V2ScanSaveScreen({ navigation }: { navigation: any }) {
           <View style={styles.headerRow}>
             <YMark />
             <View style={styles.headerTextCol}>
-              <Text style={[styles.headerTitle, { color: colors.black }]}>
+              <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
                 Your <Text style={{ color: colors.muted }}>twelve</Text> curated picks
               </Text>
               <Text style={styles.headerSub}>Based on your trip preferences</Text>
@@ -217,7 +217,7 @@ function ListingRow({ listing }: { listing: Listing }) {
       <Image source={{ uri: listing.image }} style={styles.listingThumb} />
       <View style={styles.listingInfo}>
         <View style={styles.listingInfoLeft}>
-          <Text style={[styles.listingName, { color: colors.black }]} numberOfLines={1}>
+          <Text style={[styles.listingName, { color: colors.textPrimary }]} numberOfLines={1}>
             {listing.name}
           </Text>
           <View style={styles.listingSpecs}>
@@ -228,11 +228,11 @@ function ListingRow({ listing }: { listing: Listing }) {
         </View>
           <View style={styles.listingInfoRight}>
           <View style={[styles.matchPill, { backgroundColor: colors.citron }]}>
-            <Text style={[styles.matchText, { color: colors.black }]}>{listing.match}% Match</Text>
+            <Text style={[styles.matchText, { color: colors.textPrimary }]}>{listing.match}% Match</Text>
           </View>
           <View style={styles.ratingRow}>
             <Icon name={IconName.Star} size={11} color={colors.primaryGold} />
-            <Text style={[styles.ratingText, { color: colors.black }]}>{listing.rating.toFixed(2)}</Text>
+            <Text style={[styles.ratingText, { color: colors.textPrimary }]}>{listing.rating.toFixed(2)}</Text>
           </View>
         </View>
       </View>
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
     gap: 5.608,
   },
   listingName: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     fontSize: 14,
     lineHeight: 16.8,
   },

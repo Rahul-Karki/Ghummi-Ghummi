@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 22,
     fontWeight: '700',
-    fontFamily: "'Georgia', serif",
+    fontFamily: 'Inter',
   },
   tripDates: {
     color: 'rgba(255,255,255,0.8)',

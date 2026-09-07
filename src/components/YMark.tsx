@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '180deg' }],
   },
   y: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     fontSize: 14,
   },
 });

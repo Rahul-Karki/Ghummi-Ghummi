@@ -139,7 +139,7 @@ export default function MapScreen({ navigation }: Props) {
         {/* Header */}
         <View style={[styles.header, { paddingTop: insets.top + Spacing.sm }]}>
           <TouchableOpacity
-            style={[styles.backBtn, { backgroundColor: colors.white }]}
+            style={[styles.backBtn, { backgroundColor: colors.surface }]}
             onPress={() => navigation.goBack()}
             activeOpacity={0.7}
             accessibilityLabel="Go back"
@@ -147,13 +147,13 @@ export default function MapScreen({ navigation }: Props) {
             <Icon name={IconName.ArrowLeft} size={20} color={colors.textPrimary} strokeWidth={2} />
           </TouchableOpacity>
 
-          <View style={[styles.headerCenter, { backgroundColor: colors.white }]}>
+          <View style={[styles.headerCenter, { backgroundColor: colors.surface }]}>
             <Icon name={IconName.MapPin} size={16} color={colors.primary} />
             <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>San Francisco</Text>
           </View>
 
           <TouchableOpacity
-            style={[styles.backBtn, { backgroundColor: colors.white }]}
+            style={[styles.backBtn, { backgroundColor: colors.surface }]}
             activeOpacity={0.7}
             accessibilityLabel="Map settings"
           >
@@ -162,7 +162,7 @@ export default function MapScreen({ navigation }: Props) {
         </View>
 
         {/* Map Legend */}
-        <View style={[styles.legend, { backgroundColor: colors.white }]}>
+        <View style={[styles.legend, { backgroundColor: colors.surface }]}>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, { backgroundColor: colors.primaryGold }]} />
             <Text style={[styles.legendText, { color: colors.textSecondary }]}>Selected</Text>
@@ -181,7 +181,7 @@ export default function MapScreen({ navigation }: Props) {
           {
             paddingBottom: Math.max(insets.bottom, Spacing.lg),
             transform: [{ translateY: sheetTranslateY }],
-            backgroundColor: colors.white,
+            backgroundColor: colors.surface,
           },
         ]}
       >

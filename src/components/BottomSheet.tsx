@@ -81,7 +81,7 @@ export function BottomSheet({
         style={[
           styles.sheet,
           {
-            backgroundColor: colors.white,
+            backgroundColor: colors.surface,
             maxHeight: `${snapPoints[0]}%`,
             paddingBottom: Math.max(insets.bottom, Spacing.xl),
             transform: [{ translateY: sheetTranslateY }],

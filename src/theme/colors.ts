@@ -164,44 +164,49 @@ export const Radius = {
   full: 999,
 } as const;
 
-export const FontStack = "'Inter', -apple-system, BlinkMacSystemFont, sans-serif";
-export const FontSerif = "'Georgia', serif";
+// These names are registered in App.tsx with expo-font. A CSS-style fallback
+// list is not valid in React Native and silently falls back to the OS font.
+export const FontStack = 'Inter';
+export const FontMedium = 'Inter-Medium';
+export const FontSemiBold = 'Inter-SemiBold';
+export const FontBold = 'Inter-Bold';
+export const FontMono = 'Geist Mono';
 
 export const Typography = {
   display: {
-    fontFamily: FontSerif,
+    fontFamily: FontBold,
     fontSize: 32,
-    fontWeight: '400' as const,
-    letterSpacing: -1.0,
+    fontWeight: '700' as const,
+    letterSpacing: -0.8,
     lineHeight: 38,
   },
   h1: {
-    fontFamily: FontSerif,
+    fontFamily: FontBold,
     fontSize: 28,
-    fontWeight: '400' as const,
-    letterSpacing: -0.8,
+    fontWeight: '700' as const,
+    letterSpacing: -0.6,
     lineHeight: 34,
   },
   h2: {
-    fontFamily: FontSerif,
+    fontFamily: FontSemiBold,
     fontSize: 24,
-    fontWeight: '400' as const,
-    letterSpacing: -0.5,
+    fontWeight: '600' as const,
+    letterSpacing: -0.4,
     lineHeight: 30,
   },
   h3: {
-    fontFamily: FontSerif,
+    fontFamily: FontSemiBold,
     fontSize: 20,
-    fontWeight: '400' as const,
-    letterSpacing: -0.5,
+    fontWeight: '600' as const,
+    letterSpacing: -0.2,
     lineHeight: 26,
   },
   sectionTitle: {
-    fontFamily: FontSerif,
+    fontFamily: FontSemiBold,
     fontSize: 18,
-    fontWeight: '400' as const,
-    letterSpacing: -0.3,
-    lineHeight: 23,
+    fontWeight: '600' as const,
+    letterSpacing: -0.1,
+    lineHeight: 24,
   },
   subtitle: {
     fontFamily: FontStack,
@@ -212,17 +217,17 @@ export const Typography = {
   },
   body: {
     fontFamily: FontStack,
+    fontSize: 16,
+    fontWeight: '400' as const,
+    letterSpacing: 0,
+    lineHeight: 24,
+  },
+  bodySmall: {
+    fontFamily: FontStack,
     fontSize: 14,
     fontWeight: '400' as const,
     letterSpacing: 0,
     lineHeight: 20,
-  },
-  bodySmall: {
-    fontFamily: FontStack,
-    fontSize: 13,
-    fontWeight: '400' as const,
-    letterSpacing: 0,
-    lineHeight: 18,
   },
   caption: {
     fontFamily: FontStack,
@@ -232,42 +237,42 @@ export const Typography = {
     lineHeight: 16,
   },
   captionSmall: {
-    fontFamily: FontStack,
-    fontSize: 11,
+    fontFamily: FontMedium,
+    fontSize: 12,
     fontWeight: '500' as const,
     letterSpacing: 0.5,
-    lineHeight: 14,
+    lineHeight: 16,
   },
   label: {
-    fontFamily: FontStack,
+    fontFamily: FontSemiBold,
     fontSize: 12,
     fontWeight: '600' as const,
     letterSpacing: 1.0,
     lineHeight: 16,
   },
   button: {
-    fontFamily: FontStack,
-    fontSize: 15,
+    fontFamily: FontSemiBold,
+    fontSize: 16,
     fontWeight: '600' as const,
     letterSpacing: 0.3,
-    lineHeight: 20,
+    lineHeight: 22,
   },
   buttonSmall: {
-    fontFamily: FontStack,
-    fontSize: 13,
+    fontFamily: FontSemiBold,
+    fontSize: 14,
     fontWeight: '600' as const,
     letterSpacing: 0.2,
-    lineHeight: 18,
+    lineHeight: 20,
   },
   tag: {
-    fontFamily: FontStack,
+    fontFamily: FontSemiBold,
     fontSize: 11,
     fontWeight: '600' as const,
     letterSpacing: 0.5,
     lineHeight: 14,
   },
   overline: {
-    fontFamily: FontStack,
+    fontFamily: FontSemiBold,
     fontSize: 10,
     fontWeight: '600' as const,
     letterSpacing: 1.5,
