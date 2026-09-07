@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Colors, Typography, Spacing, Radius, Shadows } from '../theme/colors';
+import { useTheme, Typography, Spacing, Radius, Shadows } from '../theme/ThemeContext';
 import { Icon, IconName } from './Icon';
 import { hapticLight, hapticMedium } from '../utils/haptics';
 
@@ -38,6 +38,7 @@ export function ConfirmationDialog({
   onConfirm,
   onCancel,
 }: ConfirmationDialogProps) {
+  const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const overlayOpacity = useRef(new Animated.Value(0)).current;
   const sheetTranslateY = useRef(new Animated.Value(SCREEN_H)).current;
@@ -81,7 +82,7 @@ export function ConfirmationDialog({
     <View style={styles.wrapper}>
       <TouchableWithoutFeedback onPress={onCancel}>
         <Animated.View
-          style={[styles.overlay, { opacity: overlayOpacity }]}
+          style={[styles.overlay, { opacity: overlayOpacity, backgroundColor: colors.overlay }]}
         />
       </TouchableWithoutFeedback>
 
@@ -89,49 +90,50 @@ export function ConfirmationDialog({
         style={[
           styles.sheet,
           {
+            backgroundColor: colors.white,
             paddingBottom: Math.max(insets.bottom, Spacing.xl),
             transform: [{ translateY: sheetTranslateY }],
           },
         ]}
       >
-        <View style={styles.handle} />
+        <View style={[styles.handle, { backgroundColor: colors.mutedFaint }]} />
 
         {icon && (
           <View
             style={[
               styles.iconContainer,
-              isDestructive && styles.iconContainerDestructive,
+              { backgroundColor: isDestructive ? '#FFF0F0' : colors.surfaceSubtle },
             ]}
           >
             <Icon
               name={icon}
               size={24}
-              color={isDestructive ? Colors.error : Colors.primary}
+              color={isDestructive ? colors.error : colors.primary}
             />
           </View>
         )}
 
-        <Text style={styles.title}>{title}</Text>
+        <Text style={[styles.title, { color: colors.textPrimary }]}>{title}</Text>
         {description && (
-          <Text style={styles.description}>{description}</Text>
+          <Text style={[styles.description, { color: colors.textSecondary }]}>{description}</Text>
         )}
 
         <View style={styles.actions}>
           <TouchableOpacity
-            style={styles.cancelBtn}
+            style={[styles.cancelBtn, { borderColor: colors.borderStrong }]}
             onPress={() => {
               hapticLight();
               onCancel();
             }}
             activeOpacity={0.7}
           >
-            <Text style={styles.cancelLabel}>{cancelLabel}</Text>
+            <Text style={[styles.cancelLabel, { color: colors.textPrimary }]}>{cancelLabel}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[
               styles.confirmBtn,
-              isDestructive && styles.confirmBtnDestructive,
+              { backgroundColor: isDestructive ? colors.error : colors.primary },
             ]}
             onPress={() => {
               hapticMedium();
@@ -142,7 +144,7 @@ export function ConfirmationDialog({
             <Text
               style={[
                 styles.confirmLabel,
-                isDestructive && styles.confirmLabelDestructive,
+                { color: colors.white },
               ]}
             >
               {confirmLabel}
@@ -161,14 +163,12 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: Colors.overlay,
   },
   sheet: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: Colors.white,
     borderTopLeftRadius: Radius.xl,
     borderTopRightRadius: Radius.xl,
     paddingHorizontal: Spacing.xxl,
@@ -179,30 +179,23 @@ const styles = StyleSheet.create({
     width: 36,
     height: 4,
     borderRadius: 2,
-    backgroundColor: Colors.mutedFaint,
     marginBottom: Spacing.xl,
   },
   iconContainer: {
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: Colors.surfaceSubtle,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: Spacing.lg,
   },
-  iconContainerDestructive: {
-    backgroundColor: '#FFF0F0',
-  },
   title: {
     ...Typography.h3,
-    color: Colors.textPrimary,
     textAlign: 'center',
     marginBottom: Spacing.sm,
   },
   description: {
     ...Typography.body,
-    color: Colors.textSecondary,
     textAlign: 'center',
     lineHeight: 20,
     marginBottom: Spacing.xxl,
@@ -217,30 +210,20 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.md,
     borderRadius: Radius.full,
     borderWidth: 1,
-    borderColor: Colors.borderStrong,
     alignItems: 'center',
     justifyContent: 'center',
   },
   cancelLabel: {
     ...Typography.button,
-    color: Colors.textPrimary,
   },
   confirmBtn: {
     flex: 1,
     paddingVertical: Spacing.md,
     borderRadius: Radius.full,
-    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  confirmBtnDestructive: {
-    backgroundColor: Colors.error,
-  },
   confirmLabel: {
     ...Typography.button,
-    color: Colors.white,
-  },
-  confirmLabelDestructive: {
-    color: Colors.white,
   },
 });

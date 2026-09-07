@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import { View, Text, StyleSheet, Animated, TouchableOpacity, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Colors, Typography, Spacing, Radius, Shadows } from '../theme/colors';
+import { useTheme, Typography, Spacing, Radius, Shadows } from '../theme/ThemeContext';
 import { Icon, IconName } from './Icon';
 import { hapticSuccess, hapticLight, hapticMedium } from '../utils/haptics';
 
@@ -22,32 +22,6 @@ type ToastProps = {
   position?: 'top' | 'bottom';
 };
 
-const VARIANT_CONFIG: Record<
-  ToastVariant,
-  { icon: typeof IconName.Home; bgColor: string; iconColor: string }
-> = {
-  success: {
-    icon: IconName.Heart,
-    bgColor: Colors.success,
-    iconColor: Colors.white,
-  },
-  error: {
-    icon: IconName.Heart,
-    bgColor: Colors.error,
-    iconColor: Colors.white,
-  },
-  warning: {
-    icon: IconName.Heart,
-    bgColor: Colors.warning,
-    iconColor: Colors.white,
-  },
-  info: {
-    icon: IconName.Heart,
-    bgColor: Colors.primary,
-    iconColor: Colors.white,
-  },
-};
-
 export function Toast({
   message,
   variant = 'success',
@@ -57,9 +31,37 @@ export function Toast({
   action,
   position = 'top',
 }: ToastProps) {
+  const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const opacity = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(position === 'top' ? -30 : 30)).current;
+
+  const VARIANT_CONFIG: Record<
+    ToastVariant,
+    { icon: typeof IconName.Home; bgColor: string; iconColor: string }
+  > = {
+    success: {
+      icon: IconName.Heart,
+      bgColor: colors.success,
+      iconColor: colors.white,
+    },
+    error: {
+      icon: IconName.Heart,
+      bgColor: colors.error,
+      iconColor: colors.white,
+    },
+    warning: {
+      icon: IconName.Heart,
+      bgColor: colors.warning,
+      iconColor: colors.white,
+    },
+    info: {
+      icon: IconName.Heart,
+      bgColor: colors.primary,
+      iconColor: colors.white,
+    },
+  };
+
   const config = VARIANT_CONFIG[variant];
 
   const dismiss = useCallback(() => {
@@ -123,7 +125,7 @@ export function Toast({
       pointerEvents="box-none"
     >
       <Icon name={config.icon} size={16} color={config.iconColor} />
-      <Text style={styles.message} numberOfLines={2}>
+      <Text style={[styles.message, { color: colors.white }]} numberOfLines={2}>
         {message}
       </Text>
       {action && (
@@ -136,7 +138,7 @@ export function Toast({
           style={styles.actionBtn}
           activeOpacity={0.7}
         >
-          <Text style={styles.actionLabel}>{action.label}</Text>
+          <Text style={[styles.actionLabel, { color: colors.white }]}>{action.label}</Text>
         </TouchableOpacity>
       )}
       <TouchableOpacity
@@ -167,7 +169,6 @@ const styles = StyleSheet.create({
   },
   message: {
     ...Typography.bodySmall,
-    color: Colors.white,
     flex: 1,
     fontWeight: '500',
   },
@@ -179,7 +180,6 @@ const styles = StyleSheet.create({
   },
   actionLabel: {
     ...Typography.caption,
-    color: Colors.white,
     fontWeight: '700',
   },
   closeBtn: {

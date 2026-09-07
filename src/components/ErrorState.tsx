@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
-import { Colors, Typography, Spacing, Radius, Shadows } from '../theme/colors';
+import { useTheme, Typography, Spacing, Radius, Shadows } from '../theme/ThemeContext';
 import { Icon, IconName } from './Icon';
 import { Button } from './Button';
 
@@ -62,6 +62,7 @@ export function ErrorState({
   retryLabel = 'Try Again',
   style,
 }: ErrorStateProps) {
+  const { colors } = useTheme();
   const config = ERROR_CONFIG[type];
 
   return (
@@ -70,12 +71,12 @@ export function ErrorState({
         <Icon
           name={config.icon}
           size={40}
-          color={Colors.error}
+          color={colors.error}
           strokeWidth={1.5}
         />
       </View>
-      <Text style={styles.title}>{title || config.title}</Text>
-      <Text style={styles.description}>{description || config.description}</Text>
+      <Text style={[styles.title, { color: colors.textPrimary }]}>{title || config.title}</Text>
+      <Text style={[styles.description, { color: colors.textSecondary }]}>{description || config.description}</Text>
       {onRetry && (
         <View style={styles.action}>
           <Button
@@ -108,13 +109,11 @@ const styles = StyleSheet.create({
   },
   title: {
     ...Typography.h3,
-    color: Colors.textPrimary,
     textAlign: 'center',
     marginBottom: Spacing.sm,
   },
   description: {
     ...Typography.body,
-    color: Colors.textSecondary,
     textAlign: 'center',
     lineHeight: 20,
   },

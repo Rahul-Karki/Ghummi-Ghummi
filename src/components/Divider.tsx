@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
-import { Colors, Spacing } from '../theme/colors';
+import { useTheme, Spacing } from '../theme/ThemeContext';
 
 type DividerProps = {
   variant?: 'default' | 'inset' | 'middle';
@@ -11,15 +11,16 @@ type DividerProps = {
 
 export function Divider({
   variant = 'default',
-  color = Colors.border,
+  color,
   thickness = 1,
   style,
 }: DividerProps) {
+  const { colors } = useTheme();
   return (
     <View
       style={[
         styles.divider,
-        { backgroundColor: color, height: thickness },
+        { backgroundColor: color || colors.border, height: thickness },
         variant === 'inset' && styles.inset,
         variant === 'middle' && styles.middle,
         style,

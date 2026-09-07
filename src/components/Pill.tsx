@@ -1,16 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Colors, Typography, Radius, Spacing } from '../theme/colors';
+import { useTheme, Typography, Radius, Spacing } from '../theme/ThemeContext';
 
 type PillProps = {
   children: React.ReactNode;
   bg?: string;
 };
 
-export function Pill({ children, bg = Colors.citron }: PillProps) {
+export function Pill({ children, bg }: PillProps) {
+  const { colors } = useTheme();
   return (
-    <View style={[pillStyles.pill, { backgroundColor: bg }]}>
-      <Text style={pillStyles.text}>{children}</Text>
+    <View style={[pillStyles.pill, { backgroundColor: bg || colors.citron }]}>
+      <Text style={[pillStyles.text, { color: colors.black }]}>{children}</Text>
     </View>
   );
 }
@@ -23,7 +24,6 @@ const pillStyles = StyleSheet.create({
   },
   text: {
     ...Typography.caption,
-    color: Colors.black,
     fontWeight: '500',
   },
 });
@@ -33,16 +33,16 @@ type MatchPillProps = {
 };
 
 export function MatchPill({ children }: MatchPillProps) {
+  const { colors } = useTheme();
   return (
-    <View style={matchStyles.pill}>
-      <Text style={matchStyles.text}>{children}</Text>
+    <View style={[matchStyles.pill, { backgroundColor: colors.pin }]}>
+      <Text style={[matchStyles.text, { color: colors.black }]}>{children}</Text>
     </View>
   );
 }
 
 const matchStyles = StyleSheet.create({
   pill: {
-    backgroundColor: Colors.pin,
     opacity: 0.9,
     paddingHorizontal: Spacing.sm + 3,
     paddingVertical: Spacing.xs,
@@ -50,7 +50,6 @@ const matchStyles = StyleSheet.create({
   },
   text: {
     ...Typography.caption,
-    color: Colors.black,
     fontWeight: '500',
   },
 });

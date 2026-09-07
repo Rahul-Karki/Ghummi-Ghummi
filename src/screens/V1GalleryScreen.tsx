@@ -10,7 +10,7 @@ import {
   Dimensions,
   RefreshControl,
 } from 'react-native';
-import { Colors } from '../theme/colors';
+import { useTheme } from '../theme/ThemeContext';
 import StatusBar from '../components/StatusBar';
 import TopBar from '../components/TopBar';
 import BottomMenu from '../components/BottomMenu';
@@ -25,6 +25,7 @@ const CARD_WIDTH = 352.9;
 const CARD_HEIGHT = 313.5;
 
 export default function V1GalleryScreen({ navigation }: { navigation: any }) {
+  const { colors } = useTheme();
   const [view, setView] = useState<'gallery' | 'map'>('gallery');
   const [deckIdx, setDeckIdx] = useState(0);
   const [visibleCount, setVisibleCount] = useState(4);
@@ -47,7 +48,7 @@ export default function V1GalleryScreen({ navigation }: { navigation: any }) {
 
   if (loading) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: colors.cardBg }]}>
         <StatusBar />
         <TopBar onBack={() => navigation.goBack()} />
         <View style={styles.header}>
@@ -71,7 +72,7 @@ export default function V1GalleryScreen({ navigation }: { navigation: any }) {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.cardBg }]}>
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContent}
@@ -83,8 +84,8 @@ export default function V1GalleryScreen({ navigation }: { navigation: any }) {
               setLoading(true);
               setTimeout(() => setLoading(false), 800);
             }}
-            tintColor={Colors.primaryGold}
-            colors={[Colors.primaryGold]}
+            tintColor={colors.primaryGold}
+            colors={[colors.primaryGold]}
           />
         }
       >
@@ -92,33 +93,33 @@ export default function V1GalleryScreen({ navigation }: { navigation: any }) {
         <TopBar onBack={() => navigation.goBack()} />
 
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>12 curated picks</Text>
-          <Text style={styles.headerSubtitle}>
+          <Text style={[styles.headerTitle, { color: colors.black }]}>12 curated picks</Text>
+          <Text style={[styles.headerSubtitle, { color: colors.muted }]}>
             San Francisco · Jun 15-22 · 2 guests
           </Text>
         </View>
 
         <View style={styles.toggleContainer}>
-          <View style={styles.toggle}>
+          <View style={[styles.toggle, { backgroundColor: colors.secondary }]}>
             <TouchableOpacity
-              style={[styles.togglePill, view === 'map' && styles.togglePillActive]}
+              style={[styles.togglePill, view === 'map' && { backgroundColor: colors.primary }]}
               onPress={() => {
                 hapticLight();
                 setView('map');
               }}
             >
-              <Text style={[styles.toggleText, view === 'map' && styles.toggleTextActive]}>
+              <Text style={[styles.toggleText, { color: colors.muted }, view === 'map' && { color: colors.white }]}>
                 Map
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.togglePill, view === 'gallery' && styles.togglePillActive]}
+              style={[styles.togglePill, view === 'gallery' && { backgroundColor: colors.primary }]}
               onPress={() => {
                 hapticLight();
                 setView('gallery');
               }}
             >
-              <Text style={[styles.toggleText, view === 'gallery' && styles.toggleTextActive]}>
+              <Text style={[styles.toggleText, { color: colors.muted }, view === 'gallery' && { color: colors.white }]}>
                 Gallery
               </Text>
             </TouchableOpacity>
@@ -161,6 +162,7 @@ function GalleryView({
   onShowMore: () => void;
   navigation: any;
 }) {
+  const { colors } = useTheme();
   return (
     <>
       <View style={styles.deckContainer}>
@@ -193,8 +195,8 @@ function GalleryView({
                       <Pill>91% Match</Pill>
                     </View>
                     <View style={styles.deckRating}>
-                      <Icon name={IconName.Star} size={12} color={Colors.white} />
-                      <Text style={styles.deckRatingText}>4.96</Text>
+                      <Icon name={IconName.Star} size={12} color={colors.white} />
+                      <Text style={[styles.deckRatingText, { color: colors.white }]}>4.96</Text>
                     </View>
                   </View>
                 )}
@@ -205,8 +207,8 @@ function GalleryView({
       </View>
 
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>More matches for you</Text>
-        <Text style={styles.sectionCount}>
+        <Text style={[styles.sectionTitle, { color: colors.black }]}>More matches for you</Text>
+        <Text style={[styles.sectionCount, { color: colors.muted }]}>
           {visibleCount} of 12
         </Text>
       </View>
@@ -228,8 +230,8 @@ function GalleryView({
             onPress={onShowMore}
             activeOpacity={0.8}
           >
-            <Text style={styles.viewMoreText}>View More</Text>
-            <Text style={styles.viewMoreCount}>· {remaining} Left</Text>
+            <Text style={[styles.viewMoreText, { color: colors.primary }]}>View More</Text>
+            <Text style={[styles.viewMoreCount, { color: colors.muted }]}>· {remaining} Left</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -244,6 +246,7 @@ function ListingCard({
   listing: Listing;
   navigation: any;
 }) {
+  const { colors } = useTheme();
   return (
     <TouchableOpacity
       style={styles.listingCard}
@@ -255,8 +258,8 @@ function ListingCard({
       <View style={styles.listingTopRow}>
         <Pill>{listing.match}% Match</Pill>
         <View style={styles.listingRatingRow}>
-          <Icon name={IconName.Star} size={11} color={Colors.black} />
-          <Text style={styles.listingRating}>{listing.rating.toFixed(2)}</Text>
+          <Icon name={IconName.Star} size={11} color={colors.black} />
+          <Text style={[styles.listingRating, { color: colors.black }]}>{listing.rating.toFixed(2)}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -270,13 +273,14 @@ function MapView({
   selectedId: string;
   setSelectedId: (id: string) => void;
 }) {
+  const { colors } = useTheme();
   const selected = LISTINGS.find((l) => l.id === selectedId) ?? LISTINGS[0];
 
   return (
     <>
       <View style={styles.mapContainer}>
         <View style={styles.mapPlaceholder}>
-          <Text style={styles.mapTitle}>Map</Text>
+          <Text style={[styles.mapTitle, { color: colors.black }]}>Map</Text>
           <View style={styles.mapGrid}>
             <View style={styles.mapGridLineH} />
             <View style={[styles.mapGridLineH, styles.mapGridLineH2]} />
@@ -295,7 +299,7 @@ function MapView({
               <Icon
                 name={IconName.MapPin}
                 size={l.id === selectedId ? 22 : 18}
-                color={l.id === selectedId ? Colors.primaryGold : Colors.olive}
+                color={l.id === selectedId ? colors.primaryGold : colors.olive}
               />
             </TouchableOpacity>
           ))}
@@ -303,23 +307,24 @@ function MapView({
       </View>
 
       <View style={styles.specContainer}>
-        <Text style={styles.specName}>{selected.name}</Text>
-        <View style={styles.divider} />
+        <Text style={[styles.specName, { color: colors.black }]}>{selected.name}</Text>
+        <View style={[styles.divider, { backgroundColor: colors.border }]} />
         <SpecRow label={selected.type} />
-        <View style={styles.divider} />
+        <View style={[styles.divider, { backgroundColor: colors.border }]} />
         <SpecRow label={`Number of Guests: ${selected.guests}`} />
-        <View style={styles.divider} />
+        <View style={[styles.divider, { backgroundColor: colors.border }]} />
         <SpecRow label={`Price: ${selected.price}`} />
-        <View style={styles.divider} />
+        <View style={[styles.divider, { backgroundColor: colors.border }]} />
       </View>
     </>
   );
 }
 
 function SpecRow({ label }: { label: string }) {
+  const { colors } = useTheme();
   return (
     <View style={styles.specRow}>
-      <Text style={styles.specLabel}>{label}</Text>
+      <Text style={[styles.specLabel, { color: colors.black }]}>{label}</Text>
     </View>
   );
 }
@@ -337,7 +342,6 @@ function slotForImage(imgIdx: number, deckIdx: number): string {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.cardBg,
   },
   scroll: {
     flex: 1,
@@ -353,16 +357,14 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '400',
     fontSize: 14,
-    color: Colors.black,
     lineHeight: 16.8,
   },
   headerSubtitle: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '400',
     fontSize: 14,
-    color: Colors.muted,
     lineHeight: 16.8,
   },
   toggleContainer: {
@@ -370,7 +372,6 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
   },
   toggle: {
-    backgroundColor: Colors.secondary,
     flexDirection: 'row',
     padding: 1,
     borderRadius: 112,
@@ -380,17 +381,10 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 64,
   },
-  togglePillActive: {
-    backgroundColor: Colors.primary,
-  },
   toggleText: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '500',
     fontSize: 12,
-    color: Colors.black,
-  },
-  toggleTextActive: {
-    color: Colors.black,
   },
   deckContainer: {
     alignItems: 'center',
@@ -413,7 +407,7 @@ const styles = StyleSheet.create({
   deckGradient: {
     ...StyleSheet.absoluteFill,
     borderRadius: 20.9,
-    backgroundColor: 'rgba(0,0,0,0.15)',
+    backgroundColor: 'rgba(0,0,0,0.06)',
   },
   deckPills: {
     position: 'absolute',
@@ -435,9 +429,8 @@ const styles = StyleSheet.create({
   },
   deckRatingText: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '500',
     fontSize: 12,
-    color: Colors.white,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -448,15 +441,13 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontFamily: 'Georgia',
-    fontSize: 16,
-    color: Colors.black,
-    lineHeight: 19.2,
+    fontSize: 18,
+    lineHeight: 22,
   },
   sectionCount: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '400',
     fontSize: 14,
-    color: Colors.muted,
     letterSpacing: 0.7,
   },
   grid: {
@@ -469,7 +460,7 @@ const styles = StyleSheet.create({
   listingCard: {
     width: (SCREEN_WIDTH - 60) / 2,
     height: 160,
-    borderRadius: 8,
+    borderRadius: 14,
     overflow: 'hidden',
   },
   listingImage: {
@@ -478,7 +469,7 @@ const styles = StyleSheet.create({
   },
   listingGradient: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(0,0,0,0.1)',
+    backgroundColor: 'rgba(0,0,0,0.06)',
   },
   listingTopRow: {
     position: 'absolute',
@@ -496,9 +487,8 @@ const styles = StyleSheet.create({
   },
   listingRating: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '500',
     fontSize: 12,
-    color: Colors.black,
   },
   viewMoreContainer: {
     paddingHorizontal: 20,
@@ -506,10 +496,10 @@ const styles = StyleSheet.create({
   },
   viewMoreButton: {
     width: '100%',
-    borderWidth: 0.4,
-    borderColor: 'rgba(189,142,60,0.4)',
+    borderWidth: 1.5,
+    borderColor: 'rgba(99,102,241,0.3)',
     borderRadius: 76,
-    padding: 10,
+    padding: 12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -517,15 +507,13 @@ const styles = StyleSheet.create({
   },
   viewMoreText: {
     fontFamily: 'Inter',
-    fontWeight: '300',
-    fontSize: 12,
-    color: Colors.black,
+    fontWeight: '500',
+    fontSize: 13,
   },
   viewMoreCount: {
     fontFamily: 'Inter',
-    fontWeight: '300',
-    fontSize: 12,
-    color: Colors.muted,
+    fontWeight: '400',
+    fontSize: 13,
   },
   mapContainer: {
     alignItems: 'center',
@@ -540,9 +528,8 @@ const styles = StyleSheet.create({
   },
   mapTitle: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '500',
     fontSize: 14,
-    color: Colors.black,
     position: 'absolute',
     top: 14,
     left: 14,
@@ -589,12 +576,10 @@ const styles = StyleSheet.create({
   specName: {
     fontFamily: 'Georgia',
     fontSize: 20,
-    color: Colors.black,
     lineHeight: 24,
   },
   divider: {
     height: 1,
-    backgroundColor: Colors.border,
     width: '100%',
   },
   specRow: {
@@ -604,9 +589,8 @@ const styles = StyleSheet.create({
   },
   specLabel: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '400',
     fontSize: 14,
-    color: Colors.black,
     lineHeight: 16.8,
   },
 });

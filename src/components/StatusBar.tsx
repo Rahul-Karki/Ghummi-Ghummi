@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Colors, Typography, Spacing } from '../theme/colors';
+import { useTheme, Typography, Spacing } from '../theme/ThemeContext';
 
 export default function StatusBar({ light = false }: { light?: boolean }) {
-  const color = light ? Colors.white : Colors.black;
+  const { colors } = useTheme();
+  const color = light ? colors.white : colors.black;
 
   return (
     <View style={styles.container}>

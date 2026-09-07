@@ -14,7 +14,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Colors, Spacing, Radius, Typography } from '../theme/colors';
+import { useTheme, Spacing, Radius, Typography } from '../theme/ThemeContext';
 import { Icon, IconName } from '../components/Icon';
 import { Toast } from '../components/Toast';
 import { LISTINGS, type Listing } from '../data/listings';
@@ -37,6 +37,7 @@ type Props = {
 };
 
 export default function PropertyDetailsScreen({ navigation, route }: Props) {
+  const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const listing = route?.params?.listing ?? LISTINGS[0];
   const [activeImage, setActiveImage] = useState(0);
@@ -104,7 +105,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -115,8 +116,8 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
               setRefreshing(true);
               setTimeout(() => setRefreshing(false), 800);
             }}
-            tintColor={Colors.primaryGold}
-            colors={[Colors.primaryGold]}
+            tintColor={colors.primaryGold}
+            colors={[colors.primaryGold]}
           />
         }
       >
@@ -159,7 +160,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
               }}
               activeOpacity={0.7}
             >
-              <Icon name={IconName.ArrowLeft} size={20} color={Colors.white} />
+              <Icon name={IconName.ArrowLeft} size={20} color={colors.white} />
             </TouchableOpacity>
             <View style={styles.carouselTopRight}>
               <TouchableOpacity
@@ -169,7 +170,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
                 accessibilityLabel="Share this property"
                 accessibilityRole="button"
               >
-                <Icon name={IconName.Share2} size={18} color={Colors.white} />
+                <Icon name={IconName.Share2} size={18} color={colors.white} />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.carouselBtn}
@@ -182,7 +183,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
                 <Icon
                   name={IconName.Heart}
                   size={18}
-                  color={saved ? Colors.primaryGold : Colors.white}
+                  color={saved ? colors.primaryGold : colors.white}
                   strokeWidth={saved ? 2.2 : 1.8}
                 />
               </TouchableOpacity>
@@ -215,6 +216,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
                     {
                       transform: [{ scaleX: dotScaleX }],
                       opacity: dotOpacity,
+                      backgroundColor: colors.white,
                     },
                   ]}
                 />
@@ -227,107 +229,107 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
         <View style={styles.infoSection}>
           <View style={styles.infoHeader}>
             <View style={styles.infoHeaderLeft}>
-              <Text style={styles.propertyType}>{listing.type}</Text>
-              <Text style={styles.propertyName}>{listing.name}</Text>
+              <Text style={[styles.propertyType, { color: colors.primaryGold }]}>{listing.type}</Text>
+              <Text style={[styles.propertyName, { color: colors.black }]}>{listing.name}</Text>
             </View>
-            <View style={styles.matchBadge}>
-              <Text style={styles.matchText}>{listing.match}% Match</Text>
+            <View style={[styles.matchBadge, { backgroundColor: colors.secondary }]}>
+              <Text style={[styles.matchText, { color: colors.primary }]}>{listing.match}% Match</Text>
             </View>
           </View>
 
           <View style={styles.infoMeta}>
             <View style={styles.metaItem}>
-              <Icon name={IconName.Users} size={14} color={Colors.muted} />
-              <Text style={styles.metaText}>Up to {listing.guests} guests</Text>
+              <Icon name={IconName.Users} size={14} color={colors.muted} />
+              <Text style={[styles.metaText, { color: colors.muted }]}>Up to {listing.guests} guests</Text>
             </View>
-            <View style={styles.metaDot} />
+            <View style={[styles.metaDot, { backgroundColor: colors.mutedFaint }]} />
             <View style={styles.metaItem}>
-              <Icon name={IconName.Star} size={14} color={Colors.primaryGold} />
-              <Text style={styles.metaText}>{listing.rating.toFixed(2)}</Text>
+              <Icon name={IconName.Star} size={14} color={colors.primaryGold} />
+              <Text style={[styles.metaText, { color: colors.muted }]}>{listing.rating.toFixed(2)}</Text>
             </View>
-            <View style={styles.metaDot} />
+            <View style={[styles.metaDot, { backgroundColor: colors.mutedFaint }]} />
             <View style={styles.metaItem}>
-              <Icon name={IconName.MapPin} size={14} color={Colors.muted} />
-              <Text style={styles.metaText}>0.3 km away</Text>
+              <Icon name={IconName.MapPin} size={14} color={colors.muted} />
+              <Text style={[styles.metaText, { color: colors.muted }]}>0.3 km away</Text>
             </View>
           </View>
         </View>
 
-        <View style={styles.divider} />
+        <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
         {/* About */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>About this place</Text>
-          <Text style={styles.aboutText}>
+          <Text style={[styles.sectionTitle, { color: colors.black }]}>About this place</Text>
+          <Text style={[styles.aboutText, { color: colors.mutedLight }]}>
             A stunning {listing.type.toLowerCase()} nestled in the heart of San Francisco.
             Perfect for {listing.guests} guests looking for a premium stay with
             exceptional amenities and breathtaking views.
           </Text>
         </View>
 
-        <View style={styles.divider} />
+        <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
         {/* Amenities */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Amenities</Text>
+          <Text style={[styles.sectionTitle, { color: colors.black }]}>Amenities</Text>
           <View style={styles.amenitiesGrid}>
             {AMENITIES.map((amenity) => (
-              <View key={amenity.label} style={styles.amenityItem}>
-                <View style={styles.amenityIcon}>
-                  <Icon name={amenity.icon} size={18} color={Colors.primary} />
+              <View key={amenity.label} style={[styles.amenityItem, { backgroundColor: colors.cardWhite }]}>
+                <View style={[styles.amenityIcon, { backgroundColor: colors.secondary }]}>
+                  <Icon name={amenity.icon} size={18} color={colors.primary} />
                 </View>
-                <Text style={styles.amenityLabel}>{amenity.label}</Text>
+                <Text style={[styles.amenityLabel, { color: colors.black }]}>{amenity.label}</Text>
               </View>
             ))}
           </View>
         </View>
 
-        <View style={styles.divider} />
+        <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
         {/* Host */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Hosted by</Text>
-          <View style={styles.hostCard}>
-            <View style={styles.hostAvatar}>
-              <Text style={styles.hostInitial}>A</Text>
+          <Text style={[styles.sectionTitle, { color: colors.black }]}>Hosted by</Text>
+          <View style={[styles.hostCard, { backgroundColor: colors.cardWhite }]}>
+            <View style={[styles.hostAvatar, { backgroundColor: colors.primary }]}>
+              <Text style={[styles.hostInitial, { color: colors.white }]}>A</Text>
             </View>
             <View style={styles.hostInfo}>
-              <Text style={styles.hostName}>Alexandra</Text>
-              <Text style={styles.hostSub}>Superhost · 3 years hosting</Text>
+              <Text style={[styles.hostName, { color: colors.black }]}>Alexandra</Text>
+              <Text style={[styles.hostSub, { color: colors.muted }]}>Superhost · 3 years hosting</Text>
             </View>
             <View style={styles.hostContact}>
               <TouchableOpacity
-                style={styles.hostContactBtn}
+                style={[styles.hostContactBtn, { borderColor: colors.border }]}
                 activeOpacity={0.7}
                 onPress={handleCallHost}
                 accessibilityLabel="Contact host by phone"
                 accessibilityRole="button"
               >
-                <Icon name={IconName.Phone} size={16} color={Colors.primary} />
+                <Icon name={IconName.Phone} size={16} color={colors.primary} />
               </TouchableOpacity>
               <TouchableOpacity
-                style={styles.hostContactBtn}
+                style={[styles.hostContactBtn, { borderColor: colors.border }]}
                 activeOpacity={0.7}
                 onPress={handleCallHost}
                 accessibilityLabel="Contact host by email"
                 accessibilityRole="button"
               >
-                <Icon name={IconName.Mail} size={16} color={Colors.primary} />
+                <Icon name={IconName.Mail} size={16} color={colors.primary} />
               </TouchableOpacity>
             </View>
           </View>
         </View>
 
-        <View style={styles.divider} />
+        <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
         {/* Location */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Location</Text>
-          <View style={styles.locationMap}>
-            <View style={styles.locationPin}>
-              <Icon name={IconName.MapPin} size={24} color={Colors.primaryGold} />
+          <Text style={[styles.sectionTitle, { color: colors.black }]}>Location</Text>
+          <View style={[styles.locationMap, { backgroundColor: colors.secondary }]}>
+            <View style={[styles.locationPin, { backgroundColor: colors.cardWhite }]}>
+              <Icon name={IconName.MapPin} size={24} color={colors.primaryGold} />
             </View>
-            <Text style={styles.locationAddress}>
+            <Text style={[styles.locationAddress, { color: colors.muted }]}>
               San Francisco, California
             </Text>
           </View>
@@ -337,19 +339,19 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
       </ScrollView>
 
       {/* Sticky Bottom Bar */}
-      <View style={[styles.bottomBar, { paddingBottom: Math.max(insets.bottom, Spacing.lg) }]}>
+      <View style={[styles.bottomBar, { paddingBottom: Math.max(insets.bottom, Spacing.lg), backgroundColor: colors.cardWhite, borderTopColor: colors.border }]}>
         <View style={styles.priceCol}>
-          <Text style={styles.priceAmount}>${listing.price === '$$$' ? '186' : listing.price === '$$' ? '146' : '96'}</Text>
-          <Text style={styles.pricePer}>/night</Text>
+          <Text style={[styles.priceAmount, { color: colors.black }]}>${listing.price === '$$$' ? '186' : listing.price === '$$' ? '146' : '96'}</Text>
+          <Text style={[styles.pricePer, { color: colors.muted }]}>/night</Text>
         </View>
         <TouchableOpacity
-          style={styles.reserveBtn}
+          style={[styles.reserveBtn, { backgroundColor: colors.primary }]}
           activeOpacity={0.85}
           onPress={handleReserve}
           accessibilityLabel="Reserve this property"
           accessibilityRole="button"
         >
-          <Text style={styles.reserveText}>Reserve</Text>
+          <Text style={[styles.reserveText, { color: colors.white }]}>Reserve</Text>
         </TouchableOpacity>
       </View>
 
@@ -366,7 +368,6 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
   },
   scrollContent: {
     paddingBottom: 0,
@@ -426,7 +427,6 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: Colors.white,
   },
 
   // Info
@@ -447,19 +447,16 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '600',
     fontSize: 11,
-    color: Colors.primaryGold,
     letterSpacing: 1.2,
     textTransform: 'uppercase',
   },
   propertyName: {
     fontFamily: 'Georgia',
     fontSize: 24,
-    color: Colors.black,
     letterSpacing: -0.5,
     lineHeight: 30,
   },
   matchBadge: {
-    backgroundColor: Colors.secondary,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: Radius.full,
@@ -468,7 +465,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '600',
     fontSize: 13,
-    color: Colors.primary,
   },
   infoMeta: {
     flexDirection: 'row',
@@ -484,19 +480,16 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '400',
     fontSize: 13,
-    color: Colors.muted,
   },
   metaDot: {
     width: 3,
     height: 3,
     borderRadius: 1.5,
-    backgroundColor: Colors.mutedFaint,
   },
 
   // Divider
   divider: {
     height: 1,
-    backgroundColor: Colors.border,
     marginHorizontal: Spacing.xl,
   },
 
@@ -508,14 +501,12 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontFamily: 'Georgia',
     fontSize: 18,
-    color: Colors.black,
     letterSpacing: -0.3,
   },
   aboutText: {
     fontFamily: 'Inter',
     fontWeight: '400',
     fontSize: 14,
-    color: Colors.mutedLight,
     lineHeight: 22,
   },
 
@@ -530,7 +521,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
     width: '47%',
-    backgroundColor: Colors.cardWhite,
     padding: Spacing.md,
     borderRadius: Radius.md,
   },
@@ -538,7 +528,6 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34,
     borderRadius: 10,
-    backgroundColor: Colors.secondary,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -546,14 +535,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '400',
     fontSize: 13,
-    color: Colors.black,
   },
 
   // Host
   hostCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.cardWhite,
     padding: Spacing.lg,
     borderRadius: Radius.lg,
     gap: Spacing.md,
@@ -562,14 +549,12 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
   hostInitial: {
     fontFamily: 'Georgia',
     fontSize: 20,
-    color: Colors.white,
   },
   hostInfo: {
     flex: 1,
@@ -579,13 +564,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '600',
     fontSize: 15,
-    color: Colors.black,
   },
   hostSub: {
     fontFamily: 'Inter',
     fontWeight: '400',
     fontSize: 12,
-    color: Colors.muted,
   },
   hostContact: {
     flexDirection: 'row',
@@ -596,7 +579,6 @@ const styles = StyleSheet.create({
     height: 44,
     borderRadius: 22,
     borderWidth: 1,
-    borderColor: Colors.border,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -605,7 +587,6 @@ const styles = StyleSheet.create({
   locationMap: {
     height: 160,
     borderRadius: Radius.lg,
-    backgroundColor: Colors.secondary,
     alignItems: 'center',
     justifyContent: 'center',
     gap: Spacing.sm,
@@ -614,7 +595,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: Colors.cardWhite,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
@@ -627,7 +607,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '400',
     fontSize: 13,
-    color: Colors.muted,
   },
 
   // Bottom Bar
@@ -639,11 +618,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: Colors.cardWhite,
     paddingHorizontal: Spacing.xl,
     paddingTop: Spacing.lg,
     borderTopWidth: 0.5,
-    borderTopColor: Colors.border,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 0.08,
@@ -658,16 +635,13 @@ const styles = StyleSheet.create({
   priceAmount: {
     fontFamily: 'Georgia',
     fontSize: 22,
-    color: Colors.black,
   },
   pricePer: {
     fontFamily: 'Inter',
     fontWeight: '400',
     fontSize: 14,
-    color: Colors.muted,
   },
   reserveBtn: {
-    backgroundColor: Colors.primary,
     paddingHorizontal: 32,
     paddingVertical: 14,
     borderRadius: Radius.full,
@@ -676,7 +650,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '600',
     fontSize: 15,
-    color: Colors.white,
     letterSpacing: 0.3,
   },
 });

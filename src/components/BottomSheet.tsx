@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Colors, Typography, Spacing, Radius, Shadows } from '../theme/colors';
+import { useTheme, Typography, Spacing, Radius, Shadows } from '../theme/ThemeContext';
 import { Icon, IconName } from './Icon';
 import { hapticLight } from '../utils/haptics';
 
@@ -31,6 +31,7 @@ export function BottomSheet({
   children,
   snapPoints = [70],
 }: BottomSheetProps) {
+  const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const overlayOpacity = useRef(new Animated.Value(0)).current;
   const sheetTranslateY = useRef(new Animated.Value(SCREEN_H)).current;
@@ -72,7 +73,7 @@ export function BottomSheet({
     <View style={styles.wrapper}>
       <TouchableWithoutFeedback onPress={onClose}>
         <Animated.View
-          style={[styles.overlay, { opacity: overlayOpacity }]}
+          style={[styles.overlay, { opacity: overlayOpacity, backgroundColor: colors.overlay }]}
         />
       </TouchableWithoutFeedback>
 
@@ -80,26 +81,27 @@ export function BottomSheet({
         style={[
           styles.sheet,
           {
+            backgroundColor: colors.white,
             maxHeight: `${snapPoints[0]}%`,
             paddingBottom: Math.max(insets.bottom, Spacing.xl),
             transform: [{ translateY: sheetTranslateY }],
           },
         ]}
       >
-        <View style={styles.handle} />
+        <View style={[styles.handle, { backgroundColor: colors.mutedFaint }]} />
 
         {title && (
           <View style={styles.header}>
-            <Text style={styles.title}>{title}</Text>
+            <Text style={[styles.title, { color: colors.textPrimary }]}>{title}</Text>
             <TouchableOpacity
               onPress={() => {
                 hapticLight();
                 onClose();
               }}
-              style={styles.closeBtn}
+              style={[styles.closeBtn, { backgroundColor: colors.surfaceSubtle }]}
               accessibilityLabel="Close"
             >
-              <Icon name={IconName.Search} size={16} color={Colors.muted} />
+              <Icon name={IconName.Search} size={16} color={colors.muted} />
             </TouchableOpacity>
           </View>
         )}
@@ -122,14 +124,12 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: Colors.overlay,
   },
   sheet: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: Colors.white,
     borderTopLeftRadius: Radius.xl,
     borderTopRightRadius: Radius.xl,
     paddingHorizontal: Spacing.xxl,
@@ -139,7 +139,6 @@ const styles = StyleSheet.create({
     width: 36,
     height: 4,
     borderRadius: 2,
-    backgroundColor: Colors.mutedFaint,
     alignSelf: 'center',
     marginBottom: Spacing.md,
   },
@@ -151,13 +150,11 @@ const styles = StyleSheet.create({
   },
   title: {
     ...Typography.h3,
-    color: Colors.textPrimary,
   },
   closeBtn: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: Colors.surfaceSubtle,
     alignItems: 'center',
     justifyContent: 'center',
   },

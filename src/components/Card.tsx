@@ -8,7 +8,7 @@ import {
   ViewStyle,
   ImageStyle,
 } from 'react-native';
-import { Colors, Typography, Spacing, Radius, Shadows } from '../theme/colors';
+import { useTheme, Typography, Spacing, Radius, Shadows } from '../theme/ThemeContext';
 import { Icon, IconName } from './Icon';
 import { Pill } from './Pill';
 import { hapticLight } from '../utils/haptics';
@@ -38,6 +38,7 @@ export function PropertyCard({
   style,
   accessibilityLabel,
 }: PropertyCardProps) {
+  const { colors } = useTheme();
   const handlePress = () => {
     hapticLight();
     onPress?.();
@@ -46,7 +47,7 @@ export function PropertyCard({
   if (variant === 'list') {
     return (
       <TouchableOpacity
-        style={[styles.listCard, style]}
+        style={[styles.listCard, { backgroundColor: colors.surface }, style]}
         onPress={handlePress}
         activeOpacity={0.85}
         accessibilityLabel={accessibilityLabel || `${name}, ${type || ''} ${price || ''}`}
@@ -55,19 +56,19 @@ export function PropertyCard({
         <Image source={{ uri: image }} style={styles.listImage} />
         <View style={styles.listContent}>
           <View style={styles.listInfo}>
-            <Text style={styles.listName} numberOfLines={1}>{name}</Text>
-            {type && <Text style={styles.listMeta}>{type}</Text>}
+            <Text style={[styles.listName, { color: colors.textPrimary }]} numberOfLines={1}>{name}</Text>
+            {type && <Text style={[styles.listMeta, { color: colors.textTertiary }]}>{type}</Text>}
           </View>
           <View style={styles.listRight}>
             {match && (
-              <View style={styles.matchBadge}>
-                <Text style={styles.matchText}>{match}%</Text>
+      <View style={[styles.matchBadge, { backgroundColor: colors.citron }]}>
+            <Text style={[styles.matchText, { color: colors.textPrimary }]}>{match}%</Text>
               </View>
             )}
             {rating && (
-              <View style={styles.ratingRow}>
-                <Icon name={IconName.Star} size={11} color={Colors.primaryGold} />
-                <Text style={styles.ratingText}>{rating.toFixed(2)}</Text>
+    <View style={[styles.ratingRow]}>
+              <Icon name={IconName.Star} size={11} color={colors.primaryGold} />
+              <Text style={[styles.ratingText, { color: colors.textPrimary }]}>{rating.toFixed(2)}</Text>
               </View>
             )}
           </View>
@@ -79,7 +80,8 @@ export function PropertyCard({
   return (
     <TouchableOpacity
       style={[
-        variant === 'featured' ? styles.featuredCard : styles.gridCard,
+        variant === 'grid' ? styles.gridCard : styles.featuredCard,
+        { backgroundColor: colors.surface },
         style,
       ]}
       onPress={handlePress}
@@ -90,13 +92,13 @@ export function PropertyCard({
       <Image source={{ uri: image }} style={variant === 'featured' ? styles.featuredImage : styles.gridImage} />
       <View style={styles.overlay} />
       {match && (
-        <View style={styles.badge}>
-          <Icon name={IconName.Star} size={10} color={Colors.primaryGold} strokeWidth={2.2} />
-          <Text style={styles.badgeText}>{match}%</Text>
+        <View style={[styles.badge, { backgroundColor: 'rgba(0,0,0,0.5)' }]}>
+          <Icon name={IconName.Star} size={10} color={colors.primaryGold} strokeWidth={2.2} />
+          <Text style={[styles.badgeText, { color: colors.white }]}>{match}%</Text>
         </View>
       )}
       <View style={styles.cardInfo}>
-        <Text style={variant === 'featured' ? styles.featuredName : styles.gridName} numberOfLines={1}>
+        <Text style={[variant === 'featured' ? styles.featuredName : styles.gridName, { color: colors.textPrimary }]} numberOfLines={1}>
           {name}
         </Text>
         {type && price && (
@@ -120,15 +122,16 @@ export function ImageCarousel({
   onIndexChange,
   height = 300,
 }: ImageCarouselProps) {
+  const { colors } = useTheme();
   return (
-    <View style={[styles.carouselContainer, { height }]}>
+    <View       style={[styles.carouselContainer, { height, backgroundColor: colors.skeleton }]}>
       <Image source={{ uri: images[activeIndex] }} style={styles.carouselImage} />
       {images.length > 1 && (
         <View style={styles.carouselDots}>
           {images.map((_, i) => (
             <View
               key={i}
-              style={[styles.carouselDot, i === activeIndex && styles.carouselDotActive]}
+              style={[styles.carouselDot, i === activeIndex && [styles.carouselDotActive, { backgroundColor: colors.white }]]}
             />
           ))}
         </View>
@@ -142,7 +145,6 @@ const styles = StyleSheet.create({
   gridCard: {
     borderRadius: Radius.md,
     overflow: 'hidden',
-    backgroundColor: Colors.surface,
     ...Shadows.sm,
   },
   gridImage: {
@@ -151,7 +153,6 @@ const styles = StyleSheet.create({
   },
   gridName: {
     ...Typography.bodySmall,
-    color: Colors.textPrimary,
     fontWeight: '500',
   },
 
@@ -159,7 +160,6 @@ const styles = StyleSheet.create({
   featuredCard: {
     borderRadius: Radius.lg,
     overflow: 'hidden',
-    backgroundColor: Colors.surface,
     ...Shadows.sm,
   },
   featuredImage: {
@@ -168,7 +168,6 @@ const styles = StyleSheet.create({
   },
   featuredName: {
     ...Typography.body,
-    color: Colors.textPrimary,
     fontWeight: '500',
   },
 
@@ -177,7 +176,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: Spacing.lg,
     gap: Spacing.md,
-    backgroundColor: Colors.surface,
     alignItems: 'flex-start',
   },
   listImage: {
@@ -196,12 +194,10 @@ const styles = StyleSheet.create({
   },
   listName: {
     ...Typography.body,
-    color: Colors.textPrimary,
     fontWeight: '500',
   },
   listMeta: {
     ...Typography.caption,
-    color: Colors.textTertiary,
   },
   listRight: {
     alignItems: 'flex-end',
@@ -227,18 +223,15 @@ const styles = StyleSheet.create({
   },
   badgeText: {
     ...Typography.caption,
-    color: Colors.white,
     fontWeight: '600',
   },
   matchBadge: {
-    backgroundColor: Colors.citron,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: Radius.full,
   },
   matchText: {
     ...Typography.caption,
-    color: Colors.textPrimary,
     fontWeight: '500',
   },
   cardInfo: {
@@ -261,7 +254,6 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     ...Typography.caption,
-    color: Colors.textPrimary,
     fontWeight: '500',
   },
 
@@ -269,7 +261,6 @@ const styles = StyleSheet.create({
   carouselContainer: {
     borderRadius: Radius.lg,
     overflow: 'hidden',
-    backgroundColor: Colors.skeleton,
   },
   carouselImage: {
     width: '100%',
@@ -292,6 +283,5 @@ const styles = StyleSheet.create({
   },
   carouselDotActive: {
     width: 20,
-    backgroundColor: Colors.white,
   },
 });

@@ -9,7 +9,7 @@ import {
   Easing,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Colors, Typography, Spacing, Radius, Shadows } from '../theme/colors';
+import { useTheme, Typography, Spacing, Radius, Shadows } from '../theme/ThemeContext';
 import { Icon, IconName } from '../components/Icon';
 import { Button } from '../components/Button';
 import { Toast } from '../components/Toast';
@@ -29,6 +29,7 @@ type GenerationState = 'idle' | 'generating' | 'success' | 'error' | 'cancelled'
 type Props = { navigation: any };
 
 export default function AIGenerationScreen({ navigation }: Props) {
+  const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const [state, setState] = useState<GenerationState>('idle');
   const [currentStep, setCurrentStep] = useState(0);
@@ -128,7 +129,7 @@ export default function AIGenerationScreen({ navigation }: Props) {
   });
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
@@ -136,11 +137,11 @@ export default function AIGenerationScreen({ navigation }: Props) {
         <View style={[styles.heroSection, { paddingTop: insets.top + Spacing.xl }]}>
           {state === 'idle' && (
             <>
-              <View style={styles.heroIconContainer}>
-                <Icon name={IconName.Compass} size={48} color={Colors.primaryGold} strokeWidth={1.5} />
+              <View style={[styles.heroIconContainer, { backgroundColor: colors.surfaceSubtle }]}>
+                <Icon name={IconName.Compass} size={48} color={colors.primaryGold} strokeWidth={1.5} />
               </View>
-              <Text style={styles.heroTitle}>Plan Your Perfect Trip</Text>
-              <Text style={styles.heroSub}>
+              <Text style={[styles.heroTitle, { color: colors.textPrimary }]}>Plan Your Perfect Trip</Text>
+              <Text style={[styles.heroSub, { color: colors.textSecondary }]}>
                 Let our AI create a personalized itinerary based on your preferences, budget, and travel style.
               </Text>
             </>
@@ -149,22 +150,22 @@ export default function AIGenerationScreen({ navigation }: Props) {
           {state === 'generating' && (
             <>
               <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
-                <View style={styles.heroIconContainer}>
-                  <Icon name={STEPS[currentStep]?.icon || IconName.Compass} size={48} color={Colors.primaryGold} strokeWidth={1.5} />
+                <View style={[styles.heroIconContainer, { backgroundColor: colors.surfaceSubtle }]}>
+                  <Icon name={STEPS[currentStep]?.icon || IconName.Compass} size={48} color={colors.primaryGold} strokeWidth={1.5} />
                 </View>
               </Animated.View>
-              <Text style={styles.heroTitle}>{STEPS[currentStep]?.text || 'Generating...'}</Text>
-              <Text style={styles.heroSub}>
+              <Text style={[styles.heroTitle, { color: colors.textPrimary }]}>{STEPS[currentStep]?.text || 'Generating...'}</Text>
+              <Text style={[styles.heroSub, { color: colors.textSecondary }]}>
                 Step {currentStep + 1} of {STEPS.length}
               </Text>
 
               <View style={styles.progressContainer}>
-                <View style={styles.progressTrack}>
+                <View style={[styles.progressTrack, { backgroundColor: colors.surfaceSubtle }]}>
                   <Animated.View
-                    style={[styles.progressFill, { width: progressWidth }]}
+                    style={[styles.progressFill, { width: progressWidth, backgroundColor: colors.primaryGold }]}
                   />
                 </View>
-                <Text style={styles.progressPercent}>
+                <Text style={[styles.progressPercent, { color: colors.textTertiary }]}>
                   {Math.round(((currentStep + 1) / STEPS.length) * 100)}%
                 </Text>
               </View>
@@ -175,11 +176,11 @@ export default function AIGenerationScreen({ navigation }: Props) {
             <>
               <Animated.View style={{ transform: [{ scale: checkScale }] }}>
                 <View style={[styles.heroIconContainer, styles.heroIconSuccess]}>
-                  <Icon name={IconName.Heart} size={48} color={Colors.success} strokeWidth={1.5} />
+                  <Icon name={IconName.Heart} size={48} color={colors.success} strokeWidth={1.5} />
                 </View>
               </Animated.View>
-              <Text style={styles.heroTitle}>Your Trip is Ready</Text>
-              <Text style={styles.heroSub}>
+              <Text style={[styles.heroTitle, { color: colors.textPrimary }]}>Your Trip is Ready</Text>
+              <Text style={[styles.heroSub, { color: colors.textSecondary }]}>
                 We've created a personalized 7-day itinerary for San Francisco with handpicked stays and activities.
               </Text>
             </>
@@ -188,10 +189,10 @@ export default function AIGenerationScreen({ navigation }: Props) {
           {state === 'error' && (
             <>
               <View style={[styles.heroIconContainer, styles.heroIconError]}>
-                <Icon name={IconName.Heart} size={48} color={Colors.error} strokeWidth={1.5} />
+                <Icon name={IconName.Heart} size={48} color={colors.error} strokeWidth={1.5} />
               </View>
-              <Text style={styles.heroTitle}>Generation Failed</Text>
-              <Text style={styles.heroSub}>
+              <Text style={[styles.heroTitle, { color: colors.textPrimary }]}>Generation Failed</Text>
+              <Text style={[styles.heroSub, { color: colors.textSecondary }]}>
                 Something went wrong while creating your itinerary. Please try again.
               </Text>
             </>
@@ -199,11 +200,11 @@ export default function AIGenerationScreen({ navigation }: Props) {
 
           {state === 'cancelled' && (
             <>
-              <View style={styles.heroIconContainer}>
-                <Icon name={IconName.Compass} size={48} color={Colors.muted} strokeWidth={1.5} />
+              <View style={[styles.heroIconContainer, { backgroundColor: colors.surfaceSubtle }]}>
+                <Icon name={IconName.Compass} size={48} color={colors.muted} strokeWidth={1.5} />
               </View>
-              <Text style={styles.heroTitle}>Generation Cancelled</Text>
-              <Text style={styles.heroSub}>
+              <Text style={[styles.heroTitle, { color: colors.textPrimary }]}>Generation Cancelled</Text>
+              <Text style={[styles.heroSub, { color: colors.textSecondary }]}>
                 No worries! You can start again whenever you're ready.
               </Text>
             </>
@@ -211,50 +212,50 @@ export default function AIGenerationScreen({ navigation }: Props) {
         </View>
 
         {state === 'idle' && (
-          <View style={styles.preferencesCard}>
-            <Text style={styles.prefsTitle}>Trip Details</Text>
+          <View style={[styles.preferencesCard, { backgroundColor: colors.white }]}>
+            <Text style={[styles.prefsTitle, { color: colors.textTertiary }]}>Trip Details</Text>
             <View style={styles.prefRow}>
-              <Icon name={IconName.MapPin} size={16} color={Colors.primary} />
-              <Text style={styles.prefLabel}>Destination</Text>
-              <Text style={styles.prefValue}>San Francisco, CA</Text>
+              <Icon name={IconName.MapPin} size={16} color={colors.primary} />
+              <Text style={[styles.prefLabel, { color: colors.textSecondary }]}>Destination</Text>
+              <Text style={[styles.prefValue, { color: colors.textPrimary }]}>San Francisco, CA</Text>
             </View>
-            <View style={styles.prefDivider} />
+            <View style={[styles.prefDivider, { backgroundColor: colors.border }]} />
             <View style={styles.prefRow}>
-              <Icon name={IconName.Calendar} size={16} color={Colors.primary} />
-              <Text style={styles.prefLabel}>Dates</Text>
-              <Text style={styles.prefValue}>Jun 15 – 22</Text>
+              <Icon name={IconName.Calendar} size={16} color={colors.primary} />
+              <Text style={[styles.prefLabel, { color: colors.textSecondary }]}>Dates</Text>
+              <Text style={[styles.prefValue, { color: colors.textPrimary }]}>Jun 15 – 22</Text>
             </View>
-            <View style={styles.prefDivider} />
+            <View style={[styles.prefDivider, { backgroundColor: colors.border }]} />
             <View style={styles.prefRow}>
-              <Icon name={IconName.Users} size={16} color={Colors.primary} />
-              <Text style={styles.prefLabel}>Travelers</Text>
-              <Text style={styles.prefValue}>2 guests</Text>
+              <Icon name={IconName.Users} size={16} color={colors.primary} />
+              <Text style={[styles.prefLabel, { color: colors.textSecondary }]}>Travelers</Text>
+              <Text style={[styles.prefValue, { color: colors.textPrimary }]}>2 guests</Text>
             </View>
-            <View style={styles.prefDivider} />
+            <View style={[styles.prefDivider, { backgroundColor: colors.border }]} />
             <View style={styles.prefRow}>
-              <Icon name={IconName.DollarSign} size={16} color={Colors.primary} />
-              <Text style={styles.prefLabel}>Budget</Text>
-              <Text style={styles.prefValue}>$150/night</Text>
+              <Icon name={IconName.DollarSign} size={16} color={colors.primary} />
+              <Text style={[styles.prefLabel, { color: colors.textSecondary }]}>Budget</Text>
+              <Text style={[styles.prefValue, { color: colors.textPrimary }]}>$150/night</Text>
             </View>
           </View>
         )}
 
         {state === 'success' && (
-          <View style={styles.tripPreview}>
+          <View style={[styles.tripPreview, { backgroundColor: colors.white }]}>
             <View style={styles.tripPreviewRow}>
               <View style={styles.tripStat}>
-                <Text style={styles.tripStatValue}>7</Text>
-                <Text style={styles.tripStatLabel}>Days</Text>
+                <Text style={[styles.tripStatValue, { color: colors.primary }]}>7</Text>
+                <Text style={[styles.tripStatLabel, { color: colors.textSecondary }]}>Days</Text>
               </View>
-              <View style={styles.tripStatDivider} />
+              <View style={[styles.tripStatDivider, { backgroundColor: colors.border }]} />
               <View style={styles.tripStat}>
-                <Text style={styles.tripStatValue}>5</Text>
-                <Text style={styles.tripStatLabel}>Places</Text>
+                <Text style={[styles.tripStatValue, { color: colors.primary }]}>5</Text>
+                <Text style={[styles.tripStatLabel, { color: colors.textSecondary }]}>Places</Text>
               </View>
-              <View style={styles.tripStatDivider} />
+              <View style={[styles.tripStatDivider, { backgroundColor: colors.border }]} />
               <View style={styles.tripStat}>
-                <Text style={styles.tripStatValue}>$1K</Text>
-                <Text style={styles.tripStatLabel}>Est. Cost</Text>
+                <Text style={[styles.tripStatValue, { color: colors.primary }]}>$1K</Text>
+                <Text style={[styles.tripStatLabel, { color: colors.textSecondary }]}>Est. Cost</Text>
               </View>
             </View>
           </View>
@@ -269,7 +270,7 @@ export default function AIGenerationScreen({ navigation }: Props) {
             variant="primary"
             size="lg"
             fullWidth
-            icon={<Icon name={IconName.Compass} size={18} color={Colors.white} />}
+            icon={<Icon name={IconName.Compass} size={18} color={colors.white} />}
           />
         )}
 
@@ -290,7 +291,7 @@ export default function AIGenerationScreen({ navigation }: Props) {
             variant="primary"
             size="lg"
             fullWidth
-            icon={<Icon name={IconName.ChevronRight} size={18} color={Colors.white} />}
+            icon={<Icon name={IconName.ChevronRight} size={18} color={colors.white} />}
           />
         )}
 
@@ -328,7 +329,6 @@ export default function AIGenerationScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
   },
   content: {
     flexGrow: 1,
@@ -342,7 +342,6 @@ const styles = StyleSheet.create({
     width: 96,
     height: 96,
     borderRadius: 48,
-    backgroundColor: Colors.surfaceSubtle,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: Spacing.xl,
@@ -355,13 +354,11 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     ...Typography.h1,
-    color: Colors.textPrimary,
     textAlign: 'center',
     marginBottom: Spacing.sm,
   },
   heroSub: {
     ...Typography.body,
-    color: Colors.textSecondary,
     textAlign: 'center',
     lineHeight: 22,
     paddingHorizontal: Spacing.lg,
@@ -378,31 +375,26 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 6,
     borderRadius: 3,
-    backgroundColor: Colors.surfaceSubtle,
     overflow: 'hidden',
   },
   progressFill: {
     height: '100%',
     borderRadius: 3,
-    backgroundColor: Colors.primaryGold,
   },
   progressPercent: {
     ...Typography.caption,
-    color: Colors.textTertiary,
     fontWeight: '600',
   },
 
   // Preferences card
   preferencesCard: {
     marginHorizontal: Spacing.xxl,
-    backgroundColor: Colors.white,
     borderRadius: Radius.lg,
     padding: Spacing.xl,
     ...Shadows.sm,
   },
   prefsTitle: {
     ...Typography.bodySmall,
-    color: Colors.textTertiary,
     fontWeight: '600',
     letterSpacing: 1,
     textTransform: 'uppercase',
@@ -416,23 +408,19 @@ const styles = StyleSheet.create({
   },
   prefLabel: {
     ...Typography.body,
-    color: Colors.textSecondary,
     flex: 1,
   },
   prefValue: {
     ...Typography.body,
-    color: Colors.textPrimary,
     fontWeight: '600',
   },
   prefDivider: {
     height: 1,
-    backgroundColor: Colors.border,
   },
 
   // Trip preview
   tripPreview: {
     marginHorizontal: Spacing.xxl,
-    backgroundColor: Colors.white,
     borderRadius: Radius.lg,
     padding: Spacing.xl,
     ...Shadows.sm,
@@ -448,16 +436,13 @@ const styles = StyleSheet.create({
   },
   tripStatValue: {
     ...Typography.h2,
-    color: Colors.primary,
   },
   tripStatLabel: {
     ...Typography.caption,
-    color: Colors.textSecondary,
   },
   tripStatDivider: {
     width: 1,
     height: 40,
-    backgroundColor: Colors.border,
   },
 
   // Bottom

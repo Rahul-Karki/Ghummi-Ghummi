@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Animated, Platform, TouchableOpacity } from 'react-native';
 import NetInfo, { type NetInfoState } from '@react-native-community/netinfo';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Colors, Typography, Spacing, Radius } from '../theme/colors';
+import { useTheme, Typography, Spacing, Radius } from '../theme/ThemeContext';
 import { Icon, IconName } from './Icon';
 import { hapticLight } from '../utils/haptics';
 
@@ -11,6 +11,7 @@ type OfflineBannerProps = {
 };
 
 export function OfflineBanner({ onRetry }: OfflineBannerProps) {
+  const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const [isOffline, setIsOffline] = useState(false);
   const translateY = useRef(new Animated.Value(-60)).current;
@@ -44,9 +45,9 @@ export function OfflineBanner({ onRetry }: OfflineBannerProps) {
       ]}
       pointerEvents="box-none"
     >
-      <View style={styles.content}>
-        <Icon name={IconName.Wifi} size={14} color={Colors.white} />
-        <Text style={styles.text} numberOfLines={1}>
+      <View style={[styles.content, { backgroundColor: colors.warning }]}>
+        <Icon name={IconName.Wifi} size={14} color={colors.white} />
+        <Text style={[styles.text, { color: colors.white }]} numberOfLines={1}>
           You're offline. Some features may be limited.
         </Text>
         {onRetry && (
@@ -58,7 +59,7 @@ export function OfflineBanner({ onRetry }: OfflineBannerProps) {
             style={styles.retryBtn}
             activeOpacity={0.7}
           >
-            <Text style={styles.retryText}>Retry</Text>
+            <Text style={[styles.retryText, { color: colors.white }]}>Retry</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -77,13 +78,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.sm,
-    backgroundColor: Colors.warning,
     paddingHorizontal: Spacing.lg,
     paddingVertical: Spacing.sm + 2,
   },
   text: {
     ...Typography.caption,
-    color: Colors.white,
     flex: 1,
     fontWeight: '500',
   },
@@ -95,7 +94,6 @@ const styles = StyleSheet.create({
   },
   retryText: {
     ...Typography.caption,
-    color: Colors.white,
     fontWeight: '700',
   },
 });

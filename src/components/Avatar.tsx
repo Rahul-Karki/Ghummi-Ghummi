@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ViewStyle, ImageStyle } from 'react-native';
-import { Colors, Typography, Radius } from '../theme/colors';
+import { useTheme, Typography, Radius } from '../theme/ThemeContext';
 
 type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -28,6 +28,7 @@ const FONT_SIZE_MAP: Record<AvatarSize, number> = {
 };
 
 export function Avatar({ source, name, size = 'md', style }: AvatarProps) {
+  const { colors } = useTheme();
   const dim = SIZE_MAP[size];
   const fontSize = FONT_SIZE_MAP[size];
   const initials = name ? name.charAt(0).toUpperCase() : '?';
@@ -47,9 +48,10 @@ export function Avatar({ source, name, size = 'md', style }: AvatarProps) {
   }
 
   return (
-    <View
+      <View
       style={[
         styles.fallback,
+        { backgroundColor: colors.primary },
         {
           width: dim,
           height: dim,
@@ -58,20 +60,18 @@ export function Avatar({ source, name, size = 'md', style }: AvatarProps) {
         style,
       ]}
     >
-      <Text style={[styles.initial, { fontSize }]}>{initials}</Text>
+      <Text style={[styles.initial, { color: colors.white, fontSize }]}>{initials}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   fallback: {
-    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
   initial: {
     fontFamily: 'Georgia',
-    color: Colors.white,
     fontWeight: '400',
   },
 });

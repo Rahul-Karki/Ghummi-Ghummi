@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, ViewStyle } from 'react-native';
-import { Colors, Typography, Spacing, Radius } from '../theme/colors';
+import { useTheme, Typography, Spacing, Radius } from '../theme/ThemeContext';
 import { hapticLight } from '../utils/haptics';
 
 type ChipVariant = 'default' | 'active' | 'outline';
@@ -29,6 +29,7 @@ export function Chip({
   style,
   accessibilityLabel,
 }: ChipProps) {
+  const { colors } = useTheme();
   const isActive = selected || variant === 'active';
 
   const handlePress = () => {
@@ -42,9 +43,9 @@ export function Chip({
     <TouchableOpacity
       style={[
         styles.base,
+        { backgroundColor: isActive ? colors.olive : colors.secondaryFaint },
         styles[`size_${size}`],
-        isActive && styles.active,
-        variant === 'outline' && styles.outline,
+        variant === 'outline' && { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.borderStrong },
         disabled && styles.disabled,
         style,
       ]}
@@ -60,9 +61,9 @@ export function Chip({
         style={[
           styles.label,
           styles[`label_${size}`],
-          isActive ? styles.labelActive : undefined,
-          variant === 'outline' ? styles.labelOutline : undefined,
-          disabled ? styles.labelDisabled : undefined,
+          isActive ? { color: colors.white } : undefined,
+          variant === 'outline' ? { color: colors.primary } : undefined,
+          disabled ? { color: colors.textDisabled } : undefined,
           icon ? { marginLeft: 6 } : undefined,
         ]}
       >
@@ -107,16 +108,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: Radius.full,
-    backgroundColor: Colors.secondaryFaint,
     alignSelf: 'flex-start',
-  },
-  active: {
-    backgroundColor: Colors.olive,
   },
   outline: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: Colors.borderStrong,
   },
   disabled: {
     opacity: 0.5,
@@ -139,14 +135,5 @@ const styles = StyleSheet.create({
   },
   label_md: {
     ...Typography.caption,
-  },
-  labelActive: {
-    color: Colors.white,
-  },
-  labelOutline: {
-    color: Colors.primary,
-  },
-  labelDisabled: {
-    color: Colors.textDisabled,
   },
 });

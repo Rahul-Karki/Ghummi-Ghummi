@@ -11,7 +11,7 @@ import {
   Alert,
   RefreshControl,
 } from 'react-native';
-import { Colors } from '../theme/colors';
+import { useTheme } from '../theme/ThemeContext';
 import StatusBar from '../components/StatusBar';
 import TopBar from '../components/TopBar';
 import BottomMenu from '../components/BottomMenu';
@@ -60,6 +60,7 @@ const WHY_MATCHED = [
 ];
 
 export default function V3ImageLedScreen({ navigation }: { navigation: any }) {
+  const { colors } = useTheme();
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
@@ -67,7 +68,7 @@ export default function V3ImageLedScreen({ navigation }: { navigation: any }) {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.cardBg }]}>
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContent}
@@ -79,8 +80,8 @@ export default function V3ImageLedScreen({ navigation }: { navigation: any }) {
               setRefreshing(true);
               setTimeout(() => setRefreshing(false), 800);
             }}
-            tintColor={Colors.primaryGold}
-            colors={[Colors.primaryGold]}
+            tintColor={colors.primaryGold}
+            colors={[colors.primaryGold]}
           />
         }
       >
@@ -95,6 +96,7 @@ export default function V3ImageLedScreen({ navigation }: { navigation: any }) {
 }
 
 function Hero({ onBack }: { onBack: () => void }) {
+  const { colors } = useTheme();
   const scaleAnim = useRef(new Animated.Value(1.06)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
   const [countWalk, setCountWalk] = useState(0);
@@ -122,7 +124,7 @@ function Hero({ onBack }: { onBack: () => void }) {
   }, []);
 
   return (
-    <View style={styles.heroContainer}>
+    <View style={[styles.heroContainer, { backgroundColor: colors.black }]}>
       <Animated.View
         style={[
           styles.heroImageContainer,
@@ -145,8 +147,8 @@ function Hero({ onBack }: { onBack: () => void }) {
         <View style={styles.heroDivider} />
         <View style={styles.heroCenter}>
           <YMark light />
-          <Text style={styles.heroTitle}>Your perfect place</Text>
-          <Text style={styles.heroSub}>Barcelona · Jun 15-22 · 2 guests</Text>
+          <Text style={[styles.heroTitle, { color: colors.white }]}>Your perfect place</Text>
+          <Text style={[styles.heroSub, { color: colors.white }]}>Barcelona · Jun 15-22 · 2 guests</Text>
         </View>
       </View>
 
@@ -155,7 +157,7 @@ function Hero({ onBack }: { onBack: () => void }) {
           <View style={styles.heroPin}>
             <Icon name={IconName.MapPin} size={22} color="#CFD205" />
           </View>
-          <Text style={styles.heroPlaceName}>Cozy Den</Text>
+          <Text style={[styles.heroPlaceName, { color: colors.white }]}>Cozy Den</Text>
         </View>
 
         <View style={styles.heroStatsContainer}>
@@ -189,24 +191,26 @@ function animateCount(setter: (v: number) => void, target: number, duration: num
 }
 
 function Ring({ label, value }: { label: string; value: number }) {
+  const { colors } = useTheme();
   return (
     <View style={styles.ringContainer}>
-      <View style={styles.ringCircle}>
-        <Text style={styles.ringValue}>{value}%</Text>
+      <View style={[styles.ringCircle, { borderColor: colors.citron }]}>
+        <Text style={[styles.ringValue, { color: colors.white }]}>{value}%</Text>
       </View>
-      <Text style={styles.ringLabel}>{label}</Text>
+      <Text style={[styles.ringLabel, { color: colors.white }]}>{label}</Text>
     </View>
   );
 }
 
 function CompareAlternatives() {
+  const { colors } = useTheme();
   const colsWidth = COL_WIDTH * 3 + COL_GAP * 2;
 
   return (
     <View style={styles.compareContainer}>
       <View style={styles.compareHeader}>
-        <Text style={styles.compareTitle}>Compare Alternatives</Text>
-        <Text style={styles.compareCount}>3/12</Text>
+        <Text style={[styles.compareTitle, { color: colors.black }]}>Compare Alternatives</Text>
+        <Text style={[styles.compareCount, { color: colors.muted }]}>3/12</Text>
       </View>
 
       <View style={styles.compareTable}>
@@ -217,7 +221,7 @@ function CompareAlternatives() {
               key={t.id}
               style={[
                 styles.compareThumb,
-                t.selected && styles.compareThumbSelected,
+                t.selected && { borderWidth: 2, borderColor: colors.pin, borderRadius: 6.023 },
               ]}
             >
               <Image
@@ -230,33 +234,33 @@ function CompareAlternatives() {
         <CompareRow
           label="Match"
           values={COMPARE_DATA.match.map((v, i) =>
-            i === 0 ? <MatchPill key={i}>{v}</MatchPill> : <Text key={i} style={styles.compareValue}>{v}</Text>
+            i === 0 ? <MatchPill key={i}>{v}</MatchPill> : <Text key={i} style={[styles.compareValue, { color: colors.black }]}>{v}</Text>
           )}
         />
         <CompareRow
           label="Price"
           values={COMPARE_DATA.price.map((v, i) => (
-            <Text key={i} style={styles.compareValue}>{v}</Text>
+            <Text key={i} style={[styles.compareValue, { color: colors.black }]}>{v}</Text>
           ))}
         />
         <CompareRow
           label="Style"
           values={COMPARE_DATA.style.map((v, i) => (
-            <Text key={i} style={styles.compareValue}>{v}</Text>
+            <Text key={i} style={[styles.compareValue, { color: colors.black }]}>{v}</Text>
           ))}
         />
         <CompareRow
           label="Location"
           values={COMPARE_DATA.location.map((v, i) => (
-            <Text key={i} style={styles.compareValue}>{v}</Text>
+            <Text key={i} style={[styles.compareValue, { color: colors.black }]}>{v}</Text>
           ))}
         />
         <CompareRow
           label="Reviews"
           values={COMPARE_DATA.reviews.map((v, i) => (
             <View key={i} style={styles.reviewRow}>
-              <Icon name={IconName.Star} size={8} color={Colors.black} />
-              <Text style={styles.compareValue}>{v}</Text>
+              <Icon name={IconName.Star} size={8} color={colors.black} />
+              <Text style={[styles.compareValue, { color: colors.black }]}>{v}</Text>
             </View>
           ))}
         />
@@ -272,9 +276,10 @@ function CompareRow({
   label: string;
   values: React.ReactNode[];
 }) {
+  const { colors } = useTheme();
   return (
     <View style={styles.compareRowContainer}>
-      <Text style={styles.compareRowLabel}>{label}</Text>
+      <Text style={[styles.compareRowLabel, { color: colors.black }]}>{label}</Text>
       <View style={styles.compareRowValues}>
         {values.map((v, i) => (
           <View key={i} style={styles.compareCol}>
@@ -288,16 +293,17 @@ function CompareRow({
 }
 
 function WhyMatchedSection() {
+  const { colors } = useTheme();
   return (
     <View style={styles.whyContainer}>
-      <Text style={styles.whyTitle}>Why we matched you</Text>
+      <Text style={[styles.whyTitle, { color: colors.black }]}>Why we matched you</Text>
       {WHY_MATCHED.map((item, i) => (
         <View key={i}>
           <View style={styles.whyRow}>
-            <Icon name={WHY_MATCHED_ICONS[i]} size={14} color={Colors.black} />
+            <Icon name={WHY_MATCHED_ICONS[i]} size={14} color={colors.black} />
             <View style={styles.whyTextCol}>
-              <Text style={styles.whyItemTitle}>{item.title}</Text>
-              <Text style={styles.whyItemSub}>{item.sub}</Text>
+              <Text style={[styles.whyItemTitle, { color: colors.black }]}>{item.title}</Text>
+              <Text style={[styles.whyItemSub, { color: colors.black }]}>{item.sub}</Text>
             </View>
           </View>
           {i < WHY_MATCHED.length - 1 && <View style={styles.whyDivider} />}
@@ -308,6 +314,7 @@ function WhyMatchedSection() {
 }
 
 function PriceAndReserve() {
+  const { colors } = useTheme();
   const [toast, setToast] = useState({ visible: false, message: '' });
 
   const handleReserve = () => {
@@ -332,10 +339,10 @@ function PriceAndReserve() {
     <View style={styles.priceContainer}>
       <View style={styles.priceInfo}>
         <View style={styles.priceRow}>
-          <Text style={styles.priceAmount}>$146</Text>
-          <Text style={styles.pricePerNight}>/night</Text>
+          <Text style={[styles.priceAmount, { color: colors.black }]}>$146</Text>
+          <Text style={[styles.pricePerNight, { color: colors.muted }]}>/night</Text>
         </View>
-        <Text style={styles.priceTotal}>$1,022 · 7 nights</Text>
+        <Text style={[styles.priceTotal, { color: colors.muted }]}>$1,022 · 7 nights</Text>
       </View>
       <TouchableOpacity
         style={styles.reserveButton}
@@ -344,7 +351,7 @@ function PriceAndReserve() {
         accessibilityLabel="Reserve this property"
         accessibilityRole="button"
       >
-        <Text style={styles.reserveText}>Reserve</Text>
+        <Text style={[styles.reserveText, { color: colors.black }]}>Reserve</Text>
       </TouchableOpacity>
       <Toast
         message={toast.message}
@@ -359,7 +366,6 @@ function PriceAndReserve() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.cardBg,
   },
   scroll: {
     flex: 1,
@@ -369,7 +375,6 @@ const styles = StyleSheet.create({
   },
   heroContainer: {
     height: HERO_HEIGHT,
-    backgroundColor: Colors.black,
     overflow: 'hidden',
   },
   heroImageContainer: {
@@ -395,13 +400,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '400',
     fontSize: 18,
-    color: Colors.white,
   },
   heroSub: {
     fontFamily: 'Inter',
     fontWeight: '300',
     fontSize: 12,
-    color: Colors.white,
     opacity: 0.9,
   },
   heroDivider: {
@@ -431,7 +434,6 @@ const styles = StyleSheet.create({
   heroPlaceName: {
     fontFamily: 'Georgia',
     fontSize: 30,
-    color: Colors.white,
     lineHeight: 36,
   },
   heroStatsContainer: {
@@ -460,7 +462,6 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 12,
     borderWidth: 3,
-    borderColor: Colors.citron,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -468,13 +469,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '300',
     fontSize: 8,
-    color: Colors.white,
   },
   ringLabel: {
     fontFamily: 'Inter',
     fontWeight: '300',
     fontSize: 12,
-    color: Colors.white,
     lineHeight: 14.4,
   },
   compareContainer: {
@@ -490,13 +489,11 @@ const styles = StyleSheet.create({
   compareTitle: {
     fontFamily: 'Georgia',
     fontSize: 16,
-    color: Colors.black,
   },
   compareCount: {
     fontFamily: 'Inter',
     fontWeight: '300',
     fontSize: 14,
-    color: Colors.muted,
     letterSpacing: 0.7,
   },
   compareTable: {
@@ -509,7 +506,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '300',
     fontSize: 12,
-    color: Colors.black,
     lineHeight: 14.4,
     marginBottom: 4,
   },
@@ -529,11 +525,6 @@ const styles = StyleSheet.create({
     borderRadius: 4.023,
     overflow: 'hidden',
   },
-  compareThumbSelected: {
-    borderWidth: 2,
-    borderColor: Colors.pin,
-    borderRadius: 6.023,
-  },
   compareThumbImg: {
     width: '100%',
     height: '100%',
@@ -542,7 +533,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '300',
     fontSize: 12,
-    color: Colors.black,
     lineHeight: 14.4,
     textAlign: 'center',
   },
@@ -565,7 +555,6 @@ const styles = StyleSheet.create({
   whyTitle: {
     fontFamily: 'Georgia',
     fontSize: 16,
-    color: Colors.black,
   },
   whyRow: {
     flexDirection: 'row',
@@ -580,14 +569,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '500',
     fontSize: 12,
-    color: Colors.black,
     lineHeight: 15.004,
   },
   whyItemSub: {
     fontFamily: 'Inter',
     fontWeight: '300',
     fontSize: 12,
-    color: Colors.black,
     lineHeight: 15.004,
   },
   whyDivider: {
@@ -615,14 +602,12 @@ const styles = StyleSheet.create({
   priceAmount: {
     fontFamily: 'Georgia',
     fontSize: 16,
-    color: Colors.black,
     lineHeight: 19.2,
   },
   pricePerNight: {
     fontFamily: 'Inter',
     fontWeight: '300',
     fontSize: 12,
-    color: Colors.muted,
     letterSpacing: 0.6,
     lineHeight: 14.4,
   },
@@ -630,7 +615,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '300',
     fontSize: 12,
-    color: Colors.muted,
     letterSpacing: 0.6,
     lineHeight: 14.4,
   },
@@ -646,7 +630,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '300',
     fontSize: 12,
-    color: Colors.black,
     lineHeight: 14.4,
   },
 });

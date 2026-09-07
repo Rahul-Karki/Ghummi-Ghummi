@@ -7,7 +7,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import { Colors, Typography, Spacing, Radius } from '../theme/colors';
+import { useTheme, Typography, Spacing, Radius } from '../theme/ThemeContext';
 import { hapticLight } from '../utils/haptics';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
@@ -42,6 +42,7 @@ export function Button({
   textStyle,
   accessibilityLabel,
 }: ButtonProps) {
+  const { colors } = useTheme();
   const handlePress = () => {
     hapticLight();
     onPress();
@@ -53,7 +54,8 @@ export function Button({
     <TouchableOpacity
       style={[
         styles.base,
-        styles[variant],
+        { backgroundColor: variant === 'primary' ? colors.primary : variant === 'secondary' ? colors.secondary : variant === 'danger' ? colors.error : 'transparent' },
+        variant === 'outline' && { borderWidth: 1, borderColor: colors.borderStrong },
         styles[`size_${size}`],
         fullWidth && styles.fullWidth,
         isDisabled && styles.disabled,
@@ -69,7 +71,7 @@ export function Button({
       {loading ? (
         <ActivityIndicator
           size="small"
-          color={variant === 'primary' || variant === 'danger' ? Colors.white : Colors.primary}
+          color={variant === 'primary' || variant === 'danger' ? colors.white : colors.primary}
         />
       ) : (
         <>
@@ -80,8 +82,8 @@ export function Button({
             style={[
               styles.label,
               styles[`label_${size}`],
-              styles[`label_${variant}`],
-              isDisabled ? styles.labelDisabled : undefined,
+              { color: variant === 'primary' || variant === 'danger' ? colors.white : colors.primary },
+              isDisabled ? { color: colors.textDisabled } : undefined,
               icon ? (iconPosition === 'right' ? { marginRight: 0, marginLeft: 8 } : { marginRight: 8, marginLeft: 0 }) : undefined,
               textStyle,
             ]}
@@ -118,6 +120,7 @@ export function IconButton({
   accessibilityLabel,
   style,
 }: IconButtonProps) {
+  const { colors } = useTheme();
   const handlePress = () => {
     hapticLight();
     onPress();
@@ -130,7 +133,8 @@ export function IconButton({
       style={[
         styles.iconButton,
         { width: size, height: size, borderRadius: size / 2 },
-        styles[`iconBtn_${variant}`],
+        { backgroundColor: variant === 'filled' ? colors.primary : 'transparent' },
+        variant === 'outline' && { borderWidth: 1, borderColor: colors.borderStrong },
         isDisabled && styles.disabled,
         style,
       ]}
@@ -144,7 +148,7 @@ export function IconButton({
       {loading ? (
         <ActivityIndicator
           size="small"
-          color={variant === 'filled' ? Colors.white : Colors.primary}
+          color={variant === 'filled' ? colors.white : colors.primary}
         />
       ) : (
         icon
@@ -167,24 +171,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
 
-  // Variants
-  primary: {
-    backgroundColor: Colors.primary,
-  },
-  secondary: {
-    backgroundColor: Colors.secondary,
-  },
-  outline: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: Colors.borderStrong,
-  },
-  ghost: {
-    backgroundColor: 'transparent',
-  },
-  danger: {
-    backgroundColor: Colors.error,
-  },
+  // Variants - handled inline via colors
 
   // Sizes
   size_sm: {
@@ -217,39 +204,10 @@ const styles = StyleSheet.create({
     ...Typography.button,
     fontSize: 16,
   },
-  label_primary: {
-    color: Colors.white,
-  },
-  label_secondary: {
-    color: Colors.primary,
-  },
-  label_outline: {
-    color: Colors.primary,
-  },
-  label_ghost: {
-    color: Colors.primary,
-  },
-  label_danger: {
-    color: Colors.white,
-  },
-  labelDisabled: {
-    color: Colors.textDisabled,
-  },
 
-  // Icon Button
+  // Icon Button - handled inline via colors
   iconButton: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  iconBtn_default: {
-    backgroundColor: 'transparent',
-  },
-  iconBtn_filled: {
-    backgroundColor: Colors.primary,
-  },
-  iconBtn_outline: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: Colors.borderStrong,
   },
 });

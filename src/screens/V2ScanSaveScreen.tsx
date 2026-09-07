@@ -10,7 +10,7 @@ import {
   Animated,
   RefreshControl,
 } from 'react-native';
-import { Colors } from '../theme/colors';
+import { useTheme } from '../theme/ThemeContext';
 import StatusBar from '../components/StatusBar';
 import TopBar from '../components/TopBar';
 import BottomMenu from '../components/BottomMenu';
@@ -37,6 +37,7 @@ const SAVE_REVEAL = 80;
 const SAVE_THRESHOLD = 40;
 
 export default function V2ScanSaveScreen({ navigation }: { navigation: any }) {
+  const { colors } = useTheme();
   const [filter, setFilter] = useState<FilterKey>('all');
   const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
   const [refreshing, setRefreshing] = useState(false);
@@ -53,7 +54,7 @@ export default function V2ScanSaveScreen({ navigation }: { navigation: any }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.cardBg }]}>
       <ScrollView
         style={styles.scroll}
         refreshControl={
@@ -63,8 +64,8 @@ export default function V2ScanSaveScreen({ navigation }: { navigation: any }) {
               setRefreshing(true);
               setTimeout(() => setRefreshing(false), 800);
             }}
-            tintColor={Colors.primaryGold}
-            colors={[Colors.primaryGold]}
+            tintColor={colors.primaryGold}
+            colors={[colors.primaryGold]}
           />
         }
         contentContainerStyle={styles.scrollContent}
@@ -77,8 +78,8 @@ export default function V2ScanSaveScreen({ navigation }: { navigation: any }) {
           <View style={styles.headerRow}>
             <YMark />
             <View style={styles.headerTextCol}>
-              <Text style={styles.headerTitle}>
-                Your <Text style={{ color: Colors.muted }}>twelve</Text> curated picks
+              <Text style={[styles.headerTitle, { color: colors.black }]}>
+                Your <Text style={{ color: colors.muted }}>twelve</Text> curated picks
               </Text>
               <Text style={styles.headerSub}>Based on your trip preferences</Text>
             </View>
@@ -99,13 +100,13 @@ export default function V2ScanSaveScreen({ navigation }: { navigation: any }) {
             return (
               <TouchableOpacity
                 key={c.key}
-                style={[styles.chip, active && styles.chipActive]}
+                style={[styles.chip, { backgroundColor: colors.secondaryFaint }, active && { backgroundColor: colors.primary }]}
                 onPress={() => {
                   hapticLight();
                   setFilter(c.key);
                 }}
               >
-                <Text style={[styles.chipText, active && styles.chipTextActive]}>
+                <Text style={[styles.chipText, { color: colors.textSecondary }, active && { color: colors.white }]}>
                   {c.label}
                 </Text>
               </TouchableOpacity>
@@ -143,6 +144,7 @@ function SwipeRow({
   saved: boolean;
   onPress: () => void;
 }) {
+  const { colors } = useTheme();
   const translateX = useRef(new Animated.Value(0)).current;
   const [isRevealed, setIsRevealed] = useState(false);
 
@@ -187,17 +189,17 @@ function SwipeRow({
     <View style={styles.swipeContainer}>
       <View style={styles.saveBehind}>
         <TouchableOpacity
-          style={styles.saveButton}
+          style={[styles.saveButton, { backgroundColor: colors.primary }]}
           onPress={handleSave}
           disabled={!isRevealed}
         >
-          <Icon name={IconName.Heart} size={12} color={Colors.white} />
-          <Text style={styles.saveText}>{saved ? 'Saved' : 'Save'}</Text>
+          <Icon name={IconName.Heart} size={12} color={colors.white} />
+          <Text style={[styles.saveText, { color: colors.white }]}>{saved ? 'Saved' : 'Save'}</Text>
         </TouchableOpacity>
       </View>
 
       <Animated.View
-        style={[styles.swipeForeground, { transform: [{ translateX }] }]}
+        style={[styles.swipeForeground, { transform: [{ translateX }], backgroundColor: colors.cardBg }]}
         {...panResponder.panHandlers}
       >
         <TouchableOpacity onPress={onPress} activeOpacity={1}>
@@ -209,12 +211,13 @@ function SwipeRow({
 }
 
 function ListingRow({ listing }: { listing: Listing }) {
+  const { colors } = useTheme();
   return (
     <View style={styles.listingRow}>
       <Image source={{ uri: listing.image }} style={styles.listingThumb} />
       <View style={styles.listingInfo}>
         <View style={styles.listingInfoLeft}>
-          <Text style={styles.listingName} numberOfLines={1}>
+          <Text style={[styles.listingName, { color: colors.black }]} numberOfLines={1}>
             {listing.name}
           </Text>
           <View style={styles.listingSpecs}>
@@ -224,12 +227,12 @@ function ListingRow({ listing }: { listing: Listing }) {
           </View>
         </View>
           <View style={styles.listingInfoRight}>
-          <View style={styles.matchPill}>
-            <Text style={styles.matchText}>{listing.match}% Match</Text>
+          <View style={[styles.matchPill, { backgroundColor: colors.citron }]}>
+            <Text style={[styles.matchText, { color: colors.black }]}>{listing.match}% Match</Text>
           </View>
           <View style={styles.ratingRow}>
-            <Icon name={IconName.Star} size={11} color={Colors.primaryGold} />
-            <Text style={styles.ratingText}>{listing.rating.toFixed(2)}</Text>
+            <Icon name={IconName.Star} size={11} color={colors.primaryGold} />
+            <Text style={[styles.ratingText, { color: colors.black }]}>{listing.rating.toFixed(2)}</Text>
           </View>
         </View>
       </View>
@@ -238,9 +241,10 @@ function ListingRow({ listing }: { listing: Listing }) {
 }
 
 function SpecItem({ label }: { label: string }) {
+  const { colors } = useTheme();
   return (
     <View style={styles.specItem}>
-      <Text style={styles.specText}>• {label}</Text>
+      <Text style={[styles.specText, { color: colors.textSecondary }]}>• {label}</Text>
     </View>
   );
 }
@@ -248,7 +252,6 @@ function SpecItem({ label }: { label: string }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.cardBg,
   },
   scroll: {
     flex: 1,
@@ -271,23 +274,22 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontFamily: 'Inter',
-    fontWeight: '400',
+    fontWeight: '500',
     fontSize: 16,
-    color: Colors.black,
     lineHeight: 19.2,
   },
   headerSub: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '400',
     fontSize: 13,
-    color: 'rgba(0,0,0,0.6)',
+    color: 'rgba(0,0,0,0.55)',
     lineHeight: 15.6,
   },
   headerLocation: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '400',
     fontSize: 12,
-    color: 'rgba(0,0,0,0.4)',
+    color: 'rgba(0,0,0,0.45)',
     lineHeight: 14.4,
   },
   chipScroll: {
@@ -298,30 +300,22 @@ const styles = StyleSheet.create({
     gap: 5.678,
   },
   chip: {
-    backgroundColor: Colors.secondaryFaint,
-    paddingHorizontal: 8,
-    paddingVertical: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
     borderRadius: 82.838,
-  },
-  chipActive: {
-    backgroundColor: Colors.olive,
   },
   chipText: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '500',
     fontSize: 12,
-    color: Colors.black,
     letterSpacing: -0.12,
-  },
-  chipTextActive: {
-    color: Colors.cardBg,
   },
   listingsContainer: {
     paddingTop: 16,
   },
   listingDivider: {
     height: 1,
-    backgroundColor: 'rgba(0,0,0,0.06)',
+    backgroundColor: 'rgba(0,0,0,0.08)',
     marginHorizontal: 20,
   },
   swipeContainer: {
@@ -338,23 +332,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   saveButton: {
-    backgroundColor: Colors.olive,
     width: 63.537,
     height: 67.117,
-    borderRadius: 4.474,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 6,
   },
   saveText: {
     fontFamily: 'Inter',
-    fontWeight: '400',
+    fontWeight: '500',
     fontSize: 11,
-    color: Colors.white,
     lineHeight: 13.2,
   },
   swipeForeground: {
-    backgroundColor: Colors.cardBg,
     width: '100%',
   },
   listingRow: {
@@ -367,7 +358,7 @@ const styles = StyleSheet.create({
   listingThumb: {
     width: 89.629,
     height: 82.09,
-    borderRadius: 6.701,
+    borderRadius: 12,
   },
   listingInfo: {
     flex: 1,
@@ -385,7 +376,6 @@ const styles = StyleSheet.create({
   listingName: {
     fontFamily: 'Georgia',
     fontSize: 14,
-    color: Colors.black,
     lineHeight: 16.8,
   },
   listingSpecs: {
@@ -398,23 +388,20 @@ const styles = StyleSheet.create({
   },
   specText: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '400',
     fontSize: 12,
-    color: Colors.black,
     lineHeight: 14.4,
     letterSpacing: 0.12,
   },
   matchPill: {
-    backgroundColor: Colors.citron,
     paddingHorizontal: 8,
     paddingVertical: 6,
     borderRadius: 74.26,
   },
   matchText: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '600',
     fontSize: 12,
-    color: Colors.black,
     lineHeight: 14.4,
   },
   ratingRow: {
@@ -424,9 +411,8 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     fontFamily: 'Inter',
-    fontWeight: '300',
+    fontWeight: '500',
     fontSize: 12,
-    color: Colors.black,
     letterSpacing: 0.48,
     lineHeight: 14.4,
   },

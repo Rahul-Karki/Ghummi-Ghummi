@@ -1,68 +1,145 @@
-export const Colors = {
-  // Semantic surface tokens
-  background: '#FAFAF8',
-  foreground: '#000000',
+// Light mode - Warm & vibrant
+export const LightColors = {
+  // Surfaces - warm creams, not cold grays
+  background: '#FDFBF7',
+  foreground: '#1A1614',
   surface: '#FFFFFF',
   surfaceElevated: '#FFFFFF',
-  surfaceSubtle: '#F5F3EE',
-  surfaceMuted: '#FAFAF8',
+  surfaceSubtle: '#F5F0E8',
+  surfaceMuted: '#FAF7F2',
 
-  // Brand
-  primary: '#1A1A2E',
-  primaryGold: '#C8A951',
-  primaryLight: '#DDD864',
+  // Brand - rich amber + coral
+  primary: '#D97706',
+  primaryGold: '#EAB308',
+  primaryLight: '#FEF3C7',
 
-  // Accent palette
-  secondary: '#F5F3EE',
-  secondaryFaint: 'rgba(133,126,56,0.08)',
-  olive: '#857E38',
-  citron: '#DDD864',
-  pin: '#CFD205',
+  // Accents - saturated & warm
+  secondary: '#FFF7ED',
+  secondaryFaint: 'rgba(217,119,6,0.08)',
+  olive: '#16A34A',
+  citron: '#EAB308',
+  pin: '#DC2626',
+  accentCoral: '#F43F5E',
+  accentTeal: '#0D9488',
+  accentIndigo: '#6366F1',
 
-  // Text tokens
-  textPrimary: '#000000',
-  textSecondary: 'rgba(0,0,0,0.55)',
-  textTertiary: 'rgba(0,0,0,0.35)',
+  // Text - warm blacks
+  textPrimary: '#1A1614',
+  textSecondary: '#78716C',
+  textTertiary: '#A8A29E',
   textInverse: '#FFFFFF',
-  textDisabled: 'rgba(0,0,0,0.2)',
+  textDisabled: '#D6D3D1',
 
-  // Legacy aliases (for gradual migration)
-  muted: 'rgba(0,0,0,0.35)',
-  mutedLight: 'rgba(0,0,0,0.55)',
-  mutedFaint: 'rgba(0,0,0,0.12)',
+  // Legacy aliases
+  muted: '#78716C',
+  mutedLight: '#A8A29E',
+  mutedFaint: '#E7E5E4',
 
-  // Border tokens
-  border: 'rgba(0,0,0,0.08)',
-  borderLight: 'rgba(0,0,0,0.05)',
-  borderStrong: 'rgba(0,0,0,0.15)',
-  borderFocus: '#1A1A2E',
+  // Borders - warm
+  border: '#E7E5E4',
+  borderLight: '#F5F5F4',
+  borderStrong: '#D6D3D1',
+  borderFocus: '#D97706',
 
-  // Card tokens
-  cardBg: '#FAFAF8',
+  // Cards
+  cardBg: '#FAF7F2',
   cardWhite: '#FFFFFF',
 
   // Utility
   white: '#FFFFFF',
-  black: '#000000',
-  success: '#34C759',
-  error: '#FF3B30',
-  warning: '#FF9500',
-  info: '#007AFF',
+  black: '#1A1614',
+  success: '#16A34A',
+  error: '#DC2626',
+  warning: '#D97706',
+  info: '#2563EB',
 
-  // Overlay tokens
-  overlay: 'rgba(0,0,0,0.45)',
-  overlayLight: 'rgba(0,0,0,0.25)',
-  overlayHeavy: 'rgba(0,0,0,0.6)',
+  // Overlay
+  overlay: 'rgba(26,22,20,0.5)',
+  overlayLight: 'rgba(26,22,20,0.25)',
+  overlayHeavy: 'rgba(26,22,20,0.7)',
 
-  // Gradient tokens
-  gradientStart: '#1A1A2E',
-  gradientMid: '#16213E',
-  gradientEnd: '#0F3460',
+  // Gradients - warm sunset
+  gradientStart: '#D97706',
+  gradientMid: '#EA580C',
+  gradientEnd: '#DC2626',
 
-  // Skeleton / loading
-  shimmer: '#E8E4DC',
-  skeleton: '#E8E4DC',
+  // Skeleton
+  shimmer: '#F0EBE3',
+  skeleton: '#F0EBE3',
 } as const;
+
+// Dark mode - rich & deep
+export const DarkColors = {
+  // Surfaces - deep warm dark
+  background: '#121010',
+  foreground: '#F5F0E8',
+  surface: '#1E1B18',
+  surfaceElevated: '#292420',
+  surfaceSubtle: '#1E1B18',
+  surfaceMuted: '#121010',
+
+  // Brand - glowing amber on dark
+  primary: '#F59E0B',
+  primaryGold: '#FBBF24',
+  primaryLight: '#422006',
+
+  // Accents - neon on dark
+  secondary: '#1C1917',
+  secondaryFaint: 'rgba(245,158,11,0.12)',
+  olive: '#4ADE80',
+  citron: '#FDE047',
+  pin: '#F87171',
+  accentCoral: '#FB7185',
+  accentTeal: '#2DD4BF',
+  accentIndigo: '#818CF8',
+
+  // Text - warm whites
+  textPrimary: '#F5F0E8',
+  textSecondary: '#A8A29E',
+  textTertiary: '#78716C',
+  textInverse: '#1A1614',
+  textDisabled: '#57534E',
+
+  // Legacy aliases
+  muted: '#A8A29E',
+  mutedLight: '#78716C',
+  mutedFaint: '#57534E',
+
+  // Borders
+  border: '#292420',
+  borderLight: '#1E1B18',
+  borderStrong: '#44403C',
+  borderFocus: '#F59E0B',
+
+  // Cards
+  cardBg: '#1E1B18',
+  cardWhite: '#1E1B18',
+
+  // Utility
+  white: '#F5F0E8',
+  black: '#121010',
+  success: '#4ADE80',
+  error: '#F87171',
+  warning: '#FBBF24',
+  info: '#60A5FA',
+
+  // Overlay
+  overlay: 'rgba(18,16,16,0.85)',
+  overlayLight: 'rgba(18,16,16,0.6)',
+  overlayHeavy: 'rgba(18,16,16,0.92)',
+
+  // Gradients - warm fire
+  gradientStart: '#92400E',
+  gradientMid: '#B45309',
+  gradientEnd: '#D97706',
+
+  // Skeleton
+  shimmer: '#292420',
+  skeleton: '#292420',
+} as const;
+
+// Default to light mode
+export const Colors = LightColors;
 
 export type ColorToken = keyof typeof Colors;
 
@@ -209,37 +286,37 @@ export const Shadows = {
   xs: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
     elevation: 1,
   },
   sm: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 2,
+    shadowOpacity: 0.10,
+    shadowRadius: 10,
+    elevation: 3,
   },
   md: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    elevation: 4,
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    elevation: 5,
   },
   lg: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.12,
-    shadowRadius: 20,
-    elevation: 6,
+    shadowOpacity: 0.16,
+    shadowRadius: 24,
+    elevation: 8,
   },
   xl: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.15,
-    shadowRadius: 30,
-    elevation: 10,
+    shadowOpacity: 0.20,
+    shadowRadius: 32,
+    elevation: 12,
   },
 } as const;
 

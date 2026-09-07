@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Image, StyleSheet, ViewStyle, ImageStyle } from 'react-native';
-import { Colors, Radius } from '../theme/colors';
+import { useTheme, Radius } from '../theme/ThemeContext';
 import { Icon, IconName } from './Icon';
 
 type ImagePlaceholderProps = {
@@ -16,13 +16,14 @@ export function ImagePlaceholder({
   borderRadius = Radius.md,
   iconSize = 24,
 }: ImagePlaceholderProps) {
+  const { colors } = useTheme();
   const [loadError, setLoadError] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
   if (!uri || loadError) {
     return (
-      <View style={[styles.placeholder, { borderRadius }, style]}>
-        <Icon name={IconName.Image} size={iconSize} color={Colors.mutedFaint} strokeWidth={1.2} />
+      <View style={[styles.placeholder, { borderRadius, backgroundColor: colors.skeleton }, style]}>
+        <Icon name={IconName.Image} size={iconSize} color={colors.mutedFaint} strokeWidth={1.2} />
       </View>
     );
   }
@@ -39,7 +40,6 @@ export function ImagePlaceholder({
 
 const styles = StyleSheet.create({
   placeholder: {
-    backgroundColor: Colors.skeleton,
     alignItems: 'center',
     justifyContent: 'center',
   },

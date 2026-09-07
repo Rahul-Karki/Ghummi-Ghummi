@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Animated, Easing, StyleSheet, Dimensions } from 'react-native';
-import { Colors, Radius, Spacing } from '../theme/colors';
+import { useTheme, Radius, Spacing } from '../theme/ThemeContext';
 
 const SHIMMER_WIDTH = Dimensions.get('window').width;
 
@@ -17,6 +17,7 @@ export function Skeleton({
   borderRadius = Radius.sm,
   style,
 }: SkeletonProps) {
+  const { colors } = useTheme();
   const shimmerAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -45,13 +46,7 @@ export function Skeleton({
   });
 
   return (
-    <View
-      style={[
-        styles.skeleton,
-        { width, height, borderRadius },
-        style,
-      ]}
-    >
+      <View style={[styles.skeleton, { backgroundColor: colors.shimmer }, { width, height, borderRadius }, style]}>
       <Animated.View
         style={[
           styles.shimmer,
@@ -151,7 +146,6 @@ export function SkeletonMapPin({ style }: { style?: any }) {
 
 const styles = StyleSheet.create({
   skeleton: {
-    backgroundColor: Colors.shimmer,
     overflow: 'hidden',
   },
   shimmer: {

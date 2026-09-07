@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Colors } from '../theme/colors';
+import { useTheme } from '../theme/ThemeContext';
 
 export default function YMark({ light = false }: { light?: boolean }) {
   const borderColor = light ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)';

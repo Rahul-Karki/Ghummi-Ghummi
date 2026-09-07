@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Colors, Typography, Spacing, Radius, Shadows } from '../theme/colors';
+import { useTheme, Typography, Spacing, Radius, Shadows } from '../theme/ThemeContext';
 import { Icon, IconName } from './Icon';
-import { Toast } from './Toast';
-import { hapticLight, hapticMedium } from '../utils/haptics';
+import { hapticLight } from '../utils/haptics';
 
 type MenuItem = {
   label: string;
@@ -25,18 +24,18 @@ type BottomMenuProps = {
 
 export default function BottomMenu({ activeTab = 'Explore', navigation }: BottomMenuProps) {
   const insets = useSafeAreaInsets();
-  const [toast, setToast] = useState({ visible: false, message: '' });
+  const { colors } = useTheme();
 
   const handleTabPress = (label: string) => {
     hapticLight();
     if (label === 'Explore') {
       navigation?.navigate('Intro');
     } else if (label === 'Saved') {
-      setToast({ visible: true, message: 'Saved list coming soon' });
+      navigation?.navigate('Saved');
     } else if (label === 'Trips') {
-      setToast({ visible: true, message: 'Trips coming soon' });
+      navigation?.navigate('Trips');
     } else if (label === 'Profile') {
-      setToast({ visible: true, message: 'Profile coming soon' });
+      navigation?.navigate('Profile');
     }
   };
 
@@ -44,7 +43,10 @@ export default function BottomMenu({ activeTab = 'Explore', navigation }: Bottom
     <View
       style={[
         styles.container,
-        { paddingBottom: Math.max(insets.bottom, Spacing.md) },
+        { 
+          paddingBottom: Math.max(insets.bottom, Spacing.md),
+          backgroundColor: colors.cardWhite,
+        },
       ]}
     >
       {MENU_ITEMS.map((item) => {
@@ -62,21 +64,20 @@ export default function BottomMenu({ activeTab = 'Explore', navigation }: Bottom
             <Icon
               name={item.icon}
               size={20}
-              color={isActive ? Colors.primaryGold : Colors.mutedFaint}
+              color={isActive ? colors.primaryGold : colors.mutedFaint}
               strokeWidth={isActive ? 2 : 1.5}
             />
-            <Text style={[styles.label, isActive && styles.labelActive]}>
+            <Text style={[
+              styles.label, 
+              { color: colors.mutedFaint },
+              isActive && styles.labelActive,
+              isActive && { color: colors.primaryGold }
+            ]}>
               {item.label}
             </Text>
           </TouchableOpacity>
         );
       })}
-      <Toast
-        message={toast.message}
-        visible={toast.visible}
-        variant="info"
-        onDismiss={() => setToast({ visible: false, message: '' })}
-      />
     </View>
   );
 }
@@ -87,7 +88,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: Colors.cardWhite,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     shadowColor: '#000',
@@ -110,11 +110,9 @@ const styles = StyleSheet.create({
   },
   label: {
     ...Typography.caption,
-    color: Colors.mutedFaint,
     fontWeight: '300',
   },
   labelActive: {
-    color: Colors.primaryGold,
     fontWeight: '600',
   },
 });

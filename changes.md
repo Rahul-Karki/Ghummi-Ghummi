@@ -161,8 +161,8 @@ Major design system refinement pass adding semantic tokens, typography scale, re
 ---
 
 ## File Inventory
-- **Modified:** 17 files (App.tsx, colors.ts, Icon.tsx, TopBar.tsx, BottomMenu.tsx, Pill.tsx, StatusBar.tsx, IntroScreen.tsx, V1GalleryScreen.tsx, V2ScanSaveScreen.tsx, V3ImageLedScreen.tsx, PropertyDetailsScreen.tsx, AppNavigator.tsx, Toast.tsx, EmptyState.tsx, Skeleton.tsx)
-- **Created:** 11 files (Button.tsx, Chip.tsx, Card.tsx, Avatar.tsx, Divider.tsx, Badge.tsx, ErrorState.tsx, ConfirmationDialog.tsx, BottomSheet.tsx, OfflineBanner.tsx, LoadingOverlay.tsx, ImagePlaceholder.tsx, AIGenerationScreen.tsx)
+- **Modified:** 18 files (App.tsx, colors.ts, Icon.tsx, TopBar.tsx, BottomMenu.tsx, Pill.tsx, StatusBar.tsx, IntroScreen.tsx, V1GalleryScreen.tsx, V2ScanSaveScreen.tsx, V3ImageLedScreen.tsx, PropertyDetailsScreen.tsx, AppNavigator.tsx, Toast.tsx, EmptyState.tsx, Skeleton.tsx)
+- **Created:** 14 files (Button.tsx, Chip.tsx, Card.tsx, Avatar.tsx, Divider.tsx, Badge.tsx, ErrorState.tsx, ConfirmationDialog.tsx, BottomSheet.tsx, OfflineBanner.tsx, LoadingOverlay.tsx, ImagePlaceholder.tsx, AIGenerationScreen.tsx, MapScreen.tsx)
 
 ### 20. Fixed: PropertyDetailsScreen Pagination Dots Animation (`src/screens/PropertyDetailsScreen.tsx`)
 **Type:** Fixed  
@@ -349,6 +349,49 @@ Major design system refinement pass adding semantic tokens, typography scale, re
 **Type:** Added  
 **What changed:**
 - Installed `@react-native-community/netinfo` for offline detection
+
+### 36. Landing Page Search Section (`src/screens/IntroScreen.tsx`)
+**Type:** New Feature  
+**What changed:**
+- Added full-width search input below hero section with focus state styling
+- Search filters through 6 service categories (Hotels, Homes, Nature, Beach, Resorts, Villas)
+- Shows filtered results in a card list with icons, labels, and property counts
+- Shows "No services found" empty state when no matches
+- Clear button to reset search
+- Tapping a result navigates to V2ScanSave screen
+- When no search query, shows services as a 3-column grid with icons and counts
+
+### 37. Center Map Button in Tab Bar (`src/screens/IntroScreen.tsx`)
+**Type:** Enhanced  
+**What changed:**
+- Replaced 5-tab layout with 4 tabs + center floating map button
+- Tab bar now shows: Home | Saved | [MAP] | Trips | Profile
+- Center map button is lifted 24px above the tab bar
+- Button has double-ring design: outer navy ring (64px) + inner gold ring (56px)
+- Map icon is white on gold background
+- Pressing navigates to V1Gallery (map view)
+- Added shadow elevation for floating effect
+
+### 38. Map Screen (`src/screens/MapScreen.tsx`)
+**Type:** New  
+**What changed:**
+- Created dedicated map view screen with hardcoded SF-style map
+- Simulated map with water areas (blue), roads (white lines), parks (green), building blocks (gray)
+- 12 property pins with price bubbles positioned across the map
+- Selected pin scales up 1.3x and changes to gold color
+- Bottom sheet slides up with property preview when pin tapped
+- Property preview shows: image, name, type, guests, match %, save button, "View Details" button
+- Empty state: "Tap a pin to view property details"
+- Header with back button, location badge, and filter icon
+- Map legend showing "Selected" and "Available" pin colors
+- Toast feedback on save action
+- All animations use spring physics for natural feel
+
+### 39. Navigation Update for Map Button
+**Type:** Enhanced  
+**What changed:**
+- Center map button now navigates to new Map screen instead of V1Gallery
+- Added `Map` route to navigation stack
 
 ---
 

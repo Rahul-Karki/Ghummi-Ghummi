@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Colors, Typography, Spacing, Radius } from '../theme/colors';
+import { useTheme, Typography, Spacing, Radius } from '../theme/ThemeContext';
 import { Icon, IconName } from './Icon';
 import { hapticLight } from '../utils/haptics';
 
@@ -11,7 +11,8 @@ export default function TopBar({
   light?: boolean;
   onBack?: () => void;
 }) {
-  const color = light ? Colors.white : Colors.black;
+  const { colors } = useTheme();
+  const color = light ? colors.white : colors.black;
 
   return (
     <View style={styles.container}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
-import { Colors, Typography, Radius, Spacing } from '../theme/colors';
+import { useTheme, Typography, Radius, Spacing } from '../theme/ThemeContext';
 
 type BadgeVariant = 'default' | 'success' | 'warning' | 'error' | 'info';
 type BadgeSize = 'sm' | 'md';
@@ -13,8 +13,8 @@ type BadgeProps = {
   style?: ViewStyle;
 };
 
-const VARIANT_COLORS: Record<BadgeVariant, { bg: string; text: string }> = {
-  default: { bg: Colors.secondary, text: Colors.primary },
+const STATIC_BADGE_COLORS: Record<BadgeVariant, { bg: string; text: string }> = {
+  default: { bg: '', text: '' },
   success: { bg: '#E8F5E9', text: '#2E7D32' },
   warning: { bg: '#FFF3E0', text: '#E65100' },
   error: { bg: '#FFEBEE', text: '#C62828' },
@@ -28,13 +28,16 @@ export function Badge({
   icon,
   style,
 }: BadgeProps) {
-  const colors = VARIANT_COLORS[variant];
+  const { colors } = useTheme();
+  const variantColors = variant === 'default'
+    ? { bg: colors.secondary, text: colors.primary }
+    : STATIC_BADGE_COLORS[variant];
 
   return (
     <View
       style={[
         styles.base,
-        { backgroundColor: colors.bg },
+        { backgroundColor: variantColors.bg },
         size === 'md' && styles.md,
         style,
       ]}
@@ -43,7 +46,7 @@ export function Badge({
       <Text
         style={[
           styles.label,
-          { color: colors.text },
+          { color: variantColors.text },
           size === 'md' ? styles.labelMd : undefined,
           icon ? { marginLeft: 4 } : undefined,
         ]}

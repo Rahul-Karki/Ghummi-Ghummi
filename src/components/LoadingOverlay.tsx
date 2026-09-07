@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Animated, Easing } from 'react-native';
-import { Colors, Typography, Spacing, Radius, Shadows } from '../theme/colors';
+import { useTheme, Typography, Spacing, Radius, Shadows } from '../theme/ThemeContext';
 
 type LoadingOverlayProps = {
   visible: boolean;
@@ -13,6 +13,7 @@ export function LoadingOverlay({
   message = 'Loading...',
   submessage,
 }: LoadingOverlayProps) {
+  const { colors } = useTheme();
   const opacity = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(0.9)).current;
 
@@ -44,19 +45,20 @@ export function LoadingOverlay({
 
   return (
     <Animated.View
-      style={[styles.container, { opacity }]}
+      style={[styles.container, { opacity, backgroundColor: colors.overlayLight }]}
       pointerEvents="box-none"
     >
-      <Animated.View style={[styles.card, { transform: [{ scale }] }]}>
+      <Animated.View style={[styles.card, { transform: [{ scale }], backgroundColor: colors.white }]}>
         <LoadingSpinner />
-        <Text style={styles.message}>{message}</Text>
-        {submessage && <Text style={styles.submessage}>{submessage}</Text>}
+        <Text style={[styles.message, { color: colors.textPrimary }]}>{message}</Text>
+        {submessage && <Text style={[styles.submessage, { color: colors.textSecondary }]}>{submessage}</Text>}
       </Animated.View>
     </Animated.View>
   );
 }
 
 function LoadingSpinner() {
+  const { colors } = useTheme();
   const rotation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -79,8 +81,8 @@ function LoadingSpinner() {
 
   return (
     <Animated.View style={[styles.spinner, { transform: [{ rotate }] }]}>
-      <View style={styles.spinnerTrack} />
-      <View style={styles.spinnerDot} />
+      <View style={[styles.spinnerTrack, { borderColor: colors.mutedFaint, borderTopColor: colors.primary }]} />
+      <View style={[styles.spinnerDot, { backgroundColor: colors.primaryGold }]} />
     </Animated.View>
   );
 }
@@ -88,13 +90,11 @@ function LoadingSpinner() {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: Colors.overlayLight,
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 1800,
   },
   card: {
-    backgroundColor: Colors.white,
     borderRadius: Radius.xl,
     paddingHorizontal: Spacing.xxxl,
     paddingVertical: Spacing.xxl,
@@ -112,8 +112,6 @@ const styles = StyleSheet.create({
     height: 36,
     borderRadius: 18,
     borderWidth: 3,
-    borderColor: Colors.mutedFaint,
-    borderTopColor: Colors.primary,
   },
   spinnerDot: {
     position: 'absolute',
@@ -122,17 +120,14 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: Colors.primaryGold,
   },
   message: {
     ...Typography.body,
-    color: Colors.textPrimary,
     fontWeight: '600',
     textAlign: 'center',
   },
   submessage: {
     ...Typography.caption,
-    color: Colors.textSecondary,
     textAlign: 'center',
   },
 });
