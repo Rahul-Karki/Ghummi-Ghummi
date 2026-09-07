@@ -175,7 +175,7 @@ export default function AIGenerationScreen({ navigation }: Props) {
           {state === 'success' && (
             <>
               <Animated.View style={{ transform: [{ scale: checkScale }] }}>
-                <View style={[styles.heroIconContainer, styles.heroIconSuccess]}>
+                <View style={[styles.heroIconContainer, { backgroundColor: colors.secondaryFaint }]}>
                   <Icon name={IconName.Heart} size={48} color={colors.success} strokeWidth={1.5} />
                 </View>
               </Animated.View>
@@ -188,7 +188,7 @@ export default function AIGenerationScreen({ navigation }: Props) {
 
           {state === 'error' && (
             <>
-              <View style={[styles.heroIconContainer, styles.heroIconError]}>
+              <View style={[styles.heroIconContainer, { backgroundColor: colors.secondaryFaint }]}>
                 <Icon name={IconName.Heart} size={48} color={colors.error} strokeWidth={1.5} />
               </View>
               <Text style={[styles.heroTitle, { color: colors.textPrimary }]}>Generation Failed</Text>
@@ -212,7 +212,7 @@ export default function AIGenerationScreen({ navigation }: Props) {
         </View>
 
         {state === 'idle' && (
-          <View style={[styles.preferencesCard, { backgroundColor: colors.white }]}>
+          <View style={[styles.preferencesCard, { backgroundColor: colors.surface }]}>
             <Text style={[styles.prefsTitle, { color: colors.textTertiary }]}>Trip Details</Text>
             <View style={styles.prefRow}>
               <Icon name={IconName.MapPin} size={16} color={colors.primary} />
@@ -241,7 +241,7 @@ export default function AIGenerationScreen({ navigation }: Props) {
         )}
 
         {state === 'success' && (
-          <View style={[styles.tripPreview, { backgroundColor: colors.white }]}>
+          <View style={[styles.tripPreview, { backgroundColor: colors.surface }]}>
             <View style={styles.tripPreviewRow}>
               <View style={styles.tripStat}>
                 <Text style={[styles.tripStatValue, { color: colors.primary }]}>7</Text>
@@ -345,12 +345,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: Spacing.xl,
-  },
-  heroIconSuccess: {
-    backgroundColor: '#E8F5E9',
-  },
-  heroIconError: {
-    backgroundColor: '#FFF0F0',
   },
   heroTitle: {
     ...Typography.h1,

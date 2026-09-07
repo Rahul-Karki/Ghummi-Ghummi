@@ -48,7 +48,7 @@ export function LoadingOverlay({
       style={[styles.container, { opacity, backgroundColor: colors.overlayLight }]}
       pointerEvents="box-none"
     >
-      <Animated.View style={[styles.card, { transform: [{ scale }], backgroundColor: colors.white }]}>
+      <Animated.View style={[styles.card, { transform: [{ scale }], backgroundColor: colors.surface }]}>
         <LoadingSpinner />
         <Text style={[styles.message, { color: colors.textPrimary }]}>{message}</Text>
         {submessage && <Text style={[styles.submessage, { color: colors.textSecondary }]}>{submessage}</Text>}

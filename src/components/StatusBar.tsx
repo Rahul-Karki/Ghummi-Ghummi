@@ -1,13 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme, Typography, Spacing } from '../theme/ThemeContext';
 
 export default function StatusBar({ light = false }: { light?: boolean }) {
   const { colors } = useTheme();
-  const color = light ? colors.white : colors.black;
+  const insets = useSafeAreaInsets();
+  const color = light ? colors.white : colors.textPrimary;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: Math.max(insets.top, Spacing.xl) }]}>
       <Text style={[styles.time, { color }]}>9:41</Text>
       <View style={[styles.battery, { borderColor: color }]}>
         <View style={[styles.batteryFill, { backgroundColor: color }]} />
@@ -22,7 +24,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: Spacing.xl,
-    paddingTop: Spacing.xl,
     paddingBottom: Spacing.md,
   },
   time: {

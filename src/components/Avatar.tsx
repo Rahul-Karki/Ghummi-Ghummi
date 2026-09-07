@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   initial: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     fontWeight: '400',
   },
 });

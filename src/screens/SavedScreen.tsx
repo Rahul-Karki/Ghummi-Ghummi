@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 18,
     fontWeight: '600',
-    fontFamily: "'Georgia', serif",
+    fontFamily: 'Inter',
   },
   cardType: {
     color: 'rgba(255,255,255,0.8)',

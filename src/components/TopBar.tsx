@@ -12,7 +12,7 @@ export default function TopBar({
   onBack?: () => void;
 }) {
   const { colors } = useTheme();
-  const color = light ? colors.white : colors.black;
+  const color = light ? colors.white : colors.textPrimary;
 
   return (
     <View style={styles.container}>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   wordmark: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     fontSize: 19.17,
     letterSpacing: -1.15,
   },

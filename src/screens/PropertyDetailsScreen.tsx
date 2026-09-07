@@ -151,7 +151,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
           </Animated.ScrollView>
 
           {/* Back + Share + Save */}
-          <View style={styles.carouselTopBar}>
+          <View style={[styles.carouselTopBar, { top: insets.top + Spacing.sm }]}>
             <TouchableOpacity
               style={styles.carouselBtn}
               onPress={() => {
@@ -230,7 +230,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
           <View style={styles.infoHeader}>
             <View style={styles.infoHeaderLeft}>
               <Text style={[styles.propertyType, { color: colors.primaryGold }]}>{listing.type}</Text>
-              <Text style={[styles.propertyName, { color: colors.black }]}>{listing.name}</Text>
+              <Text style={[styles.propertyName, { color: colors.textPrimary }]}>{listing.name}</Text>
             </View>
             <View style={[styles.matchBadge, { backgroundColor: colors.secondary }]}>
               <Text style={[styles.matchText, { color: colors.primary }]}>{listing.match}% Match</Text>
@@ -259,7 +259,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
 
         {/* About */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.black }]}>About this place</Text>
+          <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>About this place</Text>
           <Text style={[styles.aboutText, { color: colors.mutedLight }]}>
             A stunning {listing.type.toLowerCase()} nestled in the heart of San Francisco.
             Perfect for {listing.guests} guests looking for a premium stay with
@@ -271,14 +271,14 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
 
         {/* Amenities */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.black }]}>Amenities</Text>
+          <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Amenities</Text>
           <View style={styles.amenitiesGrid}>
             {AMENITIES.map((amenity) => (
               <View key={amenity.label} style={[styles.amenityItem, { backgroundColor: colors.cardWhite }]}>
                 <View style={[styles.amenityIcon, { backgroundColor: colors.secondary }]}>
                   <Icon name={amenity.icon} size={18} color={colors.primary} />
                 </View>
-                <Text style={[styles.amenityLabel, { color: colors.black }]}>{amenity.label}</Text>
+                <Text style={[styles.amenityLabel, { color: colors.textPrimary }]}>{amenity.label}</Text>
               </View>
             ))}
           </View>
@@ -288,13 +288,13 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
 
         {/* Host */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.black }]}>Hosted by</Text>
+          <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Hosted by</Text>
           <View style={[styles.hostCard, { backgroundColor: colors.cardWhite }]}>
             <View style={[styles.hostAvatar, { backgroundColor: colors.primary }]}>
               <Text style={[styles.hostInitial, { color: colors.white }]}>A</Text>
             </View>
             <View style={styles.hostInfo}>
-              <Text style={[styles.hostName, { color: colors.black }]}>Alexandra</Text>
+              <Text style={[styles.hostName, { color: colors.textPrimary }]}>Alexandra</Text>
               <Text style={[styles.hostSub, { color: colors.muted }]}>Superhost · 3 years hosting</Text>
             </View>
             <View style={styles.hostContact}>
@@ -324,7 +324,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
 
         {/* Location */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.black }]}>Location</Text>
+          <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Location</Text>
           <View style={[styles.locationMap, { backgroundColor: colors.secondary }]}>
             <View style={[styles.locationPin, { backgroundColor: colors.cardWhite }]}>
               <Icon name={IconName.MapPin} size={24} color={colors.primaryGold} />
@@ -341,7 +341,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
       {/* Sticky Bottom Bar */}
       <View style={[styles.bottomBar, { paddingBottom: Math.max(insets.bottom, Spacing.lg), backgroundColor: colors.cardWhite, borderTopColor: colors.border }]}>
         <View style={styles.priceCol}>
-          <Text style={[styles.priceAmount, { color: colors.black }]}>${listing.price === '$$$' ? '186' : listing.price === '$$' ? '146' : '96'}</Text>
+          <Text style={[styles.priceAmount, { color: colors.textPrimary }]}>${listing.price === '$$$' ? '186' : listing.price === '$$' ? '146' : '96'}</Text>
           <Text style={[styles.pricePer, { color: colors.muted }]}>/night</Text>
         </View>
         <TouchableOpacity
@@ -392,7 +392,6 @@ const styles = StyleSheet.create({
   },
   carouselTopBar: {
     position: 'absolute',
-    top: 0,
     left: 0,
     right: 0,
     flexDirection: 'row',
@@ -451,7 +450,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   propertyName: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     fontSize: 24,
     letterSpacing: -0.5,
     lineHeight: 30,
@@ -499,7 +498,7 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
   },
   sectionTitle: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     fontSize: 18,
     letterSpacing: -0.3,
   },
@@ -553,7 +552,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   hostInitial: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     fontSize: 20,
   },
   hostInfo: {
@@ -633,7 +632,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   priceAmount: {
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     fontSize: 22,
   },
   pricePer: {

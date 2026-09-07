@@ -11,7 +11,7 @@ export function Pill({ children, bg }: PillProps) {
   const { colors } = useTheme();
   return (
     <View style={[pillStyles.pill, { backgroundColor: bg || colors.citron }]}>
-      <Text style={[pillStyles.text, { color: colors.black }]}>{children}</Text>
+      <Text style={[pillStyles.text, { color: colors.textInverse }]}>{children}</Text>
     </View>
   );
 }
@@ -36,7 +36,7 @@ export function MatchPill({ children }: MatchPillProps) {
   const { colors } = useTheme();
   return (
     <View style={[matchStyles.pill, { backgroundColor: colors.pin }]}>
-      <Text style={[matchStyles.text, { color: colors.black }]}>{children}</Text>
+      <Text style={[matchStyles.text, { color: colors.textInverse }]}>{children}</Text>
     </View>
   );
 }

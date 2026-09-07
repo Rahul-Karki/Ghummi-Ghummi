@@ -67,7 +67,7 @@ export function ErrorState({
 
   return (
     <View style={[styles.container, style]}>
-      <View style={styles.iconContainer}>
+      <View style={[styles.iconContainer, { backgroundColor: colors.secondaryFaint }]}>
         <Icon
           name={config.icon}
           size={40}
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#FFF0F0',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: Spacing.lg,
