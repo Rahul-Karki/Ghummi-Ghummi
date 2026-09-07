@@ -31,13 +31,6 @@ const QUICK_ACTIONS = [
   { icon: IconName.Waves, label: 'Beach', count: '60+' },
 ];
 
-const TAB_ITEMS = [
-  { icon: IconName.Home, label: 'Home' },
-  { icon: IconName.Heart, label: 'Saved' },
-  { icon: IconName.Plane, label: 'Trips' },
-  { icon: IconName.User, label: 'Profile' },
-];
-
 const SERVICES = [
   { icon: IconName.Building2, label: 'Hotels', count: '120+' },
   { icon: IconName.Home, label: 'Homes', count: '85+' },
@@ -60,7 +53,6 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
   const scrollY = useRef(new Animated.Value(0)).current;
   const [activeCard, setActiveCard] = useState(0);
   const [loaded, setLoaded] = useState(false);
-  const [activeTab, setActiveTab] = useState('Home');
   const [toast, setToast] = useState({ visible: false, message: '' });
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
@@ -78,6 +70,12 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
   const filteredServices = SERVICES.filter((s) =>
     s.label.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const submitSearch = () => {
+    const query = searchQuery.trim();
+    hapticLight();
+    navigation.navigate('V2ScanSave', query ? { query } : undefined);
+  };
 
   const headerOpacity = scrollY.interpolate({
     inputRange: [0, 100],
@@ -107,94 +105,42 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
             <View style={styles.heroTop}>
               <View style={styles.locationBadge}>
                 <Icon name={IconName.MapPin} size={13} color={colors.white} strokeWidth={2} />
-                <Text style={[styles.locationText, { color: colors.white }]}>San Francisco</Text>
+                <Text style={[styles.locationText, { color: colors.white }]}>Mumbai</Text>
               </View>
-              <TouchableOpacity style={styles.profileBtn} activeOpacity={0.7} onPress={() => navigation.navigate('Profile')} accessibilityLabel="Open profile" accessibilityRole="button">
-                <Icon name={IconName.User} size={16} color={colors.white} strokeWidth={1.8} />
-              </TouchableOpacity>
             </View>
-            <View style={styles.heroCenter}>
+            <View style={styles.heroTextTint}>
+              <View style={styles.heroCenter}>
               <Text style={styles.greeting}>Good Evening</Text>
               <Text style={[styles.heroTitle, { color: colors.white }]}>Find Your Perfect Stay</Text>
-              <Text style={styles.heroSub}>12 handpicked places in San Francisco</Text>
+              <Text style={styles.heroSub}>12 handpicked places in Mumbai</Text>
+              </View>
             </View>
-            <TouchableOpacity style={[styles.searchBar, { backgroundColor: colors.surface }]} activeOpacity={0.8} onPress={() => navigation.navigate('V2ScanSave')} accessibilityLabel="Search properties in San Francisco" accessibilityRole="button">
+            <View style={[styles.searchBar, { backgroundColor: colors.surface }]}>
               <Icon name={IconName.Search} size={18} color={colors.muted} strokeWidth={1.8} />
               <View style={styles.searchTextCol}>
-                <Text style={[styles.searchTitle, { color: colors.textPrimary }]}>San Francisco, CA</Text>
+                <TextInput
+                  style={[styles.searchTitle, { color: colors.textPrimary }]}
+                  placeholder="Search stays"
+                  placeholderTextColor={colors.muted}
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                  onSubmitEditing={submitSearch}
+                  returnKeyType="search"
+                  accessibilityLabel="Search properties"
+                />
                 <Text style={[styles.searchSub, { color: colors.muted }]}>Jun 15–22 · 2 guests</Text>
               </View>
-              <View style={[styles.searchFilter, { backgroundColor: colors.secondary }]}>
+              <TouchableOpacity style={[styles.searchFilter, { backgroundColor: colors.secondary }]} onPress={submitSearch} accessibilityLabel="Search stays" accessibilityRole="button">
                 <Icon name={IconName.SlidersHorizontal} size={14} color={colors.textPrimary} strokeWidth={1.8} />
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Search Section */}
-        <View style={styles.searchSection}>
-          <View style={[styles.searchInputContainer, { backgroundColor: colors.surface, borderColor: searchFocused ? colors.primary : colors.border }, searchFocused && styles.searchInputFocused]}>
-            <Icon name={IconName.Search} size={18} color={searchFocused ? colors.primary : colors.muted} strokeWidth={1.8} />
-            <TextInput
-              style={[styles.searchInput, { color: colors.textPrimary }]}
-              placeholder="Search hotels, villas, resorts..."
-              placeholderTextColor={colors.muted}
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-              onFocus={() => setSearchFocused(true)}
-              onBlur={() => setSearchFocused(false)}
-              returnKeyType="search"
-              accessibilityLabel="Search services"
-            />
-            {searchQuery.length > 0 && (
-              <TouchableOpacity onPress={() => { setSearchQuery(''); hapticLight(); }} style={[styles.searchClearBtn, { backgroundColor: colors.surfaceSubtle }]}>
-                <Icon name={IconName.Search} size={14} color={colors.muted} />
               </TouchableOpacity>
-            )}
+            </View>
           </View>
-
-          {searchQuery.length > 0 ? (
-            <View style={[styles.searchResults, { backgroundColor: colors.surface }]}>
-              {filteredServices.length > 0 ? (
-                filteredServices.map((service) => (
-                  <TouchableOpacity key={service.label} style={[styles.searchResultItem, { borderBottomColor: colors.border }]} onPress={() => { hapticLight(); setSearchQuery(''); setSearchFocused(false); navigation.navigate('V2ScanSave'); }} activeOpacity={0.7}>
-                    <View style={[styles.searchResultIcon, { backgroundColor: colors.surfaceSubtle }]}>
-                      <Icon name={service.icon} size={18} color={colors.primary} strokeWidth={1.5} />
-                    </View>
-                    <View style={styles.searchResultInfo}>
-                      <Text style={[styles.searchResultLabel, { color: colors.textPrimary }]}>{service.label}</Text>
-                      <Text style={[styles.searchResultCount, { color: colors.textSecondary }]}>{service.count} properties</Text>
-                    </View>
-                    <Icon name={IconName.ChevronRight} size={16} color={colors.muted} />
-                  </TouchableOpacity>
-                ))
-              ) : (
-                <View style={styles.searchNoResults}>
-                  <Icon name={IconName.Search} size={32} color={colors.mutedFaint} />
-                  <Text style={[styles.searchNoResultsText, { color: colors.textSecondary }]}>No services found</Text>
-                </View>
-              )}
-            </View>
-          ) : (
-            <View style={styles.servicesGrid}>
-              {SERVICES.map((service) => (
-                <TouchableOpacity key={service.label} style={[styles.serviceItem, { backgroundColor: colors.surface }]} activeOpacity={0.7} onPress={() => { hapticLight(); navigation.navigate('V2ScanSave'); }} accessibilityLabel={`Browse ${service.label}`} accessibilityRole="button">
-                  <View style={[styles.serviceIconContainer, { backgroundColor: colors.secondary }]}>
-                    <Icon name={service.icon} size={22} color={colors.primary} strokeWidth={1.5} />
-                  </View>
-                  <Text style={[styles.serviceLabel, { color: colors.textPrimary }]}>{service.label}</Text>
-                  <Text style={[styles.serviceCount, { color: colors.textSecondary }]}>{service.count}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          )}
         </View>
 
         {/* Explore Styles Section */}
-        <View style={styles.section}>
+        <View style={[styles.section, styles.exploreSection]}>
           <View style={styles.sectionHeader}>
             <View>
-              <Text style={[styles.sectionTag, { color: colors.primaryGold }]}>EXPLORE</Text>
               <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Choose Your Style</Text>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('V1Gallery')} style={styles.seeAllBtn} accessibilityLabel="See all explore styles" accessibilityRole="button">
@@ -266,35 +212,6 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
         <View style={{ height: 100 }} />
       </Animated.ScrollView>
 
-      {/* Bottom Tab Bar */}
-      <View style={[styles.tabBarContainer, { paddingBottom: Math.max(insets.bottom, Spacing.md), backgroundColor: colors.cardWhite, borderTopColor: colors.border }]}>
-        <View style={styles.tabBar}>
-          {TAB_ITEMS.slice(0, 2).map((tab) => {
-            const isActive = activeTab === tab.label;
-            return (
-              <TouchableOpacity key={tab.label} style={styles.tabItem} activeOpacity={0.6} onPress={() => { hapticLight(); setActiveTab(tab.label); if (tab.label === 'Saved') { navigation.navigate('Saved'); } }} accessibilityLabel={tab.label} accessibilityRole="button" accessibilityState={{ selected: isActive }}>
-                <Icon name={tab.icon} size={20} color={isActive ? colors.primaryGold : colors.muted} strokeWidth={isActive ? 2 : 1.5} />
-                <Text style={[styles.tabLabel, { color: isActive ? colors.primaryGold : colors.muted }, isActive && styles.tabLabelActive]}>{tab.label}</Text>
-              </TouchableOpacity>
-            );
-          })}
-          <TouchableOpacity style={[styles.mapButton, { backgroundColor: colors.primary }]} activeOpacity={0.7} onPress={() => { hapticMedium(); navigation.navigate('Map'); }} accessibilityLabel="Open Map View" accessibilityRole="button">
-            <View style={[styles.mapButtonInner, { backgroundColor: colors.primaryGold }]}>
-              <Icon name={IconName.MapPin} size={24} color={colors.white} strokeWidth={2} />
-            </View>
-          </TouchableOpacity>
-          {TAB_ITEMS.slice(2).map((tab) => {
-            const isActive = activeTab === tab.label;
-            return (
-              <TouchableOpacity key={tab.label} style={styles.tabItem} activeOpacity={0.6} onPress={() => { hapticLight(); setActiveTab(tab.label); if (tab.label === 'Trips') { navigation.navigate('Trips'); } else if (tab.label === 'Profile') { navigation.navigate('Profile'); } }} accessibilityLabel={tab.label} accessibilityRole="button" accessibilityState={{ selected: isActive }}>
-                <Icon name={tab.icon} size={20} color={isActive ? colors.primaryGold : colors.muted} strokeWidth={isActive ? 2 : 1.5} />
-                <Text style={[styles.tabLabel, { color: isActive ? colors.primaryGold : colors.muted }, isActive && styles.tabLabelActive]}>{tab.label}</Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-      </View>
-
       <Toast message={toast.message} visible={toast.visible} variant="info" onDismiss={() => setToast({ visible: false, message: '' })} />
     </View>
   );
@@ -312,16 +229,18 @@ const styles = StyleSheet.create({
   locationBadge: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.15)', paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderRadius: Radius.full, gap: 6 },
   locationText: { fontFamily: 'Google Sans Flex-Medium', fontWeight: '500', fontSize: 13 },
   profileBtn: { width: 44, height: 44, borderRadius: 22, backgroundColor: 'rgba(255,255,255,0.15)', alignItems: 'center', justifyContent: 'center' },
+  heroTextTint: { alignSelf: 'stretch', backgroundColor: 'rgba(0,0,0,0.30)', borderRadius: Radius.lg, padding: Spacing.lg },
   heroCenter: { gap: 6 },
   greeting: { fontFamily: 'Google Sans Flex-Light', fontWeight: '300', fontSize: 14, color: 'rgba(255,255,255,0.85)' },
   heroTitle: { fontFamily: 'Besley', fontSize: 28, letterSpacing: 0, lineHeight: 34 },
   heroSub: { fontFamily: 'Google Sans Flex-Light', fontWeight: '300', fontSize: 14, color: 'rgba(255,255,255,0.8)' },
-  searchBar: { flexDirection: 'row', alignItems: 'center', borderRadius: Radius.lg, padding: Spacing.md, gap: Spacing.md, borderWidth: 1, borderColor: 'rgba(255,255,255,0.15)', shadowColor: '#000', shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.15, shadowRadius: 16, elevation: 8 },
+  searchBar: { flexDirection: 'row', alignItems: 'center', borderRadius: Radius.lg, marginHorizontal: Spacing.xs, marginBottom: Spacing.xl, padding: Spacing.md, gap: Spacing.md, borderWidth: 1, borderColor: 'rgba(255,255,255,0.15)', shadowColor: '#000', shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.15, shadowRadius: 16, elevation: 8 },
   searchTextCol: { flex: 1, gap: 2 },
   searchTitle: { fontFamily: 'Google Sans Flex-Medium', fontWeight: '500', fontSize: 14 },
   searchSub: { fontFamily: 'Google Sans Flex-Light', fontWeight: '300', fontSize: 12 },
   searchFilter: { width: 44, height: 44, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
   section: { marginBottom: Spacing.xxl },
+  exploreSection: { marginTop: Spacing.xl },
   sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', paddingHorizontal: Spacing.xl, marginBottom: Spacing.lg },
   sectionTag: { fontFamily: 'Google Sans Flex-Medium', fontWeight: '500', fontSize: 10, letterSpacing: 1.5, marginBottom: 4 },
   sectionTitle: { fontFamily: 'Besley', fontSize: 20, letterSpacing: 0 },
@@ -334,7 +253,7 @@ const styles = StyleSheet.create({
   exploreCardContent: { flex: 1, justifyContent: 'space-between', padding: Spacing.xl },
   exploreTagBadge: { alignSelf: 'flex-start', backgroundColor: 'rgba(255,255,255,0.2)', paddingHorizontal: Spacing.md, paddingVertical: 5, borderRadius: Radius.full },
   exploreTagText: { fontFamily: 'Google Sans Flex-Medium', fontWeight: '500', fontSize: 11, letterSpacing: 0.5 },
-  exploreCardBottom: { gap: 4 },
+  exploreCardBottom: { gap: 4, marginHorizontal: -Spacing.xl, marginBottom: -Spacing.xl, paddingHorizontal: Spacing.xl, paddingTop: Spacing.lg, paddingBottom: Spacing.xl, backgroundColor: 'rgba(0,0,0,0.42)' },
   exploreCardTitle: { fontFamily: 'Besley', fontSize: 22, letterSpacing: 0 },
   exploreCardSub: { fontFamily: 'Google Sans Flex-Light', fontWeight: '300', fontSize: 13, color: 'rgba(255,255,255,0.8)' },
   exploreCardDesc: { fontFamily: 'Google Sans Flex-Light', fontWeight: '300', fontSize: 12, color: 'rgba(255,255,255,0.75)', lineHeight: 17, marginTop: 4 },

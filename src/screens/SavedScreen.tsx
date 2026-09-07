@@ -38,7 +38,7 @@ export default function SavedScreen({ navigation }: any) {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.header, { paddingTop: insets.top + Spacing.sm }]}>
+      <View style={[styles.header, { paddingTop: Math.max(insets.top, Spacing.huge) + Spacing.md }]}>
         <Text style={[styles.title, { color: colors.textPrimary }]}>Saved</Text>
         <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
           {savedListings.length} {savedListings.length === 1 ? 'place' : 'places'} saved
@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
     ...Typography.h1,
     fontSize: 32,
     fontWeight: '700',
+    lineHeight: 40,
   },
   subtitle: {
     ...Typography.body,
@@ -194,6 +195,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: Spacing.lg,
+    backgroundColor: 'rgba(0,0,0,0.42)',
   },
   cardBadges: {
     flexDirection: 'row',

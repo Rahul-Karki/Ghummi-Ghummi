@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ghummi-app",
-    "slug": "ghummi-app",
+    "name": "Verse",
+    "slug": "verse",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

@@ -15,7 +15,7 @@ import { hapticLight } from '../utils/haptics';
 const TRIPS = [
   {
     id: 't1',
-    destination: 'San Francisco',
+    destination: 'Mumbai',
     dates: 'Mar 15 – Mar 22, 2025',
     status: 'upcoming',
     image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1400&q=90&auto=format&fit=crop',
@@ -54,7 +54,7 @@ export default function TripsScreen({ navigation }: any) {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.header, { paddingTop: insets.top + Spacing.sm }]}>
+      <View style={[styles.header, { paddingTop: Math.max(insets.top, Spacing.huge) + Spacing.md }]}>
         <Text style={[styles.title, { color: colors.textPrimary }]}>Trips</Text>
         <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
           {UP_COMING.length} upcoming · {PAST.length} past
@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
     ...Typography.h1,
     fontSize: 32,
     fontWeight: '700',
+    lineHeight: 40,
   },
   subtitle: {
     ...Typography.body,
@@ -227,6 +228,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: Spacing.lg,
+    backgroundColor: 'rgba(0,0,0,0.42)',
   },
   tripDest: {
     color: '#FFFFFF',

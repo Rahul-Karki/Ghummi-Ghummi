@@ -61,7 +61,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
     hapticLight();
     try {
       await Share.share({
-        message: `Check out ${listing.name} on Ghummi! ${listing.type} for ${listing.guests} guests - ${listing.price}`,
+        message: `Check out ${listing.name} on Verse! ${listing.type} for ${listing.guests} guests - ${listing.price}`,
         title: listing.name,
       });
     } catch {}
@@ -98,7 +98,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
         },
         {
           text: 'Email',
-          onPress: () => Linking.openURL('mailto:alexandra@ghummi.com'),
+          onPress: () => Linking.openURL('mailto:alexandra@verse.app'),
         },
       ]
     );
@@ -261,7 +261,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>About this place</Text>
           <Text style={[styles.aboutText, { color: colors.mutedLight }]}>
-            A stunning {listing.type.toLowerCase()} nestled in the heart of San Francisco.
+            A stunning {listing.type.toLowerCase()} nestled in the heart of Mumbai.
             Perfect for {listing.guests} guests looking for a premium stay with
             exceptional amenities and breathtaking views.
           </Text>
@@ -330,7 +330,7 @@ export default function PropertyDetailsScreen({ navigation, route }: Props) {
               <Icon name={IconName.MapPin} size={24} color={colors.primaryGold} />
             </View>
             <Text style={[styles.locationAddress, { color: colors.muted }]}>
-              San Francisco, California
+              Mumbai, Maharashtra
             </Text>
           </View>
         </View>

@@ -149,7 +149,7 @@ export default function MapScreen({ navigation }: Props) {
 
           <View style={[styles.headerCenter, { backgroundColor: colors.surface }]}>
             <Icon name={IconName.MapPin} size={16} color={colors.primary} />
-            <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>San Francisco</Text>
+            <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>Mumbai</Text>
           </View>
 
           <TouchableOpacity

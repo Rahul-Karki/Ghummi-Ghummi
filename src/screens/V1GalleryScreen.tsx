@@ -13,7 +13,6 @@ import {
 import { useTheme } from '../theme/ThemeContext';
 import StatusBar from '../components/StatusBar';
 import TopBar from '../components/TopBar';
-import BottomMenu from '../components/BottomMenu';
 import { Pill } from '../components/Pill';
 import { Icon, IconName } from '../components/Icon';
 import { Skeleton } from '../components/Skeleton';
@@ -95,7 +94,7 @@ export default function V1GalleryScreen({ navigation }: { navigation: any }) {
         <View style={styles.header}>
           <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>12 curated picks</Text>
           <Text style={[styles.headerSubtitle, { color: colors.muted }]}>
-            San Francisco · Jun 15-22 · 2 guests
+            Mumbai · Jun 15–22 · 2 guests
           </Text>
         </View>
 
@@ -140,7 +139,6 @@ export default function V1GalleryScreen({ navigation }: { navigation: any }) {
           <MapView selectedId={selectedId} setSelectedId={setSelectedId} />
         )}
       </ScrollView>
-      <BottomMenu navigation={navigation} />
     </View>
   );
 }

@@ -29,18 +29,18 @@ const IMAGES: Record<string, string> = {
 };
 
 export const LISTINGS: Listing[] = [
-  { id: 'oasis', name: 'Oasis', type: 'House', guests: 5, price: '$$$', match: 95, rating: 4.96, image: IMAGES.oasis },
-  { id: 'cozy', name: 'Cozy Den', type: 'House', guests: 4, price: '$$', match: 91, rating: 4.78, image: IMAGES.cozy },
-  { id: 'garden', name: 'Garden Escape', type: 'House', guests: 3, price: '$$', match: 87, rating: 4.89, image: IMAGES.garden },
-  { id: 'coastal', name: 'Coastal Villa', type: 'Villa', guests: 4, price: '$$$', match: 83, rating: 4.62, image: IMAGES.coastal },
-  { id: 'wilderness', name: 'Wilderness Escape', type: 'Camping', guests: 2, price: '$', match: 79, rating: 4.94, image: IMAGES.wilderness },
-  { id: 'seaside', name: 'Seaside Resort', type: 'Hotel', guests: 2, price: '$$$', match: 74, rating: 4.45, image: IMAGES.seaside },
-  { id: 'urban', name: 'Urban Retreat', type: 'House', guests: 8, price: '$$$', match: 70, rating: 4.81, image: IMAGES.urban },
-  { id: 'ocean', name: 'Ocean Vista', type: 'Hotel', guests: 2, price: '$$$', match: 66, rating: 4.73, image: IMAGES.ocean },
-  { id: 'tiny', name: 'Tiny Home', type: 'Cabin', guests: 2, price: '$', match: 62, rating: 4.92, image: IMAGES.tiny },
-  { id: 'bunk', name: 'Shared Bunk Room', type: 'House', guests: 1, price: '$', match: 57, rating: 3.87, image: IMAGES.bunk },
-  { id: 'mountain', name: 'Mountain Lodge', type: 'Cabin', guests: 4, price: '$', match: 53, rating: 4.65, image: IMAGES.mountain },
-  { id: 'grand', name: 'Grand Marr', type: 'Hotel', guests: 4, price: '$$$', match: 48, rating: 4.55, image: IMAGES.grand },
+  { id: 'oasis', name: 'The Alibaug House', type: 'House', guests: 5, price: '$$$', match: 95, rating: 4.96, image: IMAGES.oasis },
+  { id: 'cozy', name: 'Bandra Bay Retreat', type: 'House', guests: 4, price: '$$', match: 91, rating: 4.78, image: IMAGES.cozy },
+  { id: 'garden', name: 'Coonoor Garden Stay', type: 'House', guests: 3, price: '$$', match: 87, rating: 4.89, image: IMAGES.garden },
+  { id: 'coastal', name: 'Goa Coast Villa', type: 'Villa', guests: 4, price: '$$$', match: 83, rating: 4.62, image: IMAGES.coastal },
+  { id: 'wilderness', name: 'Rishikesh Riverside Camp', type: 'Camping', guests: 2, price: '$', match: 79, rating: 4.94, image: IMAGES.wilderness },
+  { id: 'seaside', name: 'Kovalam Beach Resort', type: 'Hotel', guests: 2, price: '$$$', match: 74, rating: 4.45, image: IMAGES.seaside },
+  { id: 'urban', name: 'Indiranagar Retreat', type: 'House', guests: 8, price: '$$$', match: 70, rating: 4.81, image: IMAGES.urban },
+  { id: 'ocean', name: 'Pondicherry Vista', type: 'Hotel', guests: 2, price: '$$$', match: 66, rating: 4.73, image: IMAGES.ocean },
+  { id: 'tiny', name: 'Manali Cedar Cabin', type: 'Cabin', guests: 2, price: '$', match: 62, rating: 4.92, image: IMAGES.tiny },
+  { id: 'bunk', name: 'Varkala Surf House', type: 'House', guests: 1, price: '$', match: 57, rating: 3.87, image: IMAGES.bunk },
+  { id: 'mountain', name: 'Mussoorie Mountain Lodge', type: 'Cabin', guests: 4, price: '$', match: 53, rating: 4.65, image: IMAGES.mountain },
+  { id: 'grand', name: 'Udaipur Palace Hotel', type: 'Hotel', guests: 4, price: '$$$', match: 48, rating: 4.55, image: IMAGES.grand },
 ];
 
 export const COORDS: Record<string, [number, number]> = {
