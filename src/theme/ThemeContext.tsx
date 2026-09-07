@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { useColorScheme } from 'react-native';
-import { LightColors, DarkColors, Spacing, Radius, Typography, Shadows, Layout, FontStack, FontMono } from './colors';
+import { LightColors, DarkColors, Spacing, Radius, Typography, Shadows, Layout, FontStack, FontMono, FontBrand, FontDisplay, FontUi, FontUiLight, FontUiMedium } from './colors';
 
 type ThemeColors = typeof LightColors | typeof DarkColors;
 
@@ -56,4 +56,4 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 };
 
 // Re-export theme utilities
-export { Spacing, Radius, Typography, Shadows, Layout, FontStack, FontMono };
+export { Spacing, Radius, Typography, Shadows, Layout, FontStack, FontMono, FontBrand, FontDisplay, FontUi, FontUiLight, FontUiMedium };

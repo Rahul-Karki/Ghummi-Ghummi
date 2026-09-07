@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
+import { useTheme, FontBrand } from '../theme/ThemeContext';
 
 export default function YMark({ light = false }: { light?: boolean }) {
   const borderColor = light ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)';
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '180deg' }],
   },
   y: {
-    fontFamily: 'Inter',
+    fontFamily: FontBrand,
     fontSize: 14,
   },
 });
