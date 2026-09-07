@@ -181,7 +181,7 @@ export default function AIGenerationScreen({ navigation }: Props) {
               </Animated.View>
               <Text style={[styles.heroTitle, { color: colors.textPrimary }]}>Your Trip is Ready</Text>
               <Text style={[styles.heroSub, { color: colors.textSecondary }]}>
-                We've created a personalized 7-day itinerary for San Francisco with handpicked stays and activities.
+                We've created a personalized 7-day itinerary for Mumbai with handpicked stays and activities.
               </Text>
             </>
           )}
@@ -217,7 +217,7 @@ export default function AIGenerationScreen({ navigation }: Props) {
             <View style={styles.prefRow}>
               <Icon name={IconName.MapPin} size={16} color={colors.primary} />
               <Text style={[styles.prefLabel, { color: colors.textSecondary }]}>Destination</Text>
-              <Text style={[styles.prefValue, { color: colors.textPrimary }]}>San Francisco, CA</Text>
+              <Text style={[styles.prefValue, { color: colors.textPrimary }]}>Mumbai, Maharashtra</Text>
             </View>
             <View style={[styles.prefDivider, { backgroundColor: colors.border }]} />
             <View style={styles.prefRow}>

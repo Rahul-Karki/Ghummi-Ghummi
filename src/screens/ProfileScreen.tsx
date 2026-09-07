@@ -170,7 +170,7 @@ export default function ProfileScreen({ navigation }: any) {
           <Text style={[styles.signOutText, { color: colors.error }]}>Sign Out</Text>
         </TouchableOpacity>
 
-        <Text style={[styles.version, { color: colors.textTertiary }]}>Ghummi v1.0.0</Text>
+        <Text style={[styles.version, { color: colors.textTertiary }]}>Verse v1.0.0</Text>
       </ScrollView>
 
       <Toast

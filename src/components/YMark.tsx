@@ -9,7 +9,7 @@ export default function YMark({ light = false }: { light?: boolean }) {
   return (
     <View style={[styles.container, { borderColor }]}>
       <View style={styles.inner}>
-        <Text style={[styles.y, { color: fillColor }]}>Y</Text>
+        <Text style={[styles.y, { color: fillColor }]}>V</Text>
       </View>
     </View>
   );

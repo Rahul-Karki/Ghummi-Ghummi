@@ -28,12 +28,7 @@ export default function TopBar({
       >
         <Icon name={IconName.ArrowLeft} size={20} color={color} strokeWidth={2} />
       </TouchableOpacity>
-      <Text style={[styles.wordmark, { color }]}>
-        <Text style={{ letterSpacing: -1.92 }}>Y</Text>
-        <Text>on</Text>
-        <Text style={{ letterSpacing: -0.48 }}>d</Text>
-        <Text>r</Text>
-      </Text>
+      <Text style={[styles.wordmark, { color }]}>Verse</Text>
       <View style={{ width: 40 }} />
     </View>
   );

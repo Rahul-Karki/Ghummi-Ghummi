@@ -13,7 +13,6 @@ import {
 import { useTheme } from '../theme/ThemeContext';
 import StatusBar from '../components/StatusBar';
 import TopBar from '../components/TopBar';
-import BottomMenu from '../components/BottomMenu';
 import YMark from '../components/YMark';
 import { Pill } from '../components/Pill';
 import { Icon, IconName } from '../components/Icon';
@@ -36,16 +35,17 @@ const CHIPS: { key: FilterKey; label: string }[] = [
 const SAVE_REVEAL = 80;
 const SAVE_THRESHOLD = 40;
 
-export default function V2ScanSaveScreen({ navigation }: { navigation: any }) {
+export default function V2ScanSaveScreen({ navigation, route }: { navigation: any; route?: { params?: { query?: string } } }) {
   const { colors } = useTheme();
   const [filter, setFilter] = useState<FilterKey>('all');
+  const query = route?.params?.query?.trim().toLowerCase() ?? '';
   const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
   const [refreshing, setRefreshing] = useState(false);
 
-  const filtered = LISTINGS.filter((l) => {
-    if (filter === 'all') return true;
-    if (filter === 'Budget') return l.price === '$';
-    return l.type === (filter as PropertyType);
+  const filtered = LISTINGS.filter((listing) => {
+    const matchesChip = filter === 'all' || (filter === 'Budget' ? listing.price === '$' : listing.type === (filter as PropertyType));
+    const matchesQuery = !query || `${listing.name} ${listing.type}`.toLowerCase().includes(query);
+    return matchesChip && matchesQuery;
   });
 
   const onSave = (id: string) => {
@@ -79,13 +79,13 @@ export default function V2ScanSaveScreen({ navigation }: { navigation: any }) {
             <YMark />
             <View style={styles.headerTextCol}>
               <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
-                Your <Text style={{ color: colors.muted }}>twelve</Text> curated picks
+                {query ? `Results for “${route?.params?.query}”` : <>Your <Text style={{ color: colors.muted }}>twelve</Text> curated picks</>}
               </Text>
-              <Text style={styles.headerSub}>Based on your trip preferences</Text>
+              <Text style={[styles.headerSub, { color: colors.textSecondary }]}>Based on your trip preferences</Text>
             </View>
           </View>
-          <Text style={styles.headerLocation}>
-            Barcelona · Jun 15-22 · 2 guests
+          <Text style={[styles.headerLocation, { color: colors.textTertiary }]}>
+            Mumbai · Jun 15–22 · 2 guests
           </Text>
         </View>
 
@@ -115,7 +115,13 @@ export default function V2ScanSaveScreen({ navigation }: { navigation: any }) {
         </ScrollView>
 
         <View style={styles.listingsContainer}>
-          {filtered.map((listing, i) => (
+          {filtered.length === 0 ? (
+            <View style={styles.emptyResults}>
+              <Icon name={IconName.Search} size={32} color={colors.mutedFaint} />
+              <Text style={[styles.emptyResultsTitle, { color: colors.textPrimary }]}>No stays found</Text>
+              <Text style={[styles.emptyResultsText, { color: colors.textSecondary }]}>Try a property name or type, such as “Villa” or “Cabin”.</Text>
+            </View>
+          ) : filtered.map((listing, i) => (
             <View key={listing.id}>
               <SwipeRow
                 listing={listing}
@@ -123,12 +129,11 @@ export default function V2ScanSaveScreen({ navigation }: { navigation: any }) {
                 saved={savedIds.has(listing.id)}
                 onPress={() => navigation.navigate('PropertyDetails', { listing })}
               />
-              {i < filtered.length - 1 && <View style={styles.listingDivider} />}
+              {i < filtered.length - 1 && <View style={[styles.listingDivider, { backgroundColor: colors.border }]} />}
             </View>
           ))}
         </View>
       </ScrollView>
-      <BottomMenu navigation={navigation} />
     </View>
   );
 }
@@ -273,23 +278,21 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   headerTitle: {
-    fontFamily: 'Inter',
+    fontFamily: 'Google Sans Flex-Medium',
     fontWeight: '500',
     fontSize: 16,
     lineHeight: 19.2,
   },
   headerSub: {
-    fontFamily: 'Inter',
-    fontWeight: '400',
+    fontFamily: 'Google Sans Flex-Light',
+    fontWeight: '300',
     fontSize: 13,
-    color: 'rgba(0,0,0,0.55)',
     lineHeight: 15.6,
   },
   headerLocation: {
-    fontFamily: 'Inter',
-    fontWeight: '400',
+    fontFamily: 'Google Sans Flex-Light',
+    fontWeight: '300',
     fontSize: 12,
-    color: 'rgba(0,0,0,0.45)',
     lineHeight: 14.4,
   },
   chipScroll: {
@@ -313,9 +316,23 @@ const styles = StyleSheet.create({
   listingsContainer: {
     paddingTop: 16,
   },
+  emptyResults: {
+    alignItems: 'center',
+    paddingHorizontal: 32,
+    paddingVertical: 56,
+    gap: 8,
+  },
+  emptyResultsTitle: {
+    fontFamily: 'Besley',
+    fontSize: 20,
+  },
+  emptyResultsText: {
+    fontFamily: 'Google Sans Flex-Light',
+    fontSize: 14,
+    textAlign: 'center',
+  },
   listingDivider: {
     height: 1,
-    backgroundColor: 'rgba(0,0,0,0.08)',
     marginHorizontal: 20,
   },
   swipeContainer: {

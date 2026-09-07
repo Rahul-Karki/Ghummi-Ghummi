@@ -14,7 +14,6 @@ import {
 import { useTheme } from '../theme/ThemeContext';
 import StatusBar from '../components/StatusBar';
 import TopBar from '../components/TopBar';
-import BottomMenu from '../components/BottomMenu';
 import YMark from '../components/YMark';
 import { MatchPill } from '../components/Pill';
 import { Toast } from '../components/Toast';
@@ -90,7 +89,6 @@ export default function V3ImageLedScreen({ navigation }: { navigation: any }) {
         <WhyMatchedSection />
         <PriceAndReserve />
       </ScrollView>
-      <BottomMenu navigation={navigation} />
     </View>
   );
 }
@@ -148,7 +146,7 @@ function Hero({ onBack }: { onBack: () => void }) {
         <View style={styles.heroCenter}>
           <YMark light />
           <Text style={[styles.heroTitle, { color: colors.white }]}>Your perfect place</Text>
-          <Text style={[styles.heroSub, { color: colors.white }]}>Barcelona · Jun 15-22 · 2 guests</Text>
+          <Text style={[styles.heroSub, { color: colors.white }]}>Mumbai · Jun 15–22 · 2 guests</Text>
         </View>
       </View>
 
@@ -157,7 +155,7 @@ function Hero({ onBack }: { onBack: () => void }) {
           <View style={styles.heroPin}>
             <Icon name={IconName.MapPin} size={22} color="#CFD205" />
           </View>
-          <Text style={[styles.heroPlaceName, { color: colors.white }]}>Cozy Den</Text>
+          <Text style={[styles.heroPlaceName, { color: colors.white }]}>Bandra Bay Retreat</Text>
         </View>
 
         <View style={styles.heroStatsContainer}>
@@ -320,7 +318,7 @@ function PriceAndReserve() {
   const handleReserve = () => {
     hapticMedium();
     Alert.alert(
-      'Reserve Cozy Den',
+      'Reserve Bandra Bay Retreat',
       'Book this boutique stay for 7 nights?\n\nPrice: $146/night\nTotal: $1,022',
       [
         { text: 'Cancel', style: 'cancel' },
