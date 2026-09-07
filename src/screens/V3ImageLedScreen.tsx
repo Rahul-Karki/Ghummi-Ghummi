@@ -397,12 +397,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   heroTitle: {
-    fontFamily: 'Inter',
+    fontFamily: 'Besley',
     fontWeight: '400',
     fontSize: 18,
   },
   heroSub: {
-    fontFamily: 'Inter',
+    fontFamily: 'Google Sans Flex-Light',
     fontWeight: '300',
     fontSize: 12,
     opacity: 0.9,
@@ -432,7 +432,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   heroPlaceName: {
-    fontFamily: 'Inter',
+    fontFamily: 'Besley',
     fontSize: 30,
     lineHeight: 36,
   },

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useTheme, Typography, Spacing, Radius } from '../theme/ThemeContext';
+import { useTheme, Typography, Spacing, Radius, FontBrand } from '../theme/ThemeContext';
 import { Icon, IconName } from './Icon';
 import { hapticLight } from '../utils/haptics';
 
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   wordmark: {
-    fontFamily: 'Inter',
+    fontFamily: FontBrand,
     fontSize: 19.17,
     letterSpacing: -1.15,
   },

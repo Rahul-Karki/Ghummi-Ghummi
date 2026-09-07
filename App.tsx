@@ -8,6 +8,13 @@ import {
   Inter_700Bold,
 } from '@expo-google-fonts/inter';
 import { GeistMono_400Regular, GeistMono_500Medium } from '@expo-google-fonts/geist-mono';
+import { Besley_400Regular } from '@expo-google-fonts/besley';
+import {
+  GoogleSansFlex_300Light,
+  GoogleSansFlex_400Regular,
+  GoogleSansFlex_500Medium,
+} from '@expo-google-fonts/google-sans-flex';
+import { Outfit_500Medium } from '@expo-google-fonts/outfit';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider, useTheme } from './src/theme/ThemeContext';
 import AppNavigator from './src/navigation/AppNavigator';
@@ -19,7 +26,7 @@ function setDefaultFont(Component: typeof Text | typeof TextInput) {
   const component = Component as typeof Component & { defaultProps?: { style?: unknown } };
   component.defaultProps = {
     ...component.defaultProps,
-    style: [component.defaultProps?.style, { fontFamily: 'Inter' }],
+    style: [component.defaultProps?.style, { fontFamily: 'Google Sans Flex' }],
   };
 }
 
@@ -45,6 +52,11 @@ export default function App() {
     'Inter-Bold': Inter_700Bold,
     'Geist Mono': GeistMono_400Regular,
     'Geist Mono-Medium': GeistMono_500Medium,
+    Besley: Besley_400Regular,
+    'Google Sans Flex-Light': GoogleSansFlex_300Light,
+    'Google Sans Flex': GoogleSansFlex_400Regular,
+    'Google Sans Flex-Medium': GoogleSansFlex_500Medium,
+    'Outfit-Medium': Outfit_500Medium,
   });
 
   // Do not render with a platform fallback font and then switch after loading.

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ViewStyle, ImageStyle } from 'react-native';
-import { useTheme, Typography, Radius } from '../theme/ThemeContext';
+import { useTheme, Typography, Radius, FontUiMedium } from '../theme/ThemeContext';
 
 type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   initial: {
-    fontFamily: 'Inter',
+    fontFamily: FontUiMedium,
     fontWeight: '400',
   },
 });
