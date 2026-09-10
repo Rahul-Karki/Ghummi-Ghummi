@@ -65,7 +65,7 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider>
+    <ThemeProvider initialTheme="dark">
       <AppContent />
     </ThemeProvider>
   );

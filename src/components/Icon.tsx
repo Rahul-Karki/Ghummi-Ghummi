@@ -44,6 +44,16 @@ import {
   Check,
   Sparkles,
   ArrowRight,
+  Plus,
+  Minus,
+  X,
+  Edit3,
+  Trash2,
+  Wallet,
+  Route,
+  Maximize2,
+  Minimize2,
+  LocateFixed,
   type LucideIcon,
 } from 'lucide-react-native';
 import { useTheme } from '../theme/ThemeContext';
@@ -93,6 +103,16 @@ export const IconName = {
   Check,
   Sparkles,
   ArrowRight,
+  Plus,
+  Minus,
+  X,
+  Edit3,
+  Trash2,
+  Wallet,
+  Route,
+  Maximize2,
+  Minimize2,
+  LocateFixed,
 } as const;
 
 type IconProps = {
