@@ -39,7 +39,11 @@ type Props = {
 export default function PropertyDetailsScreen({ navigation, route }: Props) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const listing = route?.params?.listing ?? LISTINGS[0];
+  // Saved and map entry points pass only an id; resolve it so every card opens
+  // its own details instead of silently falling back to the first listing.
+  const listing = route?.params?.listing
+    ?? LISTINGS.find((item) => item.id === route?.params?.listingId)
+    ?? LISTINGS[0];
   const [activeImage, setActiveImage] = useState(0);
   const [saved, setSaved] = useState(false);
   const scrollX = useRef(new Animated.Value(0)).current;

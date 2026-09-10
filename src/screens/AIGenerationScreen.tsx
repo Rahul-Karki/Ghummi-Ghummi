@@ -38,6 +38,12 @@ export default function AIGenerationScreen({ navigation }: Props) {
   const progressAnim = useRef(new Animated.Value(0)).current;
   const checkScale = useRef(new Animated.Value(0)).current;
   const pulseAnim = useRef(new Animated.Value(1)).current;
+  const generationTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const clearGenerationTimers = () => {
+    generationTimers.current.forEach(clearTimeout);
+    generationTimers.current = [];
+  };
 
   useEffect(() => {
     if (state === 'generating') {
@@ -46,6 +52,7 @@ export default function AIGenerationScreen({ navigation }: Props) {
   }, [state]);
 
   const runGeneration = () => {
+    clearGenerationTimers();
     setCurrentStep(0);
     progressAnim.setValue(0);
 
@@ -75,7 +82,7 @@ export default function AIGenerationScreen({ navigation }: Props) {
       }).start();
 
       stepIndex++;
-      setTimeout(runStep, stepDuration);
+      generationTimers.current.push(setTimeout(runStep, stepDuration));
     };
 
     runStep();
@@ -88,6 +95,8 @@ export default function AIGenerationScreen({ navigation }: Props) {
 
   const handleCancel = () => {
     hapticLight();
+    clearGenerationTimers();
+    progressAnim.stopAnimation();
     setState('cancelled');
     setToast({ visible: true, message: 'Generation cancelled', variant: 'info' });
   };
@@ -96,6 +105,8 @@ export default function AIGenerationScreen({ navigation }: Props) {
     hapticMedium();
     setState('generating');
   };
+
+  useEffect(() => () => clearGenerationTimers(), []);
 
   const handleViewTrip = () => {
     hapticSuccess();
