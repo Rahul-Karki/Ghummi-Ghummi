@@ -8,17 +8,7 @@
     <option name="selectedProviderName" value="OpenRouter" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3d65596b-dc49-4115-a719-0edfd378ae9a" name="Changes" comment="A COMPLETE CHANGE">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Icon.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Icon.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/AppNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/AppNavigator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/MapScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/MapScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/TripsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/TripsScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theme/colors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/theme/colors.ts" afterDir="false" />
-    </list>
+    <list default="true" id="3d65596b-dc49-4115-a719-0edfd378ae9a" name="Changes" comment="DEMO Changes 2" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -113,7 +103,7 @@
       <workItem from="1788769330737" duration="1524000" />
       <workItem from="1788783813361" duration="3789000" />
       <workItem from="1789021142036" duration="1428000" />
-      <workItem from="1789039929527" duration="7231000" />
+      <workItem from="1789039929527" duration="9062000" />
     </task>
     <task id="LOCAL-00001" summary="Fix - 1">
       <option name="closed" value="true" />
@@ -147,7 +137,31 @@
       <option name="project" value="LOCAL" />
       <updated>1788787507910</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="DEMO Changes">
+      <option name="closed" value="true" />
+      <created>1789050685010</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1789050685010</updated>
+    </task>
+    <task id="LOCAL-00006" summary="DEMO Changes">
+      <option name="closed" value="true" />
+      <created>1789050692439</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1789050692439</updated>
+    </task>
+    <task id="LOCAL-00007" summary="DEMO Changes 2">
+      <option name="closed" value="true" />
+      <created>1789052543728</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1789052543728</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -158,6 +172,8 @@
     <MESSAGE value="Fix - 2" />
     <MESSAGE value="Fix - 3" />
     <MESSAGE value="A COMPLETE CHANGE" />
-    <option name="LAST_COMMIT_MESSAGE" value="A COMPLETE CHANGE" />
+    <MESSAGE value="DEMO Changes" />
+    <MESSAGE value="DEMO Changes 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="DEMO Changes 2" />
   </component>
 </project>
