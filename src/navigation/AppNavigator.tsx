@@ -24,7 +24,7 @@ export type ExploreStackParamList = {
   AIGeneration: undefined;
 };
 
-type AppTabParamList = { Explore: undefined; Saved: undefined; Map: undefined; Trips: undefined; Profile: undefined };
+type AppTabParamList = { Explore: undefined; Trips: undefined; Map: undefined; Saved: undefined; Profile: undefined };
 
 const ExploreStack = createStackNavigator<ExploreStackParamList>();
 const Tab = createBottomTabNavigator<AppTabParamList>();
@@ -56,7 +56,7 @@ export default function AppNavigator() {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
-          animation: 'none',
+          animation: 'fade',
           tabBarActiveTintColor: colors.primaryGold,
           tabBarInactiveTintColor: colors.textTertiary,
           tabBarStyle: { height: 82, paddingTop: 8, paddingBottom: 12, backgroundColor: colors.surfaceElevated, borderTopColor: colors.border },
@@ -65,9 +65,9 @@ export default function AppNavigator() {
         })}
       >
         <Tab.Screen name="Explore" component={ExploreNavigator} />
-        <Tab.Screen name="Saved" component={SavedScreen} />
-        <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Trips" component={TripsScreen} />
+        <Tab.Screen name="Map" component={MapScreen} />
+        <Tab.Screen name="Saved" component={SavedScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
     </NavigationContainer>

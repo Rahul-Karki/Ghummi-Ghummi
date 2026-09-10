@@ -71,33 +71,23 @@ export const LightColors = {
 // Dark mode - rich & deep
 export const DarkColors = {
   // Surfaces - deep warm dark
-  background: '#121010',
-  foreground: '#F5F0E8',
-  surface: '#1E1B18',
-  surfaceElevated: '#292420',
-  surfaceSubtle: '#1E1B18',
-  surfaceMuted: '#121010',
+  background: '#070707', foreground: '#F5F5F5', surface: '#111111',
+  surfaceElevated: '#191919', surfaceSubtle: '#141414', surfaceMuted: '#0B0B0B',
 
   // Brand - glowing amber on dark
-  primary: '#F59E0B',
-  primaryGold: '#FBBF24',
-  primaryLight: '#422006',
+  // Keep primary actions distinct from white copy: white-on-white controls
+  // become unreadable in dark mode when primary is also white.
+  primary: '#C76A16', primaryGold: '#F5F5F5', primaryLight: '#322315',
 
   // Accents - neon on dark
-  secondary: '#1C1917',
-  secondaryFaint: 'rgba(245,158,11,0.12)',
-  olive: '#4ADE80',
-  citron: '#FDE047',
+  secondary: '#171717', secondaryFaint: 'rgba(255,255,255,0.07)', olive: '#A3E635', citron: '#FACC15',
   pin: '#F87171',
   accentCoral: '#FB7185',
   accentTeal: '#2DD4BF',
   accentIndigo: '#818CF8',
 
   // Text - warm whites
-  textPrimary: '#F5F0E8',
-  textSecondary: '#A8A29E',
-  textTertiary: '#78716C',
-  textInverse: '#1A1614',
+  textPrimary: '#F5F5F5', textSecondary: '#A3A3A3', textTertiary: '#737373', textInverse: '#080808',
   textDisabled: '#57534E',
 
   // Legacy aliases
@@ -106,10 +96,7 @@ export const DarkColors = {
   mutedFaint: '#57534E',
 
   // Borders
-  border: '#292420',
-  borderLight: '#1E1B18',
-  borderStrong: '#44403C',
-  borderFocus: '#F59E0B',
+  border: '#292929', borderLight: '#1C1C1C', borderStrong: '#404040', borderFocus: '#F5F5F5',
 
   // Cards
   cardBg: '#1E1B18',

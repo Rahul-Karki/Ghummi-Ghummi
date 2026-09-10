@@ -1,505 +1,59 @@
-import React, { useState, useRef } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Animated,
-  Dimensions,
-  ScrollView,
-} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { Modal, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+declare module 'react-native' { interface StyleSheetStatic { absoluteFillObject: any } }
+(StyleSheet as any).absoluteFillObject = StyleSheet.absoluteFill;
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTheme, Typography, Spacing, Radius, Shadows } from '../theme/ThemeContext';
+import { useTheme } from '../theme/ThemeContext';
 import { Icon, IconName } from '../components/Icon';
-import { Toast } from '../components/Toast';
-import { LISTINGS, type Listing } from '../data/listings';
-import { hapticLight, hapticMedium, hapticSuccess } from '../utils/haptics';
 
-const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get('window');
+// react-native-maps is a native-only module in this Expo setup. Loading it on
+// web crashes the whole app before the navigator can render, so defer the
+// require and provide a responsive route preview for browser demos.
+const NativeMaps = Platform.OS === 'web' ? null : require('react-native-maps');
+const NativeMapView = NativeMaps?.default;
+const NativeMarker = NativeMaps?.Marker;
+const NativePolyline = NativeMaps?.Polyline;
+const nativeProvider = NativeMaps?.PROVIDER_DEFAULT;
 
-// Hardcoded "map" coordinates for SF area (relative positions 0-1)
-const MAP_PINS: Record<string, { x: number; y: number }> = {
-  oasis: { x: 0.45, y: 0.35 },
-  cozy: { x: 0.32, y: 0.48 },
-  garden: { x: 0.58, y: 0.28 },
-  coastal: { x: 0.22, y: 0.62 },
-  wilderness: { x: 0.72, y: 0.45 },
-  seaside: { x: 0.55, y: 0.58 },
-  urban: { x: 0.40, y: 0.72 },
-  ocean: { x: 0.65, y: 0.68 },
-  tiny: { x: 0.28, y: 0.38 },
-  bunk: { x: 0.50, y: 0.52 },
-  mountain: { x: 0.78, y: 0.32 },
-  grand: { x: 0.35, y: 0.55 },
-};
+type Stop = { name: string; subtitle: string; description: string; coordinate: { latitude: number; longitude: number } };
+const stops: Stop[] = [
+  { name: 'Chandigarh', subtitle: 'Start · 0 km', description: 'Leave the city early and follow NH 3 toward the foothills.', coordinate: { latitude: 30.7333, longitude: 76.7794 } },
+  { name: 'Kullu Valley', subtitle: '4 hr 12 min · 268 km', description: 'A perfect pause for riverside chai and a first glimpse of the Himalayas.', coordinate: { latitude: 31.9579, longitude: 77.1095 } },
+  { name: 'Manali', subtitle: '6 hr 35 min · 308 km', description: 'Check in, slow down, and wander through Old Manali before sunset.', coordinate: { latitude: 32.2432, longitude: 77.1892 } },
+  { name: 'Solang Valley', subtitle: '7 hr · 321 km', description: 'Tomorrow’s alpine adventure: paragliding, snow, and wide-open views.', coordinate: { latitude: 32.3154, longitude: 77.1569 } },
+];
+// Demo route follows the Chandigarh–Manali corridor; swap for Directions API geometry when a key is configured.
+const route = [{ latitude: 30.7333, longitude: 76.7794 }, { latitude: 31.1048, longitude: 77.1734 }, { latitude: 31.4022, longitude: 77.2246 }, { latitude: 31.9579, longitude: 77.1095 }, { latitude: 32.1106, longitude: 77.1660 }, { latitude: 32.2432, longitude: 77.1892 }, { latitude: 32.3154, longitude: 77.1569 }];
+const region = { latitude: 31.63, longitude: 76.98, latitudeDelta: 3.7, longitudeDelta: 2.4 };
 
-type Props = { navigation: any };
-
-export default function MapScreen({ navigation }: Props) {
-  const { colors } = useTheme();
-  const insets = useSafeAreaInsets();
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [toast, setToast] = useState({ visible: false, message: '' });
-  const sheetTranslateY = useRef(new Animated.Value(300)).current;
-
-  const selected = selectedId ? LISTINGS.find((l) => l.id === selectedId) : null;
-
-  const handlePinPress = (id: string) => {
-    hapticLight();
-    setSelectedId(id);
-    Animated.spring(sheetTranslateY, {
-      toValue: 0,
-      damping: 20,
-      stiffness: 200,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const handleCloseSheet = () => {
-    setSelectedId(null);
-    Animated.spring(sheetTranslateY, {
-      toValue: 300,
-      damping: 20,
-      stiffness: 200,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const handleSave = () => {
-    hapticSuccess();
-    setToast({ visible: true, message: 'Added to saved' });
-  };
-
-  return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      {/* Map Area */}
-      <View style={styles.mapArea}>
-        {/* Simulated map background */}
-        <View style={styles.mapBackground}>
-          {/* Water area */}
-          <View style={styles.waterArea} />
-          <View style={styles.waterArea2} />
-
-          {/* Roads */}
-          <View style={[styles.road, styles.roadH1]} />
-          <View style={[styles.road, styles.roadH2]} />
-          <View style={[styles.road, styles.roadH3]} />
-          <View style={[styles.road, styles.roadV1]} />
-          <View style={[styles.road, styles.roadV2]} />
-          <View style={[styles.road, styles.roadV3]} />
-
-          {/* Park areas */}
-          <View style={styles.park} />
-          <View style={styles.park2} />
-
-          {/* Building blocks */}
-          <View style={[styles.block, { top: '20%', left: '15%' }]} />
-          <View style={[styles.block, { top: '20%', left: '35%' }]} />
-          <View style={[styles.block, { top: '35%', left: '25%' }]} />
-          <View style={[styles.block, { top: '50%', left: '45%' }]} />
-          <View style={[styles.block, { top: '60%', left: '20%' }]} />
-          <View style={[styles.block, { top: '40%', left: '65%' }]} />
-          <View style={[styles.block, { top: '55%', left: '70%' }]} />
-          <View style={[styles.block, { top: '70%', left: '55%' }]} />
-        </View>
-
-        {/* Property Pins */}
-        {LISTINGS.map((listing) => {
-          const pin = MAP_PINS[listing.id];
-          if (!pin) return null;
-          const isSelected = selectedId === listing.id;
-
-          return (
-            <TouchableOpacity
-              key={listing.id}
-              style={[
-                styles.pin,
-                {
-                  left: `${pin.x * 100}%`,
-                  top: `${pin.y * 100}%`,
-                  transform: [{ scale: isSelected ? 1.3 : 1 }],
-                  zIndex: isSelected ? 100 : 10,
-                },
-              ]}
-              onPress={() => handlePinPress(listing.id)}
-              activeOpacity={0.7}
-              accessibilityLabel={`View ${listing.name}`}
-            >
-              <View style={[styles.pinBubble, isSelected && styles.pinBubbleSelected]}>
-                <Text style={[styles.pinPrice, isSelected && styles.pinPriceSelected]}>
-                  {listing.price}
-                </Text>
-              </View>
-              <View style={[styles.pinArrow, isSelected && styles.pinArrowSelected]} />
-            </TouchableOpacity>
-          );
-        })}
-
-        {/* Header */}
-        <View style={[styles.header, { paddingTop: insets.top + Spacing.sm }]}>
-          <TouchableOpacity
-            style={[styles.backBtn, { backgroundColor: colors.surface }]}
-            onPress={() => navigation.goBack()}
-            activeOpacity={0.7}
-            accessibilityLabel="Go back"
-          >
-            <Icon name={IconName.ArrowLeft} size={20} color={colors.textPrimary} strokeWidth={2} />
-          </TouchableOpacity>
-
-          <View style={[styles.headerCenter, { backgroundColor: colors.surface }]}>
-            <Icon name={IconName.MapPin} size={16} color={colors.primary} />
-            <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>Mumbai</Text>
-          </View>
-
-          <TouchableOpacity
-            style={[styles.backBtn, { backgroundColor: colors.surface }]}
-            activeOpacity={0.7}
-            accessibilityLabel="Map settings"
-          >
-            <Icon name={IconName.SlidersHorizontal} size={18} color={colors.textPrimary} strokeWidth={1.8} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Map Legend */}
-        <View style={[styles.legend, { backgroundColor: colors.surface }]}>
-          <View style={styles.legendItem}>
-            <View style={[styles.legendDot, { backgroundColor: colors.primaryGold }]} />
-            <Text style={[styles.legendText, { color: colors.textSecondary }]}>Selected</Text>
-          </View>
-          <View style={styles.legendItem}>
-            <View style={[styles.legendDot, { backgroundColor: colors.olive }]} />
-            <Text style={[styles.legendText, { color: colors.textSecondary }]}>Available</Text>
-          </View>
-        </View>
-      </View>
-
-      {/* Bottom Sheet - Property Preview */}
-      <Animated.View
-        style={[
-          styles.bottomSheet,
-          {
-            paddingBottom: Math.max(insets.bottom, Spacing.lg),
-            transform: [{ translateY: sheetTranslateY }],
-            backgroundColor: colors.surface,
-          },
-        ]}
-      >
-        {selected ? (
-          <>
-            <View style={[styles.sheetHandle, { backgroundColor: colors.mutedFaint }]} />
-            <View style={styles.sheetContent}>
-              <Image source={{ uri: selected.image }} style={styles.sheetImage} />
-              <View style={styles.sheetInfo}>
-                <View style={styles.sheetHeader}>
-                  <View style={styles.sheetTitleRow}>
-                    <Text style={[styles.sheetName, { color: colors.textPrimary }]} numberOfLines={1}>{selected.name}</Text>
-                    <View style={[styles.sheetBadge, { backgroundColor: colors.citron }]}>
-                      <Icon name={IconName.Star} size={10} color={colors.primaryGold} strokeWidth={2} />
-                      <Text style={[styles.sheetMatch, { color: colors.textPrimary }]}>{selected.match}%</Text>
-                    </View>
-                  </View>
-                  <Text style={[styles.sheetType, { color: colors.textSecondary }]}>{selected.type} · Up to {selected.guests} guests</Text>
-                </View>
-
-                <View style={styles.sheetActions}>
-                  <TouchableOpacity
-                    style={[styles.sheetSaveBtn, { borderColor: colors.borderStrong }]}
-                    onPress={handleSave}
-                    activeOpacity={0.7}
-                  >
-                    <Icon name={IconName.Heart} size={16} color={colors.primary} strokeWidth={1.8} />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.sheetDetailBtn, { backgroundColor: colors.primary }]}
-                    onPress={() => {
-                      hapticMedium();
-                      navigation.navigate('PropertyDetails', { listing: selected });
-                    }}
-                    activeOpacity={0.7}
-                  >
-                    <Text style={[styles.sheetDetailText, { color: colors.white }]}>View Details</Text>
-                    <Icon name={IconName.ChevronRight} size={16} color={colors.white} />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </>
-        ) : (
-          <>
-            <View style={[styles.sheetHandle, { backgroundColor: colors.mutedFaint }]} />
-            <View style={styles.sheetEmpty}>
-              <Icon name={IconName.MapPin} size={24} color={colors.mutedFaint} />
-              <Text style={[styles.sheetEmptyText, { color: colors.textSecondary }]}>Tap a pin to view property details</Text>
-            </View>
-          </>
-        )}
-      </Animated.View>
-
-      <Toast
-        message={toast.message}
-        visible={toast.visible}
-        variant="success"
-        onDismiss={() => setToast({ visible: false, message: '' })}
-      />
-    </View>
-  );
+export default function MapScreen() {
+  const { colors } = useTheme(); const insets = useSafeAreaInsets(); const map = useRef<any>(null); const [active, setActive] = useState<Stop | null>(null);
+  if (Platform.OS === 'web') return <WebMapScreen />;
+  const focusRoute = () => map.current?.fitToCoordinates(route, { edgePadding: { top: 110, right: 54, bottom: 330, left: 54 }, animated: true });
+  return <View style={styles.container}>
+    <NativeMapView ref={map} provider={nativeProvider} style={styles.map} initialRegion={region} mapType="standard" showsCompass showsScale showsUserLocation showsMyLocationButton={false} onMapReady={focusRoute}>
+      <NativePolyline coordinates={route} strokeColor="#1778E5" strokeWidth={6} lineCap="round" lineJoin="round" />
+      {stops.map((stop, i) => <NativeMarker key={stop.name} coordinate={stop.coordinate} onPress={() => setActive(stop)} tracksViewChanges={false}>
+        <View style={[styles.marker, i === 2 && styles.markerDestination]}>{i === 2 ? <Icon name={IconName.MapPin} size={21} color="#fff" fill="#fff" /> : <Text style={styles.markerText}>{i + 1}</Text>}</View>
+      </NativeMarker>)}
+    </NativeMapView>
+    <View style={[styles.searchRow, { paddingTop: insets.top + 10 }]}><View style={styles.search}><Icon name={IconName.Search} size={18} color="#55534D" /><Text style={styles.searchText}>Chandigarh to Manali</Text></View><TouchableOpacity onPress={focusRoute} style={styles.round}><Icon name={IconName.Route} size={19} color="#33312D" /></TouchableOpacity></View>
+    <View style={styles.controls}><TouchableOpacity onPress={focusRoute} style={styles.round}><Icon name={IconName.LocateFixed} size={20} color="#33312D" /></TouchableOpacity><TouchableOpacity onPress={() => map.current?.animateToRegion({ ...stops[2].coordinate, latitudeDelta: .18, longitudeDelta: .18 }, 650)} style={styles.round}><Icon name={IconName.Navigation} size={19} color="#1778E5" fill="#1778E5" /></TouchableOpacity></View>
+    <View style={[styles.routeSheet, { backgroundColor: colors.surface }]}><View style={[styles.handle, { backgroundColor: colors.borderStrong }]} /><View style={styles.routeTop}><View><Text style={[styles.eyebrow, { color: colors.textTertiary }]}>ROAD TRIP</Text><Text style={[styles.title, { color: colors.textPrimary }]}>Chandigarh → Manali</Text></View><View style={styles.timePill}><Icon name={IconName.Car} size={15} color="#1778E5"/><Text style={styles.timeText}>6 hr 35 min</Text></View></View><Text style={[styles.meta, { color: colors.textSecondary }]}>308 km · 4 stops · NH 3 scenic route</Text><View style={styles.stopRow}>{stops.map((stop, i) => <TouchableOpacity key={stop.name} onPress={() => setActive(stop)} style={styles.stopButton}><View style={[styles.stopDot, i === 2 && { backgroundColor: '#1778E5' }]}><Text style={[styles.stopNo, i === 2 && { color: '#fff' }]}>{i + 1}</Text></View><Text numberOfLines={1} style={[styles.stopLabel, { color: colors.textPrimary }]}>{stop.name}</Text></TouchableOpacity>)}</View><TouchableOpacity onPress={() => setActive(null)} style={styles.goButton}><Icon name={IconName.Navigation} size={17} color="#fff" fill="#fff"/><Text style={styles.goText}>Start navigating</Text></TouchableOpacity></View>
+    <Modal transparent visible={!!active} animationType="slide" onRequestClose={() => setActive(null)}><View style={styles.modalWrap}><TouchableOpacity style={styles.backdrop} activeOpacity={1} onPress={() => setActive(null)} /><View style={[styles.placeCard, { backgroundColor: colors.surface }]}>{active && <><View style={[styles.cardHandle, { backgroundColor: colors.borderStrong }]} /><View style={styles.placeHeader}><View><Text style={[styles.eyebrow, { color: '#1778E5' }]}>STOP ON YOUR ROUTE</Text><Text style={[styles.placeTitle, { color: colors.textPrimary }]}>{active.name}</Text><Text style={[styles.meta, { color: colors.textSecondary }]}>{active.subtitle}</Text></View><TouchableOpacity onPress={() => setActive(null)} style={[styles.close, { backgroundColor: colors.surfaceSubtle }]}><Icon name={IconName.X} size={18} color={colors.textPrimary}/></TouchableOpacity></View><View style={[styles.about, { backgroundColor: colors.surfaceSubtle }]}><Text style={[styles.aboutTitle, { color: colors.textPrimary }]}>About this place</Text><Text style={[styles.aboutText, { color: colors.textSecondary }]}>{active.description}</Text></View><TouchableOpacity style={styles.ai}><Icon name={IconName.Sparkles} size={18} color="#fff"/><View><Text style={styles.aiTitle}>Ask Verse AI</Text><Text style={styles.aiCopy}>Ask anything about {active.name}</Text></View><Icon name={IconName.ArrowRight} size={18} color="#fff"/></TouchableOpacity></>}</View></View></Modal>
+  </View>;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  mapArea: {
-    flex: 1,
-    position: 'relative',
-    overflow: 'hidden',
-  },
-  mapBackground: {
-    ...StyleSheet.absoluteFill,
-    backgroundColor: '#E8E4DC',
-  },
-  waterArea: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    width: '35%',
-    height: '45%',
-    backgroundColor: '#C5D5E4',
-    borderBottomLeftRadius: 80,
-  },
-  waterArea2: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: '25%',
-    height: '30%',
-    backgroundColor: '#C5D5E4',
-    borderTopRightRadius: 60,
-  },
-  road: {
-    position: 'absolute',
-    backgroundColor: 'rgba(255,255,255,0.6)',
-  },
-  roadH1: { top: '25%', left: 0, right: 0, height: 2 },
-  roadH2: { top: '50%', left: 0, right: 0, height: 3 },
-  roadH3: { top: '75%', left: 0, right: 0, height: 2 },
-  roadV1: { left: '25%', top: 0, bottom: 0, width: 2 },
-  roadV2: { left: '50%', top: 0, bottom: 0, width: 3 },
-  roadV3: { left: '75%', top: 0, bottom: 0, width: 2 },
-  park: {
-    position: 'absolute',
-    top: '15%',
-    left: '40%',
-    width: 60,
-    height: 50,
-    borderRadius: 12,
-    backgroundColor: 'rgba(139,195,74,0.3)',
-  },
-  park2: {
-    position: 'absolute',
-    top: '60%',
-    left: '60%',
-    width: 45,
-    height: 40,
-    borderRadius: 10,
-    backgroundColor: 'rgba(139,195,74,0.25)',
-  },
-  block: {
-    position: 'absolute',
-    width: 30,
-    height: 25,
-    borderRadius: 4,
-    backgroundColor: 'rgba(200,200,200,0.4)',
-  },
-
-  // Pins
-  pin: {
-    position: 'absolute',
-    alignItems: 'center',
-    marginLeft: -20,
-    marginTop: -40,
-  },
-  pinBubble: {
-    paddingHorizontal: Spacing.sm + 2,
-    paddingVertical: Spacing.xs,
-    borderRadius: Radius.full,
-    borderWidth: 1.5,
-    ...Shadows.sm,
-  },
-  pinBubbleSelected: {
-  },
-  pinPrice: {
-    ...Typography.captionSmall,
-    fontWeight: '700',
-  },
-  pinPriceSelected: {
-  },
-  pinArrow: {
-    width: 0,
-    height: 0,
-    borderLeftWidth: 6,
-    borderRightWidth: 6,
-    borderTopWidth: 8,
-    borderLeftColor: 'transparent',
-    borderRightColor: 'transparent',
-    marginTop: -1,
-  },
-  pinArrowSelected: {
-  },
-
-  // Header
-  header: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: Spacing.lg,
-    paddingBottom: Spacing.md,
-  },
-  backBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    alignItems: 'center',
-    justifyContent: 'center',
-    ...Shadows.sm,
-  },
-  headerCenter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.xs,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
-    borderRadius: Radius.full,
-    ...Shadows.sm,
-  },
-  headerTitle: {
-    ...Typography.bodySmall,
-    fontWeight: '600',
-  },
-
-  // Legend
-  legend: {
-    position: 'absolute',
-    bottom: Spacing.xl,
-    left: Spacing.lg,
-    flexDirection: 'row',
-    gap: Spacing.md,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
-    borderRadius: Radius.full,
-    ...Shadows.sm,
-  },
-  legendItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.xs,
-  },
-  legendDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-  },
-  legendText: {
-    ...Typography.captionSmall,
-  },
-
-  // Bottom Sheet
-  bottomSheet: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    borderTopLeftRadius: Radius.xl,
-    borderTopRightRadius: Radius.xl,
-    paddingHorizontal: Spacing.xl,
-    paddingTop: Spacing.md,
-    ...Shadows.xl,
-  },
-  sheetHandle: {
-    width: 36,
-    height: 4,
-    borderRadius: 2,
-    alignSelf: 'center',
-    marginBottom: Spacing.md,
-  },
-  sheetContent: {
-    flexDirection: 'row',
-    gap: Spacing.md,
-  },
-  sheetImage: {
-    width: 80,
-    height: 80,
-    borderRadius: Radius.md,
-  },
-  sheetInfo: {
-    flex: 1,
-    gap: Spacing.sm,
-  },
-  sheetHeader: {
-    gap: 4,
-  },
-  sheetTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.sm,
-  },
-  sheetName: {
-    ...Typography.body,
-    fontWeight: '600',
-    flex: 1,
-  },
-  sheetBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 3,
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: 2,
-    borderRadius: Radius.full,
-  },
-  sheetMatch: {
-    ...Typography.captionSmall,
-    fontWeight: '700',
-  },
-  sheetType: {
-    ...Typography.caption,
-  },
-  sheetActions: {
-    flexDirection: 'row',
-    gap: Spacing.sm,
-  },
-  sheetSaveBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  sheetDetailBtn: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: Spacing.xs,
-    paddingVertical: Spacing.sm,
-    borderRadius: Radius.full,
-  },
-  sheetDetailText: {
-    ...Typography.buttonSmall,
-  },
-
-  // Empty state
-  sheetEmpty: {
-    alignItems: 'center',
-    paddingVertical: Spacing.xl,
-    gap: Spacing.sm,
-  },
-  sheetEmptyText: {
-    ...Typography.bodySmall,
-  },
-});
+function WebMapScreen() {
+  const { colors } = useTheme(); const insets = useSafeAreaInsets(); const [active, setActive] = useState<Stop | null>(null);
+  return <View style={[styles.container, { backgroundColor: '#DCE8DE' }]}>
+    <View style={styles.webTerrain} />
+    <View style={[styles.searchRow, { paddingTop: insets.top + 10 }]}><View style={styles.search}><Icon name={IconName.Search} size={18} color="#55534D" /><Text style={styles.searchText}>Chandigarh to Manali</Text></View><View style={styles.round}><Icon name={IconName.Route} size={19} color="#33312D" /></View></View>
+    <View style={styles.webMapCenter}><Text style={styles.webMapLabel}>HIMACHAL PRADESH</Text><View style={styles.webRoute}><View style={styles.webRouteLine} />{stops.map((stop, i) => <TouchableOpacity key={stop.name} onPress={() => setActive(stop)} style={[styles.webMarker, { top: i * 56 }]}><Text style={styles.webMarkerText}>{i + 1}</Text><Text style={styles.webMarkerName}>{stop.name}</Text></TouchableOpacity>)}</View></View>
+    <View style={[styles.routeSheet, { backgroundColor: colors.surface }]}><View style={[styles.handle, { backgroundColor: colors.borderStrong }]} /><View style={styles.routeTop}><View><Text style={[styles.eyebrow, { color: colors.textTertiary }]}>ROAD TRIP · LIVE ROUTE</Text><Text style={[styles.title, { color: colors.textPrimary }]}>Chandigarh → Manali</Text></View><View style={styles.timePill}><Icon name={IconName.Car} size={15} color="#1778E5"/><Text style={styles.timeText}>6 hr 35 min</Text></View></View><Text style={[styles.meta, { color: colors.textSecondary }]}>308 km · 4 stops · NH 3 scenic route</Text><View style={styles.stopRow}>{stops.map((stop, i) => <TouchableOpacity key={stop.name} onPress={() => setActive(stop)} style={styles.stopButton}><View style={[styles.stopDot, i === 2 && { backgroundColor: '#1778E5' }]}><Text style={[styles.stopNo, i === 2 && { color: '#fff' }]}>{i + 1}</Text></View><Text numberOfLines={1} style={[styles.stopLabel, { color: colors.textPrimary }]}>{stop.name}</Text></TouchableOpacity>)}</View><TouchableOpacity onPress={() => setActive(stops[2])} style={styles.goButton}><Icon name={IconName.Navigation} size={17} color="#fff" fill="#fff"/><Text style={styles.goText}>Preview the trip</Text></TouchableOpacity></View>
+    <Modal transparent visible={!!active} animationType="slide" onRequestClose={() => setActive(null)}><View style={styles.modalWrap}><TouchableOpacity style={styles.backdrop} activeOpacity={1} onPress={() => setActive(null)} /><View style={[styles.placeCard, { backgroundColor: colors.surface }]}>{active && <><View style={[styles.cardHandle, { backgroundColor: colors.borderStrong }]} /><View style={styles.placeHeader}><View><Text style={[styles.eyebrow, { color: '#1778E5' }]}>STOP ON YOUR ROUTE</Text><Text style={[styles.placeTitle, { color: colors.textPrimary }]}>{active.name}</Text><Text style={[styles.meta, { color: colors.textSecondary }]}>{active.subtitle}</Text></View><TouchableOpacity onPress={() => setActive(null)} style={[styles.close, { backgroundColor: colors.surfaceSubtle }]}><Icon name={IconName.X} size={18} color={colors.textPrimary}/></TouchableOpacity></View><View style={[styles.about, { backgroundColor: colors.surfaceSubtle }]}><Text style={[styles.aboutTitle, { color: colors.textPrimary }]}>About this place</Text><Text style={[styles.aboutText, { color: colors.textSecondary }]}>{active.description}</Text></View></>}</View></View></Modal>
+  </View>;
+}
+// @ts-ignore - RN's runtime StyleSheet includes this alias in the app target.
+const styles = StyleSheet.create({ container:{flex:1},map:{...StyleSheet.absoluteFillObject},webTerrain:{...StyleSheet.absoluteFillObject,backgroundColor:'#DCE8DE',opacity:.9},webMapCenter:{position:'absolute',top:155,left:24,right:24,alignItems:'center'},webMapLabel:{fontSize:11,fontWeight:'800',letterSpacing:2,color:'rgba(31,78,56,.55)'},webRoute:{marginTop:25,width:220,height:230,alignItems:'center'},webRouteLine:{position:'absolute',top:12,bottom:10,width:5,borderRadius:3,backgroundColor:'#1778E5'},webMarker:{position:'absolute',left:0,width:220,flexDirection:'row',alignItems:'center'},webMarkerText:{width:30,height:30,borderRadius:15,backgroundColor:'#1778E5',color:'#fff',textAlign:'center',lineHeight:30,fontSize:12,fontWeight:'900',zIndex:2},webMarkerName:{marginLeft:12,backgroundColor:'rgba(255,255,255,.88)',paddingHorizontal:8,paddingVertical:5,borderRadius:8,fontSize:12,fontWeight:'800',color:'#24402E'},searchRow:{position:'absolute',top:0,left:16,right:16,flexDirection:'row',gap:10},search:{height:48,flex:1,borderRadius:15,backgroundColor:'#fff',paddingHorizontal:14,alignItems:'center',flexDirection:'row',gap:10,elevation:5,shadowColor:'#333',shadowOpacity:.18,shadowRadius:10},searchText:{fontSize:15,fontWeight:'800',color:'#302F2A'},round:{width:48,height:48,borderRadius:15,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',elevation:5,shadowColor:'#333',shadowOpacity:.18,shadowRadius:10},marker:{width:34,height:34,borderRadius:17,backgroundColor:'#fff',borderWidth:3,borderColor:'#1778E5',alignItems:'center',justifyContent:'center',elevation:5},markerDestination:{width:42,height:42,borderRadius:21,backgroundColor:'#E65442',borderColor:'#fff'},markerText:{fontSize:13,fontWeight:'900',color:'#1778E5'},controls:{position:'absolute',right:16,bottom:304,gap:10},routeSheet:{position:'absolute',bottom:0,left:0,right:0,borderTopLeftRadius:28,borderTopRightRadius:28,padding:14,paddingHorizontal:20,elevation:10},handle:{height:4,width:35,borderRadius:4,alignSelf:'center',marginBottom:13},routeTop:{flexDirection:'row',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:10},eyebrow:{fontSize:10,fontWeight:'900',letterSpacing:1.1},title:{fontSize:23,fontWeight:'900',marginTop:4},timePill:{backgroundColor:'#E9F2FF',paddingHorizontal:10,paddingVertical:8,borderRadius:12,flexDirection:'row',gap:6,alignItems:'center',flexShrink:0},timeText:{fontSize:12,fontWeight:'800',color:'#1778E5'},meta:{fontSize:12,marginTop:5},stopRow:{flexDirection:'row',marginTop:18,marginBottom:16},stopButton:{flex:1,alignItems:'center'},stopDot:{width:26,height:26,borderRadius:13,backgroundColor:'#EEF1F4',alignItems:'center',justifyContent:'center'},stopNo:{fontSize:11,fontWeight:'900',color:'#5E6470'},stopLabel:{fontSize:10,fontWeight:'700',marginTop:5,maxWidth:68},goButton:{height:49,borderRadius:15,backgroundColor:'#1778E5',alignItems:'center',justifyContent:'center',flexDirection:'row',gap:8},goText:{color:'#fff',fontSize:15,fontWeight:'900'},modalWrap:{flex:1,justifyContent:'flex-end'},backdrop:{...StyleSheet.absoluteFillObject,backgroundColor:'rgba(0,0,0,.35)'},placeCard:{borderTopLeftRadius:27,borderTopRightRadius:27,padding:20,paddingBottom:32},cardHandle:{height:4,width:35,borderRadius:4,alignSelf:'center',marginBottom:18},placeHeader:{flexDirection:'row',justifyContent:'space-between'},placeTitle:{fontSize:27,fontWeight:'900',marginTop:5},close:{width:39,height:39,borderRadius:20,alignItems:'center',justifyContent:'center'},about:{borderRadius:17,padding:16,marginTop:19},aboutTitle:{fontSize:16,fontWeight:'900',marginBottom:7},aboutText:{fontSize:13,lineHeight:19},ai:{backgroundColor:'#5B4CE6',borderRadius:16,padding:15,flexDirection:'row',alignItems:'center',gap:11,marginTop:14},aiTitle:{color:'#fff',fontSize:15,fontWeight:'900'},aiCopy:{color:'rgba(255,255,255,.78)',fontSize:11,marginTop:3,flex:1} });
