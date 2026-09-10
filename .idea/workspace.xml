@@ -8,13 +8,7 @@
     <option name="selectedProviderName" value="OpenRouter" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3d65596b-dc49-4115-a719-0edfd378ae9a" name="Changes" comment="DEMO Changes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/AIGenerationScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AIGenerationScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/PropertyDetailsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/PropertyDetailsScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/SavedScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/SavedScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/V2ScanSaveScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/V2ScanSaveScreen.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="3d65596b-dc49-4115-a719-0edfd378ae9a" name="Changes" comment="DEMO Changes 2" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -109,7 +103,7 @@
       <workItem from="1788769330737" duration="1524000" />
       <workItem from="1788783813361" duration="3789000" />
       <workItem from="1789021142036" duration="1428000" />
-      <workItem from="1789039929527" duration="8310000" />
+      <workItem from="1789039929527" duration="9062000" />
     </task>
     <task id="LOCAL-00001" summary="Fix - 1">
       <option name="closed" value="true" />
@@ -159,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789050692439</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="DEMO Changes 2">
+      <option name="closed" value="true" />
+      <created>1789052543728</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1789052543728</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,6 +173,7 @@
     <MESSAGE value="Fix - 3" />
     <MESSAGE value="A COMPLETE CHANGE" />
     <MESSAGE value="DEMO Changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="DEMO Changes" />
+    <MESSAGE value="DEMO Changes 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="DEMO Changes 2" />
   </component>
 </project>
