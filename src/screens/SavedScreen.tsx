@@ -67,7 +67,11 @@ export default function SavedScreen({ navigation }: any) {
                 key={listing.id}
                 style={[styles.card, { backgroundColor: colors.cardWhite, marginBottom: Spacing.lg }]}
                 activeOpacity={0.85}
-                onPress={() => navigation.navigate('PropertyDetails', { listingId: listing.id })}
+                // Saved is a tab sibling of the Explore stack. Route through
+                // that stack so this works from every platform and navigator.
+                onPress={() => navigation.navigate('Explore', { screen: 'PropertyDetails', params: { listingId: listing.id } })}
+                accessibilityRole="button"
+                accessibilityLabel={`View ${listing.name}`}
               >
                 <Image source={{ uri: listing.image }} style={styles.cardImage} />
                 <View style={styles.cardOverlay} />

@@ -197,6 +197,8 @@ function SwipeRow({
           style={[styles.saveButton, { backgroundColor: colors.primary }]}
           onPress={handleSave}
           disabled={!isRevealed}
+          accessibilityRole="button"
+          accessibilityLabel={saved ? `Saved ${listing.name}` : `Save ${listing.name}`}
         >
           <Icon name={IconName.Heart} size={12} color={colors.white} />
           <Text style={[styles.saveText, { color: colors.white }]}>{saved ? 'Saved' : 'Save'}</Text>
@@ -207,7 +209,12 @@ function SwipeRow({
         style={[styles.swipeForeground, { transform: [{ translateX }], backgroundColor: colors.cardBg }]}
         {...panResponder.panHandlers}
       >
-        <TouchableOpacity onPress={onPress} activeOpacity={1}>
+        <TouchableOpacity
+          onPress={onPress}
+          activeOpacity={1}
+          accessibilityRole="button"
+          accessibilityLabel={`View ${listing.name}`}
+        >
           <ListingRow listing={listing} />
         </TouchableOpacity>
       </Animated.View>
